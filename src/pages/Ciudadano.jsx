@@ -5,6 +5,7 @@ import {supabase} from '../lib/supabase'
 function Ciudadano({ perfil, cerrarSesion }) {
   const [materiales, setMateriales] = useStates([])
   const cargaMateriales = async () => {
+
     const {data, error} = await supabase
       .from('material')
       .select('*')
@@ -14,7 +15,14 @@ function Ciudadano({ perfil, cerrarSesion }) {
       return
     }
     setMateriales(data)
+    
+    console.log('Materiales:', data)
   }
+
+  useEffect(()=>{
+    cargarMateriales()
+  },[])
+
   return (
     <div className="contenedor">
       <div className="tarjeta">
