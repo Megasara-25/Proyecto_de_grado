@@ -12,6 +12,9 @@ function App() {
   const [cargando, setCargando] = useState(true)
 
   const obtenerPerfil = async (user) => {
+
+    console.log('Usuario autenticado:', user?.id)
+
     if (!user) {
       setUsuario(null)
       setPerfil(null)

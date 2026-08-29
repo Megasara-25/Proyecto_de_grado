@@ -1,10 +1,10 @@
-import {useStates} from 'react'
+import { useState } from 'react'
 import {useEffect} from 'react'
 import {supabase} from '../lib/supabase'
 
 function Ciudadano({ perfil, cerrarSesion }) {
-  const [materiales, setMateriales] = useStates([])
-  const cargaMateriales = async () => {
+  const [materiales, setMateriales] = useState([])
+  const cargarMateriales = async () => {
 
     const {data, error} = await supabase
       .from('material')
@@ -16,7 +16,6 @@ function Ciudadano({ perfil, cerrarSesion }) {
     }
     setMateriales(data)
     
-    console.log('Materiales:', data)
   }
 
   useEffect(()=>{
@@ -36,6 +35,17 @@ function Ciudadano({ perfil, cerrarSesion }) {
         <p>
           EcoPuntos: <strong>{perfil.ecopuntos}</strong>
         </p>
+        <h2> ¿Que quieres reciclar?</h2>
+
+        {materiales.map((material) =>(
+          <div key = {material.id}>
+          <h3>{material.nombre}</h3>
+
+          <p>
+          {material.puntos_por_kilo} Ecopuntos por kilogramo
+          </p>
+          </div>
+        ))}
 
         <button onClick={cerrarSesion}>
           Cerrar sesión
