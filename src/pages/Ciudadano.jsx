@@ -4,6 +4,7 @@ import {supabase} from '../lib/supabase'
 
 function Ciudadano({ perfil, cerrarSesion }) {
   const [materiales, setMateriales] = useState([])
+  const [materialSeleccionado, setMaterialSeleccionado] = useState (null)
   const cargarMateriales = async () => {
 
     const {data, error} = await supabase
@@ -38,14 +39,23 @@ function Ciudadano({ perfil, cerrarSesion }) {
         <h2> ¿Que quieres reciclar?</h2>
 
         {materiales.map((material) =>(
-          <div key = {material.id}>
-          <h3>{material.nombre}</h3>
+          <div 
+            key = {material.id}
+            onClick = {() => setMaterialSeleccionado(material)}
+          >
+              <h3>{material.nombre}</h3>
 
-          <p>
-          {material.puntos_por_kilo} Ecopuntos por kilogramo
-          </p>
+            <p>
+              {material.puntos_por_kilo} Ecopuntos por kilogramo
+            </p>
           </div>
         ))}
+
+        {materialSeleccionado &&(
+          <p>
+            Material seleccionado: <strong>{materialSeleccionado.nombre}</strong>
+          </p>
+        )}
 
         <button onClick={cerrarSesion}>
           Cerrar sesión
