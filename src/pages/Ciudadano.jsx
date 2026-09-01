@@ -10,6 +10,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
   const [cantidad, setCantidad] = useState('')
   const [ciudadanoId, setCiudadanoId] = useState(null)
   const [mensaje, setMensaje] = useState ('')
+  const [entregas, setEntregas] = useState([])
 
   const cargarMateriales = async () => {
 
@@ -39,7 +40,33 @@ function Ciudadano({ perfil, cerrarSesion }) {
   }
 
   setCiudadanoId(data.id)
+  cargarEntregas(data.id)
 
+  }
+
+  const cargarEntregas = async(idCiudadano) =>{
+    const {data, error} = await supabase
+    .from('entrega')
+    .select(`
+      id,
+      cantidad,
+      puntos_obtenidos, 
+      estado,
+      fecha,
+      material(
+        nombre
+      )
+    `)
+    .eq('ciudadanoid', idCiudadano)
+    .order('fecha', {ascending: false})
+
+  if (error) {
+    console.error('Error al cargar entregas del ciudadano:', error)
+    return
+  }
+
+  setEntregas(data)
+  console.log('Historial de entregas:', data)
   }
 
   const registrarEntrega = async () => {
@@ -69,6 +96,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
   
   setMensaje('Entrega registrada correctamente')
   setCantidad('')
+  cargarEntregas(ciudadanoId)
   }
 
   const cargarRecicladores = async (materialId) => {
@@ -182,6 +210,25 @@ function Ciudadano({ perfil, cerrarSesion }) {
             )}
           </div>
         )}
+        <h2>Historial de entregas</h2>
+
+        {entregas.map((entrega) => (
+          <div key = {entrega.id}>
+            <h3>{entrega.material.nombre}</h3>
+
+            <p>
+              Cantidad: {entrega.cantidad}kg
+            </p>
+
+            <p>
+              Ecopuntos: {entrega.puntos_obtenidos}
+            </p>
+
+            <p>
+              Estado: {entrega.estado}
+            </p>
+          </div>
+        ))}
         <button onClick={cerrarSesion}>
           Cerrar sesión
         </button>

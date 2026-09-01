@@ -19,10 +19,10 @@ function Reciclador({ perfil, cerrarSesion }) {
   }
 
   setRecicladorId(data.id)
-  cargarEntregas(data.id)
+  cargarEntrega(data.id)
   }
 
-  const cargarEntregas = async(idReciclador)=>{
+  const cargarEntrega = async(idReciclador)=>{
     
     console.log('ID reciclador usado para buscar entregas:', idReciclador)
 
@@ -50,6 +50,42 @@ function Reciclador({ perfil, cerrarSesion }) {
   console.log('Entregas pendientes:', data)
   }
 
+  const aprobarEntrega = async(entregaId)=>{
+    const{error} = await supabase
+    .from ('entrega')
+    .update({
+      estado:'Aprobada'
+    })
+    .eq('id', entregaId)
+    .select()
+  
+  if(error){
+    console.error('Error al probar entrega:', error)
+    return
+  }
+
+  console.log('Entregas aprobada:', entregaId)
+
+  cargarEntrega(recicladorId)
+  }
+
+  const rechazarEntrega = async(entregaId)=>{
+    const {error} = await supabase
+    .from('entrega')
+    .update({
+      estado: 'Rechazada'
+    })
+    .eq('id', entregaId)
+
+    if(error){
+      console.error('Error al rechazar la entrega:', error)
+      return
+    }
+    console.log('Entrega rechazada:', entregaId)
+
+    cargarEntrega(recicladorId)
+  }
+
   useEffect(() =>{
     cargarReciclador()
   },[])
@@ -63,6 +99,7 @@ function Reciclador({ perfil, cerrarSesion }) {
         <p>
           Bienvenido, <strong>{perfil.nombre}</strong>
         </p>
+
         <h2>Entregas pendientes</h2>
 
         {entregas.map((entrega)=>(
@@ -80,6 +117,12 @@ function Reciclador({ perfil, cerrarSesion }) {
           <p>
             Estado: {entrega.estado}
           </p>
+          <button onClick={() => aprobarEntrega(entrega.id)}>
+            Aprobar
+          </button>
+          <button onClick={()=> rechazarEntrega(entrega.id)}>
+            Rechazar
+          </button>
           </div>
         ))}
 
