@@ -11,6 +11,9 @@ function Ciudadano({ perfil, cerrarSesion }) {
   const [ciudadanoId, setCiudadanoId] = useState(null)
   const [mensaje, setMensaje] = useState ('')
   const [entregas, setEntregas] = useState([])
+  const [recompensas, setRecompensas] = useState([])
+  const [ultimoCanje, setUltimoCanje] = useState (null)
+  const [saldoEcopuntos, setSaldoEcopuntos] = useState(perfil.ecopuntos)
 
   const cargarMateriales = async () => {
 
@@ -67,6 +70,56 @@ function Ciudadano({ perfil, cerrarSesion }) {
 
   setEntregas(data)
   console.log('Historial de entregas:', data)
+  }
+
+  const cargarRecompensas = async() => {
+    const {data, error} = await supabase
+    .from('recompensas')
+    .select(`
+      id,
+      nombre,
+      descripcion,
+      puntos_requeridos,
+      cantidad_disponible,
+      estado,
+      comercioid
+    `)
+    .eq('estado', 'Activa')
+
+  if(error){
+    console.error('Error al cargar recompensas:', error)
+    return
+  }
+
+  setRecompensas(data)
+  console.log('Recompensas disponibles:', data)
+  }
+
+  const realizarCanje = async (recompensas) => {
+    console.log('Intentando canjear:', recompensas)
+    const {data, error} = await supabase
+    .from ('canje')
+    .insert([
+      {
+        ciudadanoid: ciudadanoId,
+        recompensaid: recompensas.id,
+        comercioid: recompensas.comercioid,
+        puntos_utilizados: recompensas.puntos_requeridos
+      }
+    ])
+    .select()
+
+  if (error){
+    console.error('Error al realizar canje:', error)
+    return
+  }
+
+  console.log('Canje realizado:', data)
+  setUltimoCanje(data[0])
+
+  setSaldoEcopuntos(
+    saldoEcopuntos - data[0].puntos_utilizados
+  )
   }
 
   const registrarEntrega = async () => {
@@ -128,6 +181,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
   useEffect(()=>{
     cargarMateriales()
     cargarCiudadano()
+    cargarRecompensas()
   },[])
 
   return (
@@ -141,7 +195,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
         </p>
 
         <p>
-          EcoPuntos: <strong>{perfil.ecopuntos}</strong>
+          EcoPuntos: <strong>{saldoEcopuntos}</strong>
         </p>
         <h2> ¿Que quieres reciclar?</h2>
 
@@ -233,6 +287,53 @@ function Ciudadano({ perfil, cerrarSesion }) {
           Cerrar sesión
         </button>
       </div>
+        <h2>Recompensas disponibles</h2>
+
+          {recompensas.map((recompensas) => (
+            <div key={recompensas.id}>
+              <h3>{recompensas.nomnre}</h3>
+
+              <p>
+                {recompensas.descripcion}
+              </p>
+
+              <p>
+                EcoPuntos requeridos: {recompensas.puntos_requeridos}
+              </p>
+
+              <p>
+                Disponibles: {recompensas. cantidad_disponible}
+              </p>
+              {saldoEcopuntos >= recompensas.puntos_utilizados ? (
+                <button onClick={()=> realizarCanje(recompensas)}>
+                  canjear
+                </button>
+              ):(
+                <p>
+                  Ecopuntos insuficientes
+                </p>
+              )}
+            </div>    
+          ))}
+
+          {ultimoCanje && (
+            <div>
+              <h2> Canje realizado correctamente</h2>
+
+              <p>
+                Codigo de canje:
+                <strong>{ultimoCanje.codigo_canje}</strong>
+              </p>
+
+              <p>
+                Estado: {ultimoCanje.estado}
+              </p>
+
+              <p>
+                Ecopuntos utilizados: {ultimoCanje.puntos_utilizados}
+              </p>
+            </div>
+          )}
     </div>
   )
 }
