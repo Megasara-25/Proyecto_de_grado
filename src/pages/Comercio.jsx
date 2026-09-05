@@ -152,14 +152,12 @@ function Comercio({ perfil, cerrarSesion }) {
                 Confirmar canje
               </button>
             )}
-
-            {mensaje &&(
-              <p>{mensaje}</p>
-            )}
-
           </div>
         )}
-
+        {mensaje &&(
+              <p>{mensaje}</p>
+            )}
+            
         <button onClick={cerrarSesion}>
           Cerrar sesión
         </button>
