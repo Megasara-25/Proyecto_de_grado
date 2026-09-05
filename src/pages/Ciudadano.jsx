@@ -184,6 +184,26 @@ function Ciudadano({ perfil, cerrarSesion }) {
     cargarRecompensas()
   },[])
 
+  const cargarSaldoEcopuntos = async () => {
+    const {data, error} = await supabase
+    .from('usuario')
+    .select('ecopuntos')
+    .eq('id', perfil.id)
+    .single()
+
+  if (error){
+    console.error('Error al cargar Ecopuntos:', error)
+    return
+  }
+
+  setSaldoEcopuntos(data.ecopuntos)
+  }
+
+  useEffect(() => {
+    cargarSaldoEcopuntos()
+  }, [perfil.id])
+  
+
   return (
     <div className="contenedor">
       <div className="tarjeta">
@@ -291,7 +311,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
 
           {recompensas.map((recompensas) => (
             <div key={recompensas.id}>
-              <h3>{recompensas.nomnre}</h3>
+              <h3>{recompensas.nombre}</h3>
 
               <p>
                 {recompensas.descripcion}
@@ -304,7 +324,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
               <p>
                 Disponibles: {recompensas. cantidad_disponible}
               </p>
-              {saldoEcopuntos >= recompensas.puntos_utilizados ? (
+              {saldoEcopuntos >= recompensas.puntos_requeridos ? (
                 <button onClick={()=> realizarCanje(recompensas)}>
                   canjear
                 </button>

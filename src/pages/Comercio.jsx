@@ -7,6 +7,7 @@ function Comercio({ perfil, cerrarSesion }) {
   const [codigoCanje, setCodigoCanje] = useState ('')
   const [mensaje, setMensaje] = useState ('')
   const [comercioId, setComercioId] = useState(null)
+  const [canjeEncontrado, setCanjeEncontrado] = useState(null)
 
   const cargarComercio = async () =>{
     const {data, error} = await supabase
@@ -28,6 +29,61 @@ function Comercio({ perfil, cerrarSesion }) {
     cargarComercio()
   }, [])
 
+  const buscarCanje = async () =>{
+    const {data, error} = await supabase.rpc(
+      'buscar_canje_comercio',
+      {
+        p_tipo_documento: tipoDocumento,
+        p_numero_documento: numeroDocumento,
+        p_codigo_canje: codigoCanje
+      }
+    )
+
+  if (error){
+    console.error('Error al buscar canje:', error)
+    setMensaje('No te fue posible validar el canje')
+    return
+  }
+
+  if(data.length === 0){
+    setCanjeEncontrado(null)
+    setMensaje('No se encontro un canje valido')
+    return
+  }
+  setCanjeEncontrado(data[0])
+    setMensaje('')
+
+  console.log('Canje encontrado:', data)
+  }
+
+  const confirmarCanje = async () =>{
+    if(!canjeEncontrado){
+      setMensaje('No hay un canje seleccionado')
+      return
+    }
+
+    const {data, error} = await supabase.rpc(
+      'confirmar_canje_comercio',
+      {
+        p_canje_id: canjeEncontrado.canje_id,
+        p_codigo_canje: codigoCanje
+      }
+    )
+
+    if (error){
+      console.error('Error al confirmar canje:', error)
+      setMensaje('No fue posible confirmar el canje')
+      return
+    }
+
+    setMensaje('Canje confirmado correctamente')
+
+    setCanjeEncontrado({
+      ...canjeEncontrado,
+      estado_canje:'Canjeado'
+    })
+  }
+
   return (
     <div className="contenedor">
       <div className="tarjeta">
@@ -39,6 +95,7 @@ function Comercio({ perfil, cerrarSesion }) {
         </p>
 
         <h2>Validar canje</h2>
+
         <label>tipo de documento</label>
         <select 
           value={tipoDocumento}
@@ -65,10 +122,42 @@ function Comercio({ perfil, cerrarSesion }) {
           onChange={(e) => setCodigoCanje(e.target.value)}
           placeholder='Codigo de 6 digitos' 
         />
+        <button onClick={buscarCanje}>
+          Validar canje
+        </button>
 
-        {mensaje && (
-          <p>{mensaje}</p>
-        
+        {canjeEncontrado && (
+          <div>
+
+            <h3>Canje encontrado</h3>
+
+            <p>
+              Ciudadano: {canjeEncontrado.nombre_ciudadano}
+            </p>
+
+            <p>
+              Recompensa: {canjeEncontrado.nombre_recompensa}
+            </p>
+
+            <p>
+              EcoPunto utilizados: {canjeEncontrado.puntos_canje}
+            </p>
+
+            <p>
+              Estado: {canjeEncontrado.estado_canje}
+            </p>
+
+            {canjeEncontrado.estado_canje === 'Pendiente' &&(
+              <button onClick={confirmarCanje}>
+                Confirmar canje
+              </button>
+            )}
+
+            {mensaje &&(
+              <p>{mensaje}</p>
+            )}
+
+          </div>
         )}
 
         <button onClick={cerrarSesion}>
