@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 
-function Login({ onLogin }) {
+function Login({ irARegistro }) {
   const [correo, setCorreo] = useState('')
   const [password, setPassword] = useState('')
   const [mensaje, setMensaje] = useState('')
@@ -61,6 +61,14 @@ function Login({ onLogin }) {
             Iniciar sesión
           </button>
 
+          <p className='texto_registro'>
+            ¿Aun no tienes cuenta?
+          </p>
+
+          <button type='button'
+            onClick={irARegistro}>
+            Crear cuenta
+          </button>
         </form>
 
         {mensaje && (

@@ -45,11 +45,15 @@ form {
 }
 
 label {
+  display: block;
+  width: 100%;
   margin-bottom: 6px;
   font-weight: bold;
 }
 
 input {
+  display: block;
+  width: 100%;
   padding: 12px;
   margin-bottom: 18px;
   border: 1px solid #ccc;
@@ -57,7 +61,20 @@ input {
   font-size: 16px;
 }
 
+select{
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  background: white;
+}
+
 button {
+  display: block;
+  width: 100%;
   padding: 13px;
   border: none;
   border-radius: 8px;
@@ -74,4 +91,8 @@ button:hover {
 .mensaje {
   text-align: center;
   margin-top: 20px;
+}
+
+.tarjeta p{
+  text-align: center;
 }

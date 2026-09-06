@@ -5,14 +5,16 @@ import Ciudadano from './pages/Ciudadano'
 import Reciclador from './pages/Reciclador'
 import Comercio from './pages/Comercio'
 import './App.css'
+import Registro from './pages/Registro'
 
 function App() {
   const [usuario, setUsuario] = useState(null)
   const [perfil, setPerfil] = useState(null)
   const [cargando, setCargando] = useState(true)
+  const [mostrarRegistro, setMostrarRegistro] = useState(false)
+  const [correoConfirmado, setCorreoConfirmado] = useState(false)
 
   const obtenerPerfil = async (user) => {
-
     console.log('Usuario autenticado:', user?.id)
 
     if (!user) {
@@ -30,17 +32,53 @@ function App() {
       .eq('id', user.id)
       .single()
 
-    if (error) {
+    if (error || !data) {
       console.error('Error cargando perfil:', error)
       setPerfil(null)
       setCargando(false)
       return
     }
 
-    setPerfil(data)
+    let estadoValidacion = null
+
+    if(data.rol === 'reciclador'){
+      const {data: reciclador, error: errorReciclador}= await supabase
+      .from ('reciclador')
+      .select('estado_validacion')
+      .eq('usuarioid', data.id)
+      .single()
+
+      if (errorReciclador){
+      console.error('Error cargando validacion del reciclador:', errorReciclador)
+      }else{
+        estadoValidacion = reciclador?.estado_validacion ?? null
+      }
+    }
+
+    if (data.rol === 'comercio_aliado'){
+      const { data: comercio, error: errorComercio} = await supabase
+      .from('comercio_aliado')
+      .select('estado_validacion')
+      .eq('usuarioid', data.id)
+      .single()
+
+      if (errorComercio){
+        console.error('Error cargando validacion del comercio:', errorComercio)
+      }else{
+
+        console.log('Estado del comercio:', comercio?.estado_validacion)
+        
+        estadoValidacion = comercio?.estado_validacion ?? null
+      }
+    } 
+
+    setPerfil({
+      ...data,
+      estado_validacion: estadoValidacion
+    })
+
     setCargando(false)
   }
-
   useEffect(() => {
     const cargarSesion = async () => {
       const { data } = await supabase.auth.getSession()
@@ -53,6 +91,10 @@ function App() {
     const {
       data: { subscription }
     } = supabase.auth.onAuthStateChange((_event, session) => {
+      if(event === 'SIGNED_IN' && session?.user?.email_confirmed_at){
+        setCorreoConfirmado(true)
+      }
+
       obtenerPerfil(session?.user ?? null)
     })
 
@@ -78,7 +120,15 @@ function App() {
   }
 
   if (!usuario) {
-    return <Login onLogin={obtenerPerfil} />
+    if(mostrarRegistro){
+      return(
+        <Registro volverLogin={() => setMostrarRegistro(false)}/>
+      )
+    }
+
+      return(
+      <Login irARegistro={() => setMostrarRegistro(true)}/>
+    )
   }
 
   if (!perfil) {
@@ -93,6 +143,67 @@ function App() {
       </div>
     )
   }
+
+   if(
+      (perfil.rol === 'reciclador' || perfil.rol === 'comercio_aliado') &&
+      perfil.estado_validacion == 'Pendiente'
+    ) {
+      return(
+        <div className='contenedor'>
+          <div className='tarjeta'>
+            <h2> Solicitud pendiente de validacion</h2>
+
+            <p>
+              Tu cuenta fue registrada correctamente, pero debe
+              ser aprobada por Ecocycle antes de utilizar este perfil
+            </p>
+
+            <button onClick={cerrarSesion}>
+              Cerrar Sesion
+            </button>
+          </div>
+        </div>
+      )
+    }
+
+    if(
+      (perfil.rol == 'reciclador' || perfil.rol === 'comercio_aliado') &&
+      perfil.estado_validacion === 'Rechazado'
+    ){
+      return(
+        <div className='contenedor'>
+          <div className='tarjeta'>
+            <h2>Solicitud no aprobada</h2>
+
+            <p>
+              Tu solicitud no fue aprobada por EcoCycle
+            </p>
+
+            <button onClick={cerrarSesion}>
+              Cerrar Sesion
+            </button>
+          </div>
+        </div>
+      )
+    }
+
+  if(correoConfirmado){
+    return(
+      <div className='contenedor'>
+        <div className='tarjeta'>
+          <h2>Correo verificado correctamente</h2>
+
+          <p>
+            tu cuenta de Ecocycle ya esta activa 
+          </p>
+
+          <button onClick={() => setCorreoConfirmado(false)}>
+            continuar
+          </button>
+        </div>
+      </div>
+    )
+  }  
 
   if (perfil.rol === 'ciudadano') {
     return (
