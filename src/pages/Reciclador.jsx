@@ -4,22 +4,23 @@ import { supabase } from '../lib/supabase'
 function Reciclador({ perfil, cerrarSesion }) {
   const [recicladorId, setRecicladorId] = useState(null)
   const [entregas, setEntregas] = useState ([])
+  const [mensaje, setMensaje] = useState('')
 
   const cargarReciclador = async () => {
     
     const {data, error} = await supabase
-    .from('reciclador')
-    .select('id')
-    .eq('usuarioid', perfil.id)
-    .single()
+      .from('reciclador')
+      .select('id')
+      .eq('usuarioid', perfil.id)
+      .single()
 
-  if (error){
-    console.error('Eror al cargar reciclador:', error)
-    return
-  }
+    if (error){
+      console.error('Error al cargar reciclador:', error)
+      return
+    }
 
-  setRecicladorId(data.id)
-  cargarEntrega(data.id)
+    setRecicladorId(data.id)
+    cargarEntrega(data.id)
   }
 
   const cargarEntrega = async(idReciclador)=>{
@@ -38,52 +39,64 @@ function Reciclador({ perfil, cerrarSesion }) {
       nombre
       )
     `)
-    .eq('recicladorid', idReciclador)
-    .eq('estado', 'Pendiente')
+      .eq('recicladorid', idReciclador)
+      .eq('estado', 'Pendiente')
 
-  if (error){
-    console.error('Error al cargar entregas:', error)
-    return
-  }
+    if (error){
+      console.error('Error al cargar entregas:', error)
+      return
+    }
   
-  setEntregas(data)
-  console.log('Entregas pendientes:', data)
+    setEntregas(data)
+    console.log('Entregas pendientes:', data)
+  }
+
+  const actualizandoEstadoEntrega = async (
+    entregaId,
+    nuevoEstado
+  ) =>{ 
+    setMensaje('')
+
+    const {data, error} = await supabase.rpc(
+      'actualizar_estado_entrega_reciclador',
+      {
+        p_entrega_id : entregaId,
+        p_estado: nuevoEstado
+      }
+    )
+
+    if(error){
+      console.error('Error al actualizar entrega',error)
+
+      setMensaje('No fue posible actualizar la entrega')
+      return
+    }
+
+    if(!data){
+      setMensaje('La entrega no pudo ser actualizada')
+      return
+    }
+
+    if(nuevoEstado === 'Aprobado'){
+      setMensaje('Entrega aprobada correctamente')
+    }
+
+    if(nuevoEstado === 'Rechazada'){
+      setMensaje('Entrega rechazada correctamente')
+    }
+    cargarEntrega(recicladorId)
   }
 
   const aprobarEntrega = async(entregaId)=>{
-    const{error} = await supabase
-    .from ('entrega')
-    .update({
-      estado:'Aprobada'
-    })
-    .eq('id', entregaId)
-    .select()
-  
-  if(error){
-    console.error('Error al probar entrega:', error)
-    return
-  }
-
-  console.log('Entregas aprobada:', entregaId)
-
-  cargarEntrega(recicladorId)
+    await actualizandoEstadoEntrega(
+      entregaId, 'Aprobada'
+    )
   }
 
   const rechazarEntrega = async(entregaId)=>{
-    const {error} = await supabase
-    .from('entrega')
-    .update({
-      estado: 'Rechazada'
-    })
-    .eq('id', entregaId)
-
-    if(error){
-      console.error('Error al rechazar la entrega:', error)
-      return
-    }
-    console.log('Entrega rechazada:', entregaId)
-
-    cargarEntrega(recicladorId)
+    await actualizandoEstadoEntrega(
+      entregaId, 'Rechazada'
+    )
   }
 
   useEffect(() =>{

@@ -96,3 +96,240 @@ button:hover {
 .tarjeta p{
   text-align: center;
 }
+
+.login-pagina{
+  min-height: 100 vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 20px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f4faf5 0%, #eef8f1 50%, #f8fbf9 100%);
+}
+
+.login-fondo-decoracion{
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.12;
+  filter: blur(2px);
+}
+
+.login-circulo1{
+  width: 420px;
+  height: 420px;
+  background: #2e7d32;
+  top: -150px;
+  left: -130px;
+}
+
+.login-circulo2{
+  width: 360px;
+  height: 360px;
+  background: #8eea2f;
+  top: -140px;
+  left: -100px;
+}
+
+.login-tarjeta{
+  width: 100%;
+  max-width: 440px;
+  background: rgb(255, 255, 255, 0.96);
+  padding: 38px;
+  border-radius: 24px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 20px 50px rgb(0, 0, 0, 0.09);
+  border: 1px solid rgb(46, 125, 50, 0.08);
+}
+
+.login-logo-contenedor{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.login-logo{
+  width: 100%;
+  max-width: 285px;
+  height: auto;
+  object-fit: contain;
+}
+
+.login-encabezado{
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-encabezado h1{
+  margin: 0 0 10px;
+  font-size: 25px;
+  color: #243029;
+}
+
+.login-encabezado p{
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #6b756e;
+}
+
+.login-formulario label{
+  display: block;
+  margin-bottom: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #37473d;
+}
+
+.login-formulario > input,
+.login-password-contenedor input{
+  width: 100%;
+  padding: 14px 15px;
+  border: 1px solid #d9e2dc;
+  border-radius: 11px;
+  font-size: 15px;
+  background: #fafcfb;
+  color: #243029;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.login-formulario > input{
+  margin-bottom: 20px;
+}
+
+.login-formulario input:focus{
+  border-color: #2e7d32;
+  background: white;
+  box-shadow: 0 0 0 3px rgb(46, 125, 50, 0.08);
+}
+
+.login-password-contenedor{
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.login-password-contenedor input{
+  padding-right: 75px;
+  margin-bottom: 0;
+}
+
+.login-mostrar-password{
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  margin: 0;
+  padding: 7px 10px;
+  border: none;
+  background: transparent;
+  color: #2e7d32;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-mostrar-password:hover{
+  background: #eef7ef;
+  opacity: 1;
+}
+
+.login-mensaje{
+  margin: 0 0 16px;
+  padding: 11px 13px;
+  border-radius: 9px;
+  background: #fff4f4;
+  color: #a73939;
+  font-size: 13px;
+  text-align: center;
+}
+
+.login-boton-principal{
+  width: 100%;
+  padding: 14px;
+  margin: 0;
+  border: none;
+  border-radius: 11px;
+  background: #2e7d32;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.login-boton-principal:hover{
+  background: #256729;
+  transform: translateY(-1px);
+  opacity: 1;
+}
+
+.login-separador{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 24px 0 18px;
+}
+
+.login-separador span{
+  height: 1px;
+  flex: 1;
+  background: #e0e8e2;
+}
+
+.login-separador p{
+  margin: 0;
+  font-size: 12px;
+  color: #95a098;
+}
+
+.login-registro{
+  text-align: center;
+}
+
+.login-registro p{
+  margin: 0 0 10px;
+  color: #68746c;
+  font-size: 14px;
+}
+
+.login-boton-registro{
+  width: 100%;
+  padding: 13px;
+  margin: 0;
+  background: white;
+  color: #2e7d32;
+  border: 1px solid #2e7d32;
+  border-radius: 11px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-boton-registro:hover{
+  background: #eef7ef;
+  opacity: 1;
+}
+
+/*responsive*/
+
+@media(max-width: 520px){
+  .login-pagina{
+    padding: 20px 14px;
+  }
+
+  .login-tarjeta{
+    padding: 28px 22px;
+    border-radius: 18px;
+  }
+
+  .login-logo{
+    max-width: 240px;
+  }
+  .login-encabezado h1{
+    font-size: 22px;
+  }
+}

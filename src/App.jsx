@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './lib/supabase'
+
 import Login from './pages/Login'
 import Ciudadano from './pages/Ciudadano'
 import Reciclador from './pages/Reciclador'
 import Comercio from './pages/Comercio'
-import './App.css'
 import Registro from './pages/Registro'
+import Admin from './pages/Admin'
+import './App.css'
 
 function App() {
   const [usuario, setUsuario] = useState(null)
@@ -28,20 +30,23 @@ function App() {
 
     const { data, error } = await supabase
       .from('usuario')
-      .select('id, nombre, correo, rol, ecopuntos')
+      .select(`id, nombre, correo, rol, ecopuntos`)
       .eq('id', user.id)
       .single()
 
     if (error || !data) {
       console.error('Error cargando perfil:', error)
+
       setPerfil(null)
       setCargando(false)
+
       return
     }
 
     let estadoValidacion = null
 
     if(data.rol === 'reciclador'){
+
       const {data: reciclador, error: errorReciclador}= await supabase
       .from ('reciclador')
       .select('estado_validacion')
@@ -49,13 +54,15 @@ function App() {
       .single()
 
       if (errorReciclador){
-      console.error('Error cargando validacion del reciclador:', errorReciclador)
+
+        console.error('Error cargando validacion del reciclador:', errorReciclador)
       }else{
         estadoValidacion = reciclador?.estado_validacion ?? null
       }
     }
 
     if (data.rol === 'comercio_aliado'){
+
       const { data: comercio, error: errorComercio} = await supabase
       .from('comercio_aliado')
       .select('estado_validacion')
@@ -63,6 +70,7 @@ function App() {
       .single()
 
       if (errorComercio){
+
         console.error('Error cargando validacion del comercio:', errorComercio)
       }else{
 
@@ -79,6 +87,7 @@ function App() {
 
     setCargando(false)
   }
+
   useEffect(() => {
     const cargarSesion = async () => {
       const { data } = await supabase.auth.getSession()
@@ -90,7 +99,8 @@ function App() {
 
     const {
       data: { subscription }
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange((event, session) => {
+
       if(event === 'SIGNED_IN' && session?.user?.email_confirmed_at){
         setCorreoConfirmado(true)
       }
@@ -104,9 +114,11 @@ function App() {
   }, [])
 
   const cerrarSesion = async () => {
+
     await supabase.auth.signOut()
     setUsuario(null)
     setPerfil(null)
+    setCorreoConfirmado(false)
   }
 
   if (cargando) {
@@ -188,6 +200,7 @@ function App() {
     }
 
   if(correoConfirmado){
+
     return(
       <div className='contenedor'>
         <div className='tarjeta'>
@@ -204,6 +217,15 @@ function App() {
       </div>
     )
   }  
+
+  if(perfil.rol === 'admin'){
+    return(
+      <Admin 
+        perfil={perfil}
+        cerrarSesion={cerrarSesion}
+      />
+    )
+  }
 
   if (perfil.rol === 'ciudadano') {
     return (

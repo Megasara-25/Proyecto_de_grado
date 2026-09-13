@@ -12,6 +12,12 @@ function Registro({ volverLogin }){
     const [rol, setRol] = useState('ciudadano')
     const [confirmarContrasena, setConfirmarContrasena] = useState ('')
     const [mensaje, setMensaje] = useState ('')
+    const [nombreCentro, setNombreCentro] = useState('')
+    const [nombreComercio, setNombreComercio] = useState('')
+    const [nit, setNit] = useState ('')
+    const [categoria, setCategoria] = useState ('')
+    const [direccion, setDireccion] = useState ('')
+    const [ciudad, setCiudad] = useState ('')
 
     const registrarUsuario = async () => {
 
@@ -25,6 +31,22 @@ function Registro({ volverLogin }){
             !fechaNacimiento 
         ) {
             setMensaje('Debes completar todos los campos')
+            return
+        }
+
+        if(
+            rol === 'reciclador' &&
+            (!nombreCentro || !direccion || !ciudad)
+        ) {
+            setMensaje('Debes completar los datos del centro de reciclaje')
+            return
+        }
+
+        if(
+            rol === 'comercio_aliado' &&
+            (!nombreComercio || !nit || !categoria || !direccion || !ciudad)
+        ){
+            setMensaje('Debes completar los datos del comercio')
             return
         }
 
@@ -64,7 +86,14 @@ function Registro({ volverLogin }){
                     numero_documento: numeroDocumento,
                     telefono: telefono,
                     fecha_nacimiento: fechaNacimiento,
-                    rol: rol
+                    rol: rol,
+
+                    nombre_centro: nombreCentro,
+                    nombre_comercio: nombreComercio,
+                    nit: nit,
+                    categoria: categoria,
+                    direccion: direccion,
+                    ciudad: ciudad
                 },
                 emailRedirectTo: 'http://localhost:5173'
             }
@@ -152,6 +181,54 @@ function Registro({ volverLogin }){
                         <option value="reciclador">Reciclador</option>
                         <option value="comercio_aliado">Comercio aliado</option>
                     </select>
+
+                    {rol === 'reciclador' &&(
+                        <>
+                        <label>Nombre de centro de reciclaje</label>
+                        <input type="text"
+                        value={nombreCentro}
+                        onChange={(e) => setNombreCentro(e.target.value)}/>
+                        
+                        <label>Direccion del centro</label>
+                        <input type="text"
+                        value={direccion}
+                        onChange={(e) => setDireccion(e.target.value)}/>
+
+                        <label>Ciudad</label>
+                        <input type="text"
+                        value={ciudad}
+                        onChange={(e) => setCiudad(e.target.value)}/>
+                        </>
+                    )}
+
+                    {rol === 'comercio_aliado' &&(
+                        <>
+                        <label>Nombre del comercio</label>
+                        <input type="text"
+                        value={nombreComercio}
+                        onChange={(e) => setNombreComercio(e.target.value)}/>
+
+                        <label>NIT</label>
+                        <input type="text"
+                        value={nit}
+                        onChange={(e) => setNit(e.target.value)}/>
+
+                        <label>Categoria del comercio</label>
+                        <input type="text"
+                        value={categoria}
+                        onChange={(e) => setCategoria(e.target.value)}/>
+
+                        <label>Direccion del comercio</label>
+                        <input type="text"
+                        value={direccion}
+                        onChange={(e) => setDireccion(e.target.value)}/>
+
+                        <label>Ciudad</label>
+                        <input type="text"
+                        value={ciudad}
+                        onChange={(e) => setCiudad(e.target.value)}/>
+                        </>
+                    )}
 
                     <button onClick={registrarUsuario}>
                         Registrarme

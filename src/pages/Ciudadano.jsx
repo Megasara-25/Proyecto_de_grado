@@ -27,27 +27,27 @@ function Ciudadano({ perfil, cerrarSesion }) {
     }
 
     setMateriales(data)
-    
   }
 
   const cargarCiudadano = async () => {
+
     const {data, error} = await supabase
     .from('ciudadano')
     .select('id')
     .eq('usuarioid', perfil.id)
     .single()
   
-  if(error){
-    console.error('Error al cargar ciudadano:', error)
-    return
-  }
+    if(error){
+      console.error('Error al cargar ciudadano:', error)
+      return
+    }
 
-  setCiudadanoId(data.id)
-  cargarEntregas(data.id)
-
+    setCiudadanoId(data.id)
+    cargarEntregas(data.id)
   }
 
   const cargarEntregas = async(idCiudadano) =>{
+
     const {data, error} = await supabase
     .from('entrega')
     .select(`
@@ -63,16 +63,17 @@ function Ciudadano({ perfil, cerrarSesion }) {
     .eq('ciudadanoid', idCiudadano)
     .order('fecha', {ascending: false})
 
-  if (error) {
-    console.error('Error al cargar entregas del ciudadano:', error)
-    return
-  }
+    if (error) {
+      console.error('Error al cargar entregas del ciudadano:', error)
+      return
+    }
 
-  setEntregas(data)
-  console.log('Historial de entregas:', data)
+    setEntregas(data)
+    console.log('Historial de entregas:', data)
   }
 
   const cargarRecompensas = async() => {
+
     const {data, error} = await supabase
     .from('recompensas')
     .select(`
@@ -86,123 +87,150 @@ function Ciudadano({ perfil, cerrarSesion }) {
     `)
     .eq('estado', 'Activa')
 
-  if(error){
-    console.error('Error al cargar recompensas:', error)
-    return
-  }
-
-  setRecompensas(data)
-  console.log('Recompensas disponibles:', data)
-  }
-
-  const realizarCanje = async (recompensas) => {
-    console.log('Intentando canjear:', recompensas)
-    const {data, error} = await supabase
-    .from ('canje')
-    .insert([
-      {
-        ciudadanoid: ciudadanoId,
-        recompensaid: recompensas.id,
-        comercioid: recompensas.comercioid,
-        puntos_utilizados: recompensas.puntos_requeridos
-      }
-    ])
-    .select()
-
-  if (error){
-    console.error('Error al realizar canje:', error)
-    return
-  }
-
-  console.log('Canje realizado:', data)
-  setUltimoCanje(data[0])
-
-  setSaldoEcopuntos(
-    saldoEcopuntos - data[0].puntos_utilizados
-  )
-  }
-
-  const registrarEntrega = async () => {
-    if(!materialSeleccionado || !recicladorSeleccionado || !cantidad) {
-      alert('Debes seleccionar material, centro y cantidad')
+    if(error){
+      console.error('Error al cargar recompensas:', error)
       return
     }
 
-    const {data, error} = await supabase
-    .from('entrega')
-    .insert([
-      {
-        cantidad: Number(cantidad),
-        ciudadanoid : ciudadanoId,
-        recicladorid: recicladorSeleccionado.id,
-        materialid: materialSeleccionado.id,
-      }
-    ])
-    . select()
-
-  if(error){
-    console.error('Error al registrar entregas:', error)
-    return
+    setRecompensas(data)
+    console.log('Recompensas disponibles:', data)
   }
 
-  console.log('Entrega registrada:', data)
-  
-  setMensaje('Entrega registrada correctamente')
-  setCantidad('')
-  cargarEntregas(ciudadanoId)
-  }
+  const cargarSaldoEcopuntos = async() =>{
 
-  const cargarRecicladores = async (materialId) => {
-
-    const {data,error} = await supabase
-    .from ('material_reciclador')
-    .select(`
-      recicladorid,
-      reciclador(
-        id,
-        nombre_centro, 
-        direccion,
-        ciudad,
-        latitud,
-        longitud
-      )
-    `)
-    .eq('materialid', materialId)
-
-  if (error){
-    console.error('Error al cargar recicladores:', error)
-    return
-  }
-
-  setRecicladores(data)
-  console.log('Recicladores encontrados:', data)
-  }
-
-  useEffect(()=>{
-    cargarMateriales()
-    cargarCiudadano()
-    cargarRecompensas()
-  },[])
-
-  const cargarSaldoEcopuntos = async () => {
     const {data, error} = await supabase
     .from('usuario')
     .select('ecopuntos')
     .eq('id', perfil.id)
     .single()
 
-  if (error){
-    console.error('Error al cargar Ecopuntos:', error)
-    return
+    if(error){
+      console.error('Error al cargar Ecopuntos', error)
+      return
+    }
+
+    setSaldoEcopuntos(data.ecopuntos)
   }
 
-  setSaldoEcopuntos(data.ecopuntos)
+  const cargarRecicladores = async (materialId) =>{
+    const {data, error} = await supabase
+    .from('material_reciclador')
+    .select(`
+      recicladorid,
+      reciclador(
+      id,
+      nombre_centro,
+      direccion,
+      ciudad,
+      latitud,
+      longitud
+      )
+    `)
+    .eq('materialid', materialId)
+
+    if (error){
+      console.error('Error al cargar recicladroes:', error)
+      return
+    }
+
+    setRecicladores(data)
+    console.log('Recicladores encontrados:', data)
+  }
+
+  const registrarEntrega = async () =>{
+    setMensaje('')
+
+    if(!materialSeleccionado || !recicladorSeleccionado || !cantidad){
+      setMensaje('Debes seleccionar material, centro y cantidad')
+      return
+    }
+
+    if(Number(cantidad) <= 0){
+      setMensaje('La cantidad debe ser mayor que cero')
+      return
+    }
+
+    const{data, error} = await supabase.rpc(
+      'registrar_entrega_ciudadano',
+      {
+        p_material_id: materialSeleccionado.id,
+        p_reciclador_id: recicladorSeleccionado.id,
+        p_cantidad:Number(cantidad)
+      }
+    )
+
+    if(error){
+      console.error('Error al registrar entrega:', error)
+      setMensaje('No fue posible registrar la entrega')
+      return
+    }
+  
+    console.log('Entrega registrada con ID:', data) 
+    setMensaje('Entrega registrada correctamente')
+
+    setCantidad('')
+    setRecicladorSeleccionado(null)
+
+    cargarEntregas(ciudadanoId)
+  }
+
+  const realizarCanje = async (recompensas) => {
+
+    setMensaje('')
+
+    if(recompensas.cantidad_disponible <= 0){
+      setMensaje('Esta recompensa no tiene unidades disponibles')
+      return
+    }
+
+    if( saldoEcopuntos < recompensas.puntos_requeridos){
+      setMensaje('No tiene Ecopuntos suficientes')
+      return
+    }
+  
+    const {data, error} = await supabase.rpc(
+      'realizar_canje_ciudadano',
+      {
+        p_recompensa_id: recompensas.id
+      }
+    )
+
+    if (error){
+      console.error('Error al realizar canje:', error)
+
+      if(error.message.includes('stock')){
+        setMensaje('La recompensa ya no tiene unidades disponibles')
+      } else if (error.message.includes('Ecopuntos insuficiente')){
+        setMensaje('No tienes Ecopuntos suficientes')
+      } else {
+        setMensaje('No fue posible realizar canje')
+      }
+      return
+    }
+
+    if(!data || data.length === 0) {
+      setMensaje('No fue posible realizar el canje')
+      return
+    }
+
+    console.log('Canje realizado:', data)
+    setUltimoCanje(data[0])
+
+    setMensaje('Canje realizado correctamente')
+
+    await cargarSaldoEcopuntos()
+    await cargarRecompensas ()
   }
 
   useEffect(() => {
+    cargarMateriales()
+    cargarCiudadano()
+    cargarRecompensas()
+  }, [])
+
+  useEffect(() =>{
     cargarSaldoEcopuntos()
   }, [perfil.id])
-  
 
   return (
     <div className="contenedor">
@@ -217,6 +245,11 @@ function Ciudadano({ perfil, cerrarSesion }) {
         <p>
           EcoPuntos: <strong>{saldoEcopuntos}</strong>
         </p>
+
+        {mensaje && (
+          <p>{mensaje}</p>
+        )}
+
         <h2> ¿Que quieres reciclar?</h2>
 
         {materiales.map((material) =>(
@@ -242,19 +275,20 @@ function Ciudadano({ perfil, cerrarSesion }) {
             Material seleccionado: <strong>{materialSeleccionado.nombre}</strong>
           </p>
         )}
-        {recicladores.map((item)=> (
-          <div 
-            key={item.reciclador.id}
-            onClick ={()=> setRecicladorSeleccionado(item.reciclador)}
-          >
-            <h3>{item.reciclador.nombre_centro}</h3>
 
-            <p> 
-              Dirección: {item.reciclador.direccion}
-            </p> 
-            <p>
-              Ciudad: {item.reciclador.ciudad}
-            </p>
+        {recicladores.map((item)=> (
+            <div 
+              key={item.reciclador.id}
+              onClick ={()=> setRecicladorSeleccionado(item.reciclador)}
+            >
+              <h3>{item.reciclador.nombre_centro}</h3>
+
+              <p> 
+                Dirección: {item.reciclador.direccion}
+              </p> 
+              <p>
+                Ciudad: {item.reciclador.ciudad}
+              </p>
             </div>
         ))}
 
@@ -269,22 +303,28 @@ function Ciudadano({ perfil, cerrarSesion }) {
           <div>
             <label>Cantidad en kilogramos</label>
             <input
-            type="number"
-            min="0.1"
-            step="0.1"
-            placeholder="Ejemplo: 2.5"
-            value ={cantidad}
-            onChange={(e) => setCantidad(e.target.value)}
+              type="number"
+              min="0.1"
+              step="0.1"
+              placeholder="Ejemplo: 2.5"
+              value ={cantidad}
+              onChange={(e) => setCantidad(e.target.value)}
             />
             <button onClick = {registrarEntrega}>
               registrar entrega
             </button>
-            {mensaje&&(
-              <p>{mensaje}</p>
+            {mensaje &&(
+              <p>
+                <strong>{mensaje}</strong>
+              </p>
             )}
           </div>
         )}
         <h2>Historial de entregas</h2>
+
+        {entregas.length === 0 && (
+          <p>No tiene entregas registradas</p>
+        )}
 
         {entregas.map((entrega) => (
           <div key = {entrega.id}>
@@ -303,14 +343,23 @@ function Ciudadano({ perfil, cerrarSesion }) {
             </p>
           </div>
         ))}
-        <button onClick={cerrarSesion}>
-          Cerrar sesión
-        </button>
-      </div>
+
         <h2>Recompensas disponibles</h2>
 
-          {recompensas.map((recompensas) => (
+        {recompensas.length === 0 &&(
+          <p>no hay recompensas disponibles</p>
+        )}
+
+          {recompensas.map((recompensas) => {
+
+            const sinStock = recompensas.cantidad_disponible <= 0
+
+            const puntosInsuficientes = saldoEcopuntos < recompensas.puntos_requeridos
+          
+          return(
+          
             <div key={recompensas.id}>
+
               <h3>{recompensas.nombre}</h3>
 
               <p>
@@ -318,23 +367,29 @@ function Ciudadano({ perfil, cerrarSesion }) {
               </p>
 
               <p>
-                EcoPuntos requeridos: {recompensas.puntos_requeridos}
+                EcoPuntos requeridos: {''}
+                <strong>{recompensas.puntos_requeridos}</strong> 
               </p>
 
+              
+
               <p>
-                Disponibles: {recompensas. cantidad_disponible}
+                Stock disponibles:{' '}
+                <strong>{recompensas. cantidad_disponible}</strong>
               </p>
-              {saldoEcopuntos >= recompensas.puntos_requeridos ? (
-                <button onClick={()=> realizarCanje(recompensas)}>
-                  canjear
+              
+              {sinStock ? (
+                <p>Beneficio agotado</p>
+              ): puntosInsuficientes ? (
+                <p>Ecopuntos insuficientes</p>
+              ): (
+                <button onClick={() => realizarCanje(recompensas)}>
+                  Canjear
                 </button>
-              ):(
-                <p>
-                  Ecopuntos insuficientes
-                </p>
               )}
-            </div>    
-          ))}
+            </div>
+          )    
+        })}
 
           {ultimoCanje && (
             <div>
@@ -354,6 +409,10 @@ function Ciudadano({ perfil, cerrarSesion }) {
               </p>
             </div>
           )}
+          <button onClick={cerrarSesion}>
+            Cerrar sesion
+          </button>
+        </div>
     </div>
   )
 }
