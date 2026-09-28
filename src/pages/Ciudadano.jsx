@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import {useEffect} from 'react'
 import {supabase} from '../lib/supabase'
+import MapaReciclaje from '../components/MapaReciclaje'
 
 function Ciudadano({ perfil, cerrarSesion }) {
   const [materiales, setMateriales] = useState([])
@@ -233,70 +234,154 @@ function Ciudadano({ perfil, cerrarSesion }) {
   }, [perfil.id])
 
   return (
-    <div className="contenedor">
-      <div className="tarjeta">
-        <h1>EcoCycle</h1>
-        <h2>Panel del ciudadano</h2>
+    <div className="ciudadano_pagina">
 
-        <p>
-          Bienvenido, <strong>{perfil.nombre}</strong>
-        </p>
+      <header className='ciudadano_header'>
+      <div className="ciudadano_header_contenido">
+        <img src="/src/assets/ecocycle-logo.png" alt="Ecocycle" className='ciudadano-logo'/>
 
-        <p>
-          EcoPuntos: <strong>{saldoEcopuntos}</strong>
-        </p>
+        <div className='ciudadano-header-acciones'>
+          <span>{perfil.nombre}</span>
 
-        {mensaje && (
-          <p>{mensaje}</p>
-        )}
+          <button className='ciudadano-boton-salir'
+          onClick={cerrarSesion}>
+            Cerrar sesion
+          </button>
+        </div>
 
-        <h2> ¿Que quieres reciclar?</h2>
+        </div>
+      </header>
 
-        {materiales.map((material) =>(
-          <div 
-            key = {material.id}
-            onClick = {() => {
-              setMaterialSeleccionado(material)
-              setRecicladorSeleccionado(null)
-              setCantidad('')
-              cargarRecicladores(material.id)
-            }}
-          >
-              <h3>{material.nombre}</h3>
+      <main className='ciudadano-contenido'>
 
-            <p>
-              {material.puntos_por_kilo} Ecopuntos por kilogramo
-            </p>
+        <section className='ciudadano-bienvenida'>
+          <div className='ciudadano-bienvenida-texto'>
+            <span className='ciudadano-etiqueta'>
+              Panel del ciudadano
+            </span>
+
+            <h1> hola, {perfil.nombre}</h1>
+
+            <p> Recicla, acumula Ecopuntos y obten beneficios mientras ayudas al planeta</p>
           </div>
-        ))}
 
-        {materialSeleccionado &&(
-          <p>
-            Material seleccionado: <strong>{materialSeleccionado.nombre}</strong>
-          </p>
+          <div className='ciudadano-saldo'>
+            <div className='ciudadano-saldo-icono'>
+              ♻️
+            </div>
+
+            <div>
+              <span>Mis Ecopuntos</span>
+
+              <strong>{saldoEcopuntos}</strong>
+
+              <small> disponible para canjear</small>
+            </div>
+          </div>
+
+        </section>
+
+        {mensaje &&(
+          <div className='ciudadano-mensaje'>
+            {mensaje}
+          </div>
         )}
 
-        {recicladores.map((item)=> (
-            <div 
-              key={item.reciclador.id}
-              onClick ={()=> setRecicladorSeleccionado(item.reciclador)}
-            >
-              <h3>{item.reciclador.nombre_centro}</h3>
-
-              <p> 
-                Dirección: {item.reciclador.direccion}
-              </p> 
-              <p>
-                Ciudad: {item.reciclador.ciudad}
+        <section className='ciudadano-seccion-materiales'>
+          <div className='ciudadano-seccion-titulo'>
+            <div>
+              <span>Recicla y gana</span>
+              <p>¿Que quieres reciclar?</p>
+            </div>
+          </div>
+          <div className='ciudadano-material-grid'>
+            {materiales.map((material)=>(
+              <button type='button'
+              key={material.id}
+              className={
+                materialSeleccionado?.id === material.id
+                ? 'ciudadano-material-card seleccionado' : 'ciudadano-material-card'
+              }
+              onClick={() => {
+                setMaterialSeleccionado(material)
+                setRecicladorSeleccionado(null)
+                setCantidad('')
+                cargarRecicladores(material.id)
+              }}
+          >
+            <div className='ciudadano-material-icono'>
+              ♻️
+            </div>
+            <div className='ciudadano-material-info'>
+              <h3>{material.nombre}</h3>
+              <p><strong>{material.puntos_por_kilo}</strong>
+              {' '}Ecopuntos/kg
               </p>
             </div>
-        ))}
 
-        {recicladorSeleccionado && (
-          <p>
-            centro seleccionado: {' '}
-            <strong>{recicladorSeleccionado.nombre_centro}</strong>
-          </p>
+            <div className='ciudadano-material-seleccionar'>
+              {materialSeleccionado?.id === material.id 
+              ?'seleccionado' : 'seleccionar'}
+            </div>
+          </button>
+            ))}
+
+          </div>
+        </section> 
+
+        {materialSeleccionado && (
+          <section className='ciudadano-centros'>
+            <div className='ciudadano-material-resumen'>
+              <div>
+                <span>Material seleccionado</span>
+                <strong>{materialSeleccionado.nombre}</strong>
+              </div>
+
+              <div>
+                <span>Valor</span>
+                <strong>{materialSeleccionado.puntos_por_kilo} Ecopuntos/kg </strong>
+              </div>
+            </div>
+
+            <div className='ciudadano-seccion-titulo'>
+              <span>Paso2</span>
+              <h2>Encuentra donde reciclar</h2>
+              <p>
+                Consulta los puntos de reciclaje disponible 
+                para este material y selecciona el que prefieras
+              </p>
+            </div>
+
+            <div className='ciudadano-mapa-contenedor'>
+              <MapaReciclaje  recicladores={recicladores}
+                onSeleccionarCentro={setRecicladorSeleccionado}
+              />
+            </div>
+
+            <div className='ciudadano-centros-grid'>
+              {recicladores.map((item) => (
+                <button type='button'
+                key={item.reciclador.id}
+                className={ recicladorSeleccionado?.id === item.reciclador.id
+                  ? 'ciudadano-centro-card seleccionado' : 'ciudadano-centro-card'
+                }
+                onClick={() => setRecicladorSeleccionado(item.reciclador)}
+                >
+                  <div className='ciudadano-centro-icono'>
+                    ♻️
+                  </div>
+
+                  <h3>{item.reciclador.nombre_centro}</h3>
+                  <p>{item.reciclador.direccion}</p>
+                  <p>{item.reciclador.ciudad}</p>
+
+                  <span>{recicladorSeleccionado?.id === item.reciclador.id
+                    ? 'centro seleccionado' : 'seleccionar centro'}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </section>
         )}
 
         {recicladorSeleccionado && (
@@ -313,11 +398,6 @@ function Ciudadano({ perfil, cerrarSesion }) {
             <button onClick = {registrarEntrega}>
               registrar entrega
             </button>
-            {mensaje &&(
-              <p>
-                <strong>{mensaje}</strong>
-              </p>
-            )}
           </div>
         )}
         <h2>Historial de entregas</h2>
@@ -409,10 +489,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
               </p>
             </div>
           )}
-          <button onClick={cerrarSesion}>
-            Cerrar sesion
-          </button>
-        </div>
+        </main>
     </div>
   )
 }
