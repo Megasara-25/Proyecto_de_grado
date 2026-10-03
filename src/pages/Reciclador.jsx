@@ -5,6 +5,8 @@ function Reciclador({ perfil, cerrarSesion }) {
   const [recicladorId, setRecicladorId] = useState(null)
   const [entregas, setEntregas] = useState ([])
   const [mensaje, setMensaje] = useState('')
+  const [motivoRechazo, setMotivoRechazo] = useState('')
+  const [entregaARechazar, setEntregaARechazar] = useState(null)
 
   const cargarReciclador = async () => {
     
@@ -53,7 +55,8 @@ function Reciclador({ perfil, cerrarSesion }) {
 
   const actualizandoEstadoEntrega = async (
     entregaId,
-    nuevoEstado
+    nuevoEstado,
+    motivo = null
   ) =>{ 
     setMensaje('')
 
@@ -61,7 +64,8 @@ function Reciclador({ perfil, cerrarSesion }) {
       'actualizar_estado_entrega_reciclador',
       {
         p_entrega_id : entregaId,
-        p_estado: nuevoEstado
+        p_estado: nuevoEstado,
+        p_motivo_rechazo: motivo
       }
     )
 
@@ -77,7 +81,7 @@ function Reciclador({ perfil, cerrarSesion }) {
       return
     }
 
-    if(nuevoEstado === 'Aprobado'){
+    if(nuevoEstado === 'Aprobada'){
       setMensaje('Entrega aprobada correctamente')
     }
 
@@ -94,9 +98,25 @@ function Reciclador({ perfil, cerrarSesion }) {
   }
 
   const rechazarEntrega = async(entregaId)=>{
+    setEntregaARechazar(entregaId)
+    setMotivoRechazo('')
+    setMensaje('')
+  }
+
+  const confirmarRechazo = async () => {
+    if(!motivoRechazo.trim()){
+      setMensaje('Debes indicar el motivo del rechazo')
+      return
+    }
+
     await actualizandoEstadoEntrega(
-      entregaId, 'Rechazada'
+      entregaARechazar,
+      'Rechazada',
+      motivoRechazo
     )
+
+    setEntregaARechazar(null)
+    setMotivoRechazo('')
   }
 
   useEffect(() =>{
@@ -113,10 +133,19 @@ function Reciclador({ perfil, cerrarSesion }) {
           Bienvenido, <strong>{perfil.nombre}</strong>
         </p>
 
+        {mensaje && (
+          <p>{mensaje}</p>
+        )}
+
         <h2>Entregas pendientes</h2>
 
+        {entregas.length === 0 &&(
+          <p>No tienes entregas pendeintes por validar</p>
+        )}
+
         {entregas.map((entrega)=>(
-        <div key ={entrega.id}>
+
+        <div key ={entrega.id}className="reciclador-entregas-card">
           <h3>{entrega.material.nombre}</h3> 
 
           <p>
@@ -130,12 +159,51 @@ function Reciclador({ perfil, cerrarSesion }) {
           <p>
             Estado: {entrega.estado}
           </p>
-          <button onClick={() => aprobarEntrega(entrega.id)}>
+          <div className="reciclador-accciones">
+          <button 
+          className="reciclador-boton-aprobar" 
+          onClick={() => aprobarEntrega(entrega.id)}
+          >
             Aprobar
           </button>
-          <button onClick={()=> rechazarEntrega(entrega.id)}>
+
+          <button 
+          className="reciclador-boton-rechazar"
+          onClick={()=> rechazarEntrega(entrega.id)}
+          >
             Rechazar
           </button>
+          </div>
+
+          {entregaARechazar === entrega.id && (
+            <div className="reciclador-rechazo">
+              <label>Motivo de rechazo</label>
+
+              <textarea 
+              className="reciclador-rechazo-textarea"
+              placeholder="Ejemplo: la cantidad entregada no coincide con lo registrado"
+              value={motivoRechazo}
+              onChange={(e) => setMotivoRechazo(e.target.value)}
+              />
+
+              <button
+              type="button"
+              onClick={() =>{
+                setEntregaARechazar(null) 
+                setMotivoRechazo('')
+                }}
+                >
+                  Cancelar
+                </button>
+
+                <button 
+                type="button"
+                onClick={confirmarRechazo}
+                >
+                  Confirmar rechazo
+                </button>
+            </div>
+          )}
           </div>
         ))}
 

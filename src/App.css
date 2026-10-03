@@ -754,3 +754,105 @@ button:hover {
   height: 400px;
   border-radius: 18px;
 }
+
+.ciudadano-puntos-estimados{
+  margin: 16px 0;
+  padding: 18px;
+  border: 1px solid #d9e8da;
+  border-radius: 14px;
+  text-align: center;
+  background: #f5faf5;
+}
+
+.ciudadano-puntos-estimados p{
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.ciudadano-puntos-estimados strong{
+  display: block;
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.ciudadano-puntos-estimados span{
+  display: block;
+  font-size: 13px;
+}
+
+.reciclador-entrega-card{
+  background: #ffffff;
+  border: 1px solid #dfe8df;
+  border-radius: 14px;  
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.reciclador-entrega-card h3{
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.reciclador-entrega-card p{
+  margin: 6px 0;
+}
+
+.reciclador-acciones{
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.reciclador-acciones button{
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.reclador-boton-aprobar{
+  background: #2e7d32;
+  color: white;
+  border: none;
+}
+
+.reciclador-boton-rechazar{
+  background: white;
+  color: #b3261e;
+  border: 1px solid #b3261e;
+}
+
+.reciclador-boton-aprobar:hover{
+  opacity: 0.9;
+}
+
+.reciclador-boton-rechazar:hover{
+  background: #fff5f5;
+}
+
+.reciclador-rechazo{
+  margin-top: 14px;
+  padding: 14px;
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+}
+
+.reciclador-rechazo label{
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.reciclador-rechazo-textarea{
+  width: 100%;
+  min-height: 70px;
+  padding: 10px;
+  box-sizing: border-box;
+  resize: vertical;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}

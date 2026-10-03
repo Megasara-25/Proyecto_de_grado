@@ -2,6 +2,27 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useEffect, useState } from "react";
 import 'leaflet/dist/leaflet.css'
 
+function calcularDistancia(lat1,lon1,lat2,lon2){
+    const radioTierrra = 6371
+    const diferenciaLatitud = (lat2-lat1) * Math.PI/180
+    const diferenciaLongitud = (lon1-lon1) * Math.PI/180
+
+    const a =
+    Math.sin(diferenciaLatitud / 2)*
+    Math.sin(diferenciaLatitud / 2)+
+    Math.cos(lat1 * Math.PI / 180)*
+    Math.cos(lat2 * Math.PI /180)*
+    Math.sin(diferenciaLongitud / 2)*
+    Math.sin(diferenciaLongitud / 2)
+
+    const c = 2 * Math.atan2(
+        Math.sqrt(a),
+        Math.sqrt(1-a)
+    )
+
+    return radioTierrra * c
+}
+
 function MapaReciclaje({recicladores = [], onSeleccionarCentro}) {
     const posicionInicial = [4.6268, -74.1573]
     const [ubicacionUsuario, setUbicacionUsuario] = useState(null)
@@ -69,6 +90,17 @@ function MapaReciclaje({recicladores = [], onSeleccionarCentro}) {
                         return null
                     }
 
+                    let distancia = null
+
+                    if(ubicacionUsuario){
+                        distancia = calcularDistancia(
+                            ubicacionUsuario[0],
+                            ubicacionUsuario[1],
+                            latitud,
+                            longitud
+                        )
+                    }
+
                     return (
                         <Marker
                             key={centro.id}
@@ -81,9 +113,20 @@ function MapaReciclaje({recicladores = [], onSeleccionarCentro}) {
                                 <br/>
                                 {centro.ciudad}
                                 <br />
+                                {distancia!== null &&(
+                                    <>
+                                    <strong>
+                                        {distancia.toFixed(2)} km de ti
+                                    </strong>
+                                    <br />
+                                    </>
+                                )}
                                 <br />
 
-                                <button type="button" onClick={() => onSeleccionarCentro(centro)}>
+                                <button type="button" onClick={() => onSeleccionarCentro({
+                                    ...centro,
+                                    distancia: distancia
+                                })}>
                                     Seleccionar este centro
                                 </button>
                             </Popup>

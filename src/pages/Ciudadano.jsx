@@ -56,6 +56,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
       cantidad,
       puntos_obtenidos, 
       estado,
+      motivo_rechazo,
       fecha,
       material(
         nombre
@@ -359,27 +360,35 @@ function Ciudadano({ perfil, cerrarSesion }) {
             </div>
 
             <div className='ciudadano-centros-grid'>
-              {recicladores.map((item) => (
-                <button type='button'
-                key={item.reciclador.id}
-                className={ recicladorSeleccionado?.id === item.reciclador.id
-                  ? 'ciudadano-centro-card seleccionado' : 'ciudadano-centro-card'
-                }
-                onClick={() => setRecicladorSeleccionado(item.reciclador)}
-                >
+              {recicladorSeleccionado &&(
+                <div className='ciudadano-centro-card seleccionado'>
                   <div className='ciudadano-centro-icono'>
                     ♻️
                   </div>
+                  <span>Centro seleccionado</span>
+                  <h3>{recicladorSeleccionado.nombre_centro}</h3>
+                  <p>{recicladorSeleccionado.direccion}</p>
+                  <p>{recicladorSeleccionado.ciudad}</p>
 
-                  <h3>{item.reciclador.nombre_centro}</h3>
-                  <p>{item.reciclador.direccion}</p>
-                  <p>{item.reciclador.ciudad}</p>
+                  {recicladorSeleccionado.distancia !== null &&
+                    recicladorSeleccionado.distancia !== undefined && (
+                      <p>
+                        <strong>
+                          A{recicladorSeleccionado.distancia.toFixed(2)} km de tu ubicacion
+                        </strong>
+                      </p>
+                    )}
+                    <p>
+                      Material seleccionado: <strong>{materialSeleccionado.nombre}</strong>
+                    </p>
 
-                  <span>{recicladorSeleccionado?.id === item.reciclador.id
-                    ? 'centro seleccionado' : 'seleccionar centro'}
-                  </span>
-                </button>
-              ))}
+                    <button type="button"
+                    onClick={() => setRecicladorSeleccionado(null)}
+                    >
+                      cambiar centro
+                    </button>
+                </div>
+              )}
             </div>
           </section>
         )}
@@ -395,6 +404,21 @@ function Ciudadano({ perfil, cerrarSesion }) {
               value ={cantidad}
               onChange={(e) => setCantidad(e.target.value)}
             />
+
+            {cantidad > 0 && materialSeleccionado && (
+              <div className='ciudadano-puntos-estimados'>
+                <p>Ecopuntos estimados</p>
+                <strong>
+                  {Math.floor(
+                    Number(cantidad) * materialSeleccionado.puntos_por_kilo
+                  )} Ecopuntos
+                </strong>
+
+                <span>
+                  {cantidad} kg x {materialSeleccionado.puntos_por_kilo} puntos/kg
+                </span>
+              </div>
+            )}
             <button onClick = {registrarEntrega}>
               registrar entrega
             </button>
@@ -415,12 +439,20 @@ function Ciudadano({ perfil, cerrarSesion }) {
             </p>
 
             <p>
-              Ecopuntos: {entrega.puntos_obtenidos}
+              {entrega.estado === 'Aprobada'
+              ? 'Ecopuntos obtenidos:'
+              : 'Ecopuntos estimados:'}
+              {entrega.puntos_obtenidos}
             </p>
 
             <p>
               Estado: {entrega.estado}
             </p>
+            {entrega.estado === 'Rechazada' && entrega.motivo_rechazo &&(
+              <p>
+                <strong>Motivo del rechazo:</strong> {entrega.motivo_rechazo}
+              </p>
+            )}
           </div>
         ))}
 
