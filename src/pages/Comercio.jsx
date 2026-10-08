@@ -76,6 +76,11 @@ function Comercio({ perfil, cerrarSesion }) {
       return
     }
 
+    if(!data){
+      setMensaje('El canje ya fue utilizado o no es valido')
+      return
+    }
+
     setMensaje('Canje confirmado correctamente')
 
     setCanjeEncontrado({

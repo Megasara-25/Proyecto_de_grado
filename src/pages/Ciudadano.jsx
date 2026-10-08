@@ -3,6 +3,11 @@ import {useEffect} from 'react'
 import {supabase} from '../lib/supabase'
 import MapaReciclaje from '../components/MapaReciclaje'
 
+import huevosImg from '../assets/recompensas/huevos.png'
+import mercadoImg from '../assets/recompensas/mercado.png'
+import comidaImg from '../assets/recompensas/comida.png'
+import cuidadoImg from '../assets/recompensas/cuidado_personal.png'
+
 function Ciudadano({ perfil, cerrarSesion }) {
   const [materiales, setMateriales] = useState([])
   const [materialSeleccionado, setMaterialSeleccionado] = useState (null)
@@ -13,8 +18,17 @@ function Ciudadano({ perfil, cerrarSesion }) {
   const [mensaje, setMensaje] = useState ('')
   const [entregas, setEntregas] = useState([])
   const [recompensas, setRecompensas] = useState([])
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState ('Todos')
   const [ultimoCanje, setUltimoCanje] = useState (null)
   const [saldoEcopuntos, setSaldoEcopuntos] = useState(perfil.ecopuntos)
+  const [recompensaCanjeando, setRecompensaCanjeando] = useState(null)
+
+  const imagenesRecompensas = {
+    2: huevosImg,
+    3: mercadoImg,
+    4: comidaImg,
+    5: cuidadoImg
+  }
 
   const cargarMateriales = async () => {
 
@@ -85,7 +99,9 @@ function Ciudadano({ perfil, cerrarSesion }) {
       puntos_requeridos,
       cantidad_disponible,
       estado,
-      comercioid
+      comercioid,
+      categoria,
+      imagen_url
     `)
     .eq('estado', 'Activa')
 
@@ -176,52 +192,65 @@ function Ciudadano({ perfil, cerrarSesion }) {
     cargarEntregas(ciudadanoId)
   }
 
-  const realizarCanje = async (recompensas) => {
+  const realizarCanje = async (recompensa) => {
+
+    if (recompensaCanjeando !== null) return
 
     setMensaje('')
 
-    if(recompensas.cantidad_disponible <= 0){
+    if(recompensa.cantidad_disponible <= 0){
       setMensaje('Esta recompensa no tiene unidades disponibles')
       return
     }
 
-    if( saldoEcopuntos < recompensas.puntos_requeridos){
+    if( saldoEcopuntos < recompensa.puntos_requeridos){
       setMensaje('No tiene Ecopuntos suficientes')
       return
     }
+
+    try {setRecompensaCanjeando(recompensa.id)
+
+      const {data, error} = await supabase.rpc(
+        'realizar_canje_ciudadano',
+        {
+          p_recompensa_id: recompensa.id
+        }
+      )
   
-    const {data, error} = await supabase.rpc(
-      'realizar_canje_ciudadano',
-      {
-        p_recompensa_id: recompensas.id
+
+      if (error){
+        console.error('Error al realizar canje:', error)
+
+        if(error.message.includes('stock')){
+          setMensaje('La recompensa ya no tiene unidades disponibles')
+        } else if (error.message.includes('Ecopuntos insuficiente')){
+          setMensaje('No tienes Ecopuntos suficientes')
+        } else {
+          setMensaje('No fue posible realizar canje')
+        }
+        return
       }
-    )
 
-    if (error){
-      console.error('Error al realizar canje:', error)
-
-      if(error.message.includes('stock')){
-        setMensaje('La recompensa ya no tiene unidades disponibles')
-      } else if (error.message.includes('Ecopuntos insuficiente')){
-        setMensaje('No tienes Ecopuntos suficientes')
-      } else {
-        setMensaje('No fue posible realizar canje')
+      if(!data || data.length === 0){
+        setMensaje('No fue posible realizar el canje')
+        return
       }
-      return
-    }
-
-    if(!data || data.length === 0) {
-      setMensaje('No fue posible realizar el canje')
-      return
-    }
 
     console.log('Canje realizado:', data)
-    setUltimoCanje(data[0])
 
+    setUltimoCanje({
+      ...data[0],
+      nombre_recompensa: recompensa.nombre
+    })
+    
     setMensaje('Canje realizado correctamente')
 
     await cargarSaldoEcopuntos()
-    await cargarRecompensas ()
+    await cargarRecompensas()
+
+    } finally{
+      setRecompensaCanjeando(null)
+    }
   }
 
   useEffect(() => {
@@ -264,11 +293,11 @@ function Ciudadano({ perfil, cerrarSesion }) {
             <h1> hola, {perfil.nombre}</h1>
 
             <p> Recicla, acumula Ecopuntos y obten beneficios mientras ayudas al planeta</p>
-          </div>
+          </div>♻️
 
           <div className='ciudadano-saldo'>
             <div className='ciudadano-saldo-icono'>
-              ♻️
+              
             </div>
 
             <div>
@@ -456,68 +485,145 @@ function Ciudadano({ perfil, cerrarSesion }) {
           </div>
         ))}
 
-        <h2>Recompensas disponibles</h2>
+        <section className='ciudadano-beneficios'>
+          <div className='cidadano-beneficios-encabezado'>
+            <div>
+              <span>Canjea tus Ecopuntos</span>
+              <h2>Beneficios para ti</h2>
+              <p>Elige una recompensa y disfruta tus Ecopuntos</p>
+            </div>
+          </div>
+
+          <div className='ciudadano-categorias'>
+            {['Todos', 'Mercado', 'Comida', 'Salud']. map((categoria) => (
+              <button
+                key={categoria}
+                type='button'
+                className={ categoriaSeleccionada === categoria
+                  ?'ciudadano-categoria activa'
+                  : 'ciudadano-categoria'
+                }
+                onClick={() => setCategoriaSeleccionada(categoria)}
+              >
+                {categoria}
+              </button>
+            ))}
+          </div>
+        </section>
 
         {recompensas.length === 0 &&(
           <p>no hay recompensas disponibles</p>
         )}
 
-          {recompensas.map((recompensas) => {
+        <div className='ciudadano-beneficios-grid'>
+          {recompensas
+            .filter((recompensa) =>
+              categoriaSeleccionada === 'Todos' ||
+              recompensa.categoria === categoriaSeleccionada
+            )
+            .map((recompensa) =>{
+              const sinStock = recompensa.cantidad_disponible <= 0
+              const puntosInsuficientes = saldoEcopuntos < recompensa.puntos_requeridos
+              const puntosFaltantes = recompensa.puntos_requeridos - saldoEcopuntos
 
-            const sinStock = recompensas.cantidad_disponible <= 0
+              console.log('Saldo:', saldoEcopuntos)
+              console.log('Recompensa procesando:', recompensaCanjeando)
 
-            const puntosInsuficientes = saldoEcopuntos < recompensas.puntos_requeridos
-          
-          return(
-          
-            <div key={recompensas.id}>
+              return(
+                <div
+                  key={recompensa.id}
+                  className='ciudadano-beneficio-card'
+                >
 
-              <h3>{recompensas.nombre}</h3>
+                  <div className='ciudadano-beneficio-imagen'>
+                    {imagenesRecompensas[recompensa.id]?(
+                      <img
+                      src={imagenesRecompensas[recompensa.id]}
+                      alt={recompensa.nombre}
+                      />
+                    ):(
+                      <span>♻️</span>
+                    )}
+                  </div>
 
-              <p>
-                {recompensas.descripcion}
-              </p>
+                  <div className='ciudadano-beneficio-contenido'>
+                    {recompensa.categoria &&(
+                      <span className='ciudadano-beneficio-categoria'>
+                        {recompensa.categoria}
+                      </span>
+                    )}
 
-              <p>
-                EcoPuntos requeridos: {''}
-                <strong>{recompensas.puntos_requeridos}</strong> 
-              </p>
+                    <h3>{recompensa.nombre}</h3>
+                    <p>{recompensa.descripcion}</p>
 
-              
+                    <div className='ciudadano-beneficio-datos'>
+                      <strong>
+                        ♻️ {recompensa.puntos_requeridos} Ecopuntos
+                      </strong>
 
-              <p>
-                Stock disponibles:{' '}
-                <strong>{recompensas. cantidad_disponible}</strong>
-              </p>
-              
-              {sinStock ? (
-                <p>Beneficio agotado</p>
-              ): puntosInsuficientes ? (
-                <p>Ecopuntos insuficientes</p>
-              ): (
-                <button onClick={() => realizarCanje(recompensas)}>
-                  Canjear
-                </button>
-              )}
-            </div>
-          )    
-        })}
+                      <span>
+                        {recompensa.cantidad_disponible} disponibles
+                      </span>
+                    </div>
+
+                    {sinStock ?(
+                      <button disabled>
+                        Beneficio agotado
+                      </button>
+
+                    ) : puntosInsuficientes ? (
+                      <button disabled>
+                        Te falta {puntosFaltantes} Ecopuntos
+                      </button>
+                    ) : (
+                      <button 
+                        onClick={() => realizarCanje(recompensa)}
+                        disabled={recompensaCanjeando !== null}
+                      >
+                        {recompensaCanjeando === recompensa.id
+                        ? 'Procesando...' 
+                        : 'Canjear'
+                      }
+                      </button>
+                    )
+                  }
+                  </div>
+                </div>
+              )
+            })
+          }
+        </div>
 
           {ultimoCanje && (
-            <div>
+            <div className='ciudadano-canje-exitoso'>
+
+              <div className='ciudadano-canje-check'>
+                ✓
+              </div>
               <h2> Canje realizado correctamente</h2>
+              <h3>{ultimoCanje.nombre_recompensa}</h3>
 
-              <p>
-                Codigo de canje:
+              <p className='ciudadano-canje-instruccion'>
+                Presenta este codigo en el comercio para recibir tu beneficio
+              </p>
+
+              <div className='ciudadano.canje-codigo'>
+                <span>Codigo de canje</span>
                 <strong>{ultimoCanje.codigo_canje}</strong>
-              </p>
+              </div>
 
-              <p>
-                Estado: {ultimoCanje.estado}
-              </p>
-
-              <p>
-                Ecopuntos utilizados: {ultimoCanje.puntos_utilizados}
+              <div className='ciudadano-canje-detalles'>
+                <div>
+                  <span>Ecopuntos utilizados</span>
+                  <strong>{ultimoCanje.puntos_utilizados}</strong>
+                </div>
+                <div>
+                  <span>Estado</span>
+                  <strong>{ultimoCanje.estado}</strong>
+                </div>
+              </div>
+              <p className='ciudadano-canje-aviso'>
+                Este codigo es valido para uno solo uso
               </p>
             </div>
           )}
