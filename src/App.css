@@ -1126,3 +1126,239 @@ button:hover {
     letter-spacing: 5px;
   }
 }
+
+.comercio-pagina{
+  min-height: 100vh;
+  background: #f3f7f4;
+  padding: 32px 20px;
+}
+
+.comercio-panel{
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px;
+  background: white;
+  border: 1px solid #e1e8e1;
+  border-radius: 18px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+}
+.comercio-recompensas{
+  margin: 30px 0;
+  text-align: left;
+}
+.comercio-recompensas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 18px;
+}
+
+.comercio-recompensa-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px;
+  background:#f7faf7;
+  border-radius: 14px;
+  border: 1px solid #dce8df;
+  text-align: left;
+  box-shadow: 0 3px 12px rgb(0, 0, 0, 0.04);
+}
+
+.comercio-recompensa-card h3,
+.comercio-recompensa-card p{
+  margin: 0;
+}
+
+.comercio-recompensa-card h3{
+  color: #236c37;
+  font-size: 17px;
+}
+
+.comercio-recompensa-card span{
+  color: #64756b;
+  font-size: 13px;
+}
+
+@media(max-width: 650px) {
+  .comercio-recompensas-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.comercio-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #e1e8e1;
+}
+
+.comercio-header h1{
+  margin: 0;
+  color: #246c35;
+  font-size: 26px;
+}
+
+.comercio-header p{
+  margin: 5px 0 0;
+  color: #64756b;
+}
+
+.comercio-boton-salir{
+  width: auto;
+  padding: 11px 18px;
+  background: #fff;
+  color: #246c35;
+  border: 1px solid #246c35;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.comercio-bienvenida h2{
+  margin: 8px 0;
+  font-size: 24px;
+  color: #1d3324;
+}
+
+.comercio-bienvenida p{
+  color: #64756b;
+}
+
+.comercio-estado{
+  padding: 9px 16px;
+  background: #e8f5eb;
+  color: #246c35;
+  border-radius: 30px;
+  font-weight: 600;
+}
+
+@media(max-width: 650px){
+  .comercio-header,
+  .comercio-bienvenida{
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+.comercio-validacion{
+  margin-top: 32px;
+  padding: 28px;
+  background: #f8fbf9;
+  border:  1px solid #dce8df;
+  border-radius: 16px;
+  text-align: left;
+}
+
+.comercio-validacion-encabezado{
+  margin-bottom: 24px;
+}
+
+.comercio-validacion-encabezado span{
+  color: #287a40;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.comercio-validacion-encabezado h2{
+  margin: 8px 0;
+  color: #203b29;
+  font-size: 22px;
+}
+
+.comercio-validacion-encabezado p{
+  margin: 0;
+  color: #64756b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.comercio-validacion label{
+  display: block;
+  margin: 14px 0 6px;
+  font-weight: 600;
+  font-size: 14px
+}
+
+.comercio-validacion input,
+.comercio-validacion select{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1ddd4;
+  border-radius: 9px;
+  background: white;
+  box-sizing: border-box;
+}
+
+@media(max-width: 650px){
+  .comercio-validacion{
+    padding: 18px;
+  }
+}
+
+/*Historial de canjes del comercio*/
+
+.comercio-historial{
+  margin-top: 30px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #dce8df;
+  border-radius: 16px;
+  text-align: left;
+}
+
+.comercio-historial-encabezado h2{
+  margin: 0 0 8px;
+  color: #203b29;
+}
+
+.comercio-historial-encabezado p{
+  margin: 0 0 20px;
+  color: #64756b;
+}
+
+.comercio-tabla-contenedor{
+  width: 100%;
+  overflow-x: auto;
+}
+
+.comercio-tabla{
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.comercio-tabla th,
+.comercio-tabla td{
+  padding: 14px;
+  border-bottom: 1px salid #e5ebe6;
+  font-size: 14px;
+}
+
+.comercio-tabla th{
+  background: #f3f7f4;
+  color: #365540;
+  font-weight: 600;
+}
+
+.comercio-estado-canje{
+  display: inline-block;
+  padding: 6px 12px;
+  background: #e6f4e6;
+  color: #246c35;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+@media(max-width: 650px){
+  .comercio-historial{
+    padding: 16px;
+  }
+
+  .comercio-tabla{
+    min-width: 520px;
+  }
+}
