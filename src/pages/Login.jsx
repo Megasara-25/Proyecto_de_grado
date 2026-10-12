@@ -8,6 +8,33 @@ function Login({ irARegistro }) {
   const [mostrarContrasena, setMostrarContrasena] = useState(false)
   const [mensaje, setMensaje] = useState('')
   const [cargando, setCargando] = useState(false)
+  const [recuperando, setRecuperando] = useState(false)
+ 
+  const recuperarContrasena = async () =>{
+    if(!correo.trim()){
+      setMensaje('Ingresa tu correo electronico para recuperar la contraseña')
+      return
+    }
+
+    setRecuperando(true)
+    setMensaje('')
+
+    const {error} = await supabase.auth.resetPasswordForEmail(
+      correo.trim(),
+      {
+        redirectTo: window.location.origin
+      }
+    )
+
+    if (error){
+      console.error('Error al solicitar recuperacion:', error)
+      setMensaje('no fue posible enviar el correo de recuperacion')
+    } else{
+      setMensaje('Si el correo esta registrado, recibiras un enlace para restablecer tu contraseña')
+    }
+
+    setRecuperando(false)
+  }
 
   const iniciarSesion = async (e) => {
     if(!correo || !contrasena){
@@ -24,7 +51,7 @@ function Login({ irARegistro }) {
     })
 
     if (error) {
-      setMensaje('Erroro al inciar sesión:', error)
+      setMensaje('Error al inciar sesión:', error)
 
       if(error.message.includes('Invalid login credentials')){
         setMensaje('Correo o contrasena incorrectos')
@@ -83,10 +110,21 @@ function Login({ irARegistro }) {
               <button
                 type='button'
                 className='login-mostrar-password'
-                onClick={() =>setContrasena(!mostrarContrasena)}>
+                onClick={() =>setMostrarContrasena(!mostrarContrasena)}>
                   {mostrarContrasena ? 'ocultar' : 'ver'}
                 </button>
             </div>
+
+            <button 
+              type='button'
+              className='login-recuperar-password'
+              onClick={recuperarContrasena}
+              disabled={recuperando || cargando}
+            >
+              {recuperando
+              ?'Enviando correo...'
+              :'¿Olvidaste contraseña?'}
+            </button>
 
             {mensaje && (
               <p className='login-mensaje'>
@@ -98,7 +136,7 @@ function Login({ irARegistro }) {
               className='login-boton-principal'
               onClick={iniciarSesion}
               disabled={cargando}>
-                {cargando ? 'Ingresando...' : 'Inicianar sesion'}
+                {cargando ? 'Ingresando...' : 'Iniciar sesion'}
               </button>
 
               <div className='login-separador'>

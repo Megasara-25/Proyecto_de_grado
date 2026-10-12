@@ -7,6 +7,7 @@ import Reciclador from './pages/Reciclador'
 import Comercio from './pages/Comercio'
 import Registro from './pages/Registro'
 import Admin from './pages/Admin'
+import RecuperarCotrasena from './pages/RecuperarContrasena'
 import './App.css'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
   const [cargando, setCargando] = useState(true)
   const [mostrarRegistro, setMostrarRegistro] = useState(false)
   const [correoConfirmado, setCorreoConfirmado] = useState(false)
+  const [recuperandoCotrasena, setRecuperandoContrasena] = useState(false)
 
   const obtenerPerfil = async (user) => {
     console.log('Usuario autenticado:', user?.id)
@@ -92,7 +94,11 @@ function App() {
     const cargarSesion = async () => {
       const { data } = await supabase.auth.getSession()
 
-      await obtenerPerfil(data.session?.user ?? null)
+      if(window.location.hash.includes('type=recovery')){
+        setRecuperandoContrasena(true)
+      }
+
+      await obtenerPerfil(data.session?.user??null)
     }
 
     cargarSesion()
@@ -101,8 +107,13 @@ function App() {
       data: { subscription }
     } = supabase.auth.onAuthStateChange((event, session) => {
 
-      if(event === 'SIGNED_IN' && session?.user?.email_confirmed_at){
-        setCorreoConfirmado(true)
+      if(event === 'PASSWORD_RECOVERY'){
+        setRecuperandoContrasena(true)
+        return
+      }
+
+      if(event === 'SIGNED_OUT'){
+        setRecuperandoContrasena(false)
       }
 
       obtenerPerfil(session?.user ?? null)
@@ -114,11 +125,16 @@ function App() {
   }, [])
 
   const cerrarSesion = async () => {
+    setRecuperandoContrasena(false)
 
     await supabase.auth.signOut()
     setUsuario(null)
     setPerfil(null)
     setCorreoConfirmado(false)
+  }
+
+  if(recuperandoCotrasena){
+    return<RecuperarCotrasena/>
   }
 
   if (cargando) {
