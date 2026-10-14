@@ -1635,3 +1635,41 @@ button:hover {
   line-height: 1.6;
   font-size: 14px;
 }
+
+/*Seleccion de materiales del reciclador*/
+
+.lista-materiales{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px;
+  margin-top: 12px;
+  margin-bottom: 20px;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+.lista-materiales p,
+.lista-materiales label{
+  display: block !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  cursor: pointer;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #111 !important;
+  height: auto !important;
+}
+
+.lista-materiales input[type="checkbox"]{
+  appearance: auto;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  margin: 0;
+  padding: 0;
+  accent-color: #238636;
+  cursor: pointer;
+}

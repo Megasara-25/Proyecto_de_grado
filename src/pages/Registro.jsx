@@ -1,61 +1,91 @@
 import { useState } from "react";
-import { supabase } from '../lib/supabase'
+import { supabase } from '../lib/supabase';
+import MapaSeleccionUbicacion from "../components/MapaSeleccionUbicacion";
 
-function Registro({ volverLogin }){
-    const [nombre, setNombre] = useState ('')
-    const [correo, setCorreo] = useState ('')
-    const [contrasena, setContrasena] = useState ('')
-    const [tipoDocumento, setTipoDocumento] = useState ('')
-    const [numeroDocumento, setNumeroDocumento] = useState ('')
-    const [telefono, setTelefono] = useState ('')
-    const [fechaNacimiento, setFechaNacimiento] = useState ('')
+function Registro({ volverLogin }) {
+    const [nombre, setNombre] = useState('')
+    const [correo, setCorreo] = useState('')
+    const [contrasena, setContrasena] = useState('')
+    const [tipoDocumento, setTipoDocumento] = useState('')
+    const [numeroDocumento, setNumeroDocumento] = useState('')
+    const [telefono, setTelefono] = useState('')
+    const [fechaNacimiento, setFechaNacimiento] = useState('')
     const [rol, setRol] = useState('ciudadano')
-    const [confirmarContrasena, setConfirmarContrasena] = useState ('')
-    const [mensaje, setMensaje] = useState ('')
+    const [confirmarContrasena, setConfirmarContrasena] = useState('')
+    const [mensaje, setMensaje] = useState('')
     const [nombreCentro, setNombreCentro] = useState('')
     const [nombreComercio, setNombreComercio] = useState('')
-    const [nit, setNit] = useState ('')
-    const [categoria, setCategoria] = useState ('')
-    const [direccion, setDireccion] = useState ('')
-    const [ciudad, setCiudad] = useState ('')
+    const [nit, setNit] = useState('')
+    const [categoria, setCategoria] = useState('')
+    const [direccion, setDireccion] = useState('')
+    const [ciudad, setCiudad] = useState('')
+    const [ubicacionCentro, setUbicacionCentro] = useState(null)
+    const [materialseleccionados, setMaterialSeleccionados] = useState([])
+
+    const materialesDisponibles = [
+        { id: 1, nombre: 'Plastico' },
+        { id: 2, nombre: 'Carton' },
+        { id: 3, nombre: 'papel' },
+        { id: 4, nombre: 'Vidrio' },
+        { id: 5, nombre: 'Pilas y baterias' },
+        { id: 6, nombre: 'Metales y latas' }
+    ]
+
+    const cambiarMaterial = (materialId) => {
+        setMaterialSeleccionados((actuales) =>
+            actuales.includes(materialId)
+                ? actuales.filter((id) => id !== materialId)
+                : [...actuales, materialId]
+        )
+    }
 
     const registrarUsuario = async () => {
 
-        if( !nombre ||
+        if (!nombre ||
             !correo ||
             !contrasena ||
             !confirmarContrasena ||
             !tipoDocumento ||
             !numeroDocumento ||
             !telefono ||
-            !fechaNacimiento 
+            !fechaNacimiento
         ) {
             setMensaje('Debes completar todos los campos')
             return
         }
 
-        if(
-            rol === 'reciclador' &&
-            (!nombreCentro || !direccion || !ciudad)
-        ) {
-            setMensaje('Debes completar los datos del centro de reciclaje')
-            return
+        if (rol === 'reciclador') {
+            if (!nombreCentro || !direccion || !ciudad) {
+                setMensaje('Completa el nombre del centro, la dirección y la ciudad.');
+                return;
+            }
+            if (materialseleccionados.length === 0) {
+                setMensaje('Selecciona al menos un material que recibe el centro.');
+                return;
+            }
+            if (!ubicacionCentro) {
+                setMensaje(
+                    'Debes confirmar la ubicación del centro en el mapa antes de registrarte. ' +
+                    'Usa el botón "Confirmar ubicación del centro".'
+                );
+                return;
+            }
         }
 
-        if(
+        if (
             rol === 'comercio_aliado' &&
             (!nombreComercio || !nit || !categoria || !direccion || !ciudad)
-        ){
+        ) {
             setMensaje('Debes completar los datos del comercio')
             return
         }
 
-        if(contrasena != confirmarContrasena){
+        if (contrasena != confirmarContrasena) {
             setMensaje('Las contraseñas no coinciden')
             return
         }
 
-        if( contrasena.length < 8) {
+        if (contrasena.length < 8) {
             setMensaje('La contraseña debe tener minimo 8 caracteres')
             return
         }
@@ -64,7 +94,7 @@ function Registro({ volverLogin }){
         const tieneNumero = /[0-9]/.test(contrasena)
         const tieneSimbolo = /[^A-Za-z0-9]/.test(contrasena)
 
-        if(
+        if (
             !tieneMayuscula ||
             !tieneMinuscula ||
             !tieneNumero ||
@@ -76,7 +106,7 @@ function Registro({ volverLogin }){
 
         setMensaje('')
 
-        const {data, error} = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
             email: correo,
             password: contrasena,
             options: {
@@ -93,16 +123,28 @@ function Registro({ volverLogin }){
                     nit: nit,
                     categoria: categoria,
                     direccion: direccion,
-                    ciudad: ciudad
+                    ciudad: ciudad,
+
+                    materiales_recibidos: rol === 'reciclador'
+                        ? materialseleccionados
+                        : [],
+
+                    latitud: rol === 'reciclador'
+                        ? ubicacionCentro?.latitud
+                        : null,
+
+                    longitud: rol === 'reciclador'
+                        ? ubicacionCentro?.longitud
+                        : null
                 },
                 emailRedirectTo: 'http://localhost:5173'
             }
         })
 
-        if (error){
+        if (error) {
             console.log('Error al registrar usuario:', error)
 
-            if(error.message.includes('email rate limit exceeded')){
+            if (error.message.includes('email rate limit exceeded')) {
                 setMensaje('se alcanzo temporalmente el limite de envio de correos. Intenta nuevamente ams tarde')
                 return
             }
@@ -121,126 +163,168 @@ function Registro({ volverLogin }){
                 <h2>Crear cuenta</h2>
 
                 <label>Nombre completo</label>
-                <input type="text"
+                <input
+                    type="text"
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
                 />
 
                 <label>Correo electronico</label>
-                <input type="text"
+                <input
+                    type="text"
                     value={correo}
                     onChange={(e) => setCorreo(e.target.value)}
                 />
 
                 <label>Contraseña</label>
-                <input type="password"
+                <input
+                    type="password"
                     value={contrasena}
                     onChange={(e) => setContrasena(e.target.value)}
                 />
 
                 <label>Confirmar contraseña</label>
-                <input type="password"
+                <input
+                    type="password"
                     value={confirmarContrasena}
                     onChange={(e) => setConfirmarContrasena(e.target.value)}
                 />
 
                 <label>Tipo de documento</label>
-                <select value = {tipoDocumento}
+                <select value={tipoDocumento}
                     onChange={(e) => setTipoDocumento(e.target.value)}
-                    >
-                        <option value="">Seleccione</option>
-                        <option value="CC">CC</option>
-                        <option value="TI">TI</option>
-                        <option value="CE">CE</option>
-                        <option value="PASAPORTE">Pasaporte</option>
-                    </select>
+                >
+                    <option value="">Seleccione</option>
+                    <option value="CC">CC</option>
+                    <option value="TI">TI</option>
+                    <option value="CE">CE</option>
+                    <option value="PASAPORTE">Pasaporte</option>
+                </select>
 
-                    <label>Numero de documento</label>
-                    <input type="text"
-                        value={numeroDocumento}
-                        onChange={(e) => setNumeroDocumento(e.target.value)}
-                    />
+                <label>Numero de documento</label>
+                <input
+                    type="text"
+                    value={numeroDocumento}
+                    onChange={(e) => setNumeroDocumento(e.target.value)}
+                />
 
-                    <label>Telefono</label>
-                    <input type="text"
-                        value={telefono}
-                        onChange={(e) => setTelefono(e.target.value)}
-                    />
+                <label>Telefono</label>
+                <input
+                    type="text"
+                    value={telefono}
+                    onChange={(e) => setTelefono(e.target.value)}
+                />
 
-                    <label>Fecha de nacimiento</label>
-                    <input type="date"
-                        value={fechaNacimiento}
-                        onChange={(e) => setFechaNacimiento(e.target.value)}
-                    />
+                <label>Fecha de nacimiento</label>
+                <input
+                    type="date"
+                    value={fechaNacimiento}
+                    onChange={(e) => setFechaNacimiento(e.target.value)}
+                />
 
-                    <label>Tipo de cuenta</label>
-                    <select value = {rol}
-                        onChange={(e) => setRol(e.target.value)}
-                    >
-                        <option value="ciudadano">Ciudadano</option>
-                        <option value="reciclador">Reciclador</option>
-                        <option value="comercio_aliado">Comercio aliado</option>
-                    </select>
+                <label>Tipo de cuenta</label>
+                <select value={rol}
+                    onChange={(e) => setRol(e.target.value)}
+                >
+                    <option value="ciudadano">Ciudadano</option>
+                    <option value="reciclador">Reciclador</option>
+                    <option value="comercio_aliado">Comercio aliado</option>
+                </select>
 
-                    {rol === 'reciclador' &&(
-                        <>
+                {rol === 'reciclador' && (
+                    <>
                         <label>Nombre de centro de reciclaje</label>
-                        <input type="text"
-                        value={nombreCentro}
-                        onChange={(e) => setNombreCentro(e.target.value)}/>
-                        
+                        <input
+                            type="text"
+                            value={nombreCentro}
+                            onChange={(e) => setNombreCentro(e.target.value)}
+                        />
+
                         <label>Direccion del centro</label>
-                        <input type="text"
-                        value={direccion}
-                        onChange={(e) => setDireccion(e.target.value)}/>
+                        <input
+                            type="text"
+                            value={direccion}
+                            onChange={(e) => setDireccion(e.target.value)}
+                        />
 
                         <label>Ciudad</label>
-                        <input type="text"
-                        value={ciudad}
-                        onChange={(e) => setCiudad(e.target.value)}/>
-                        </>
-                    )}
+                        <input
+                            type="text"
+                            value={ciudad}
+                            onChange={(e) => setCiudad(e.target.value)}
+                        />
 
-                    {rol === 'comercio_aliado' &&(
-                        <>
+                        <label>Ubicacion del centro de reciclaje</label>
+                        <MapaSeleccionUbicacion
+                            direccion={direccion}
+                            ciudad={ciudad}
+                            onSeleccionar={setUbicacionCentro}
+                        />
+
+                        <label>¿Que materiales recibe tu centro de reciclaje?</label>
+                        <div className="Lista-materiales">
+                            {materialesDisponibles.map((material) => {
+                                return (
+                                    <label key={material.id}>
+                                        <input
+                                            type="checkbox"
+                                            checked={materialseleccionados.includes(material.id)}
+                                            onChange={() => cambiarMaterial(material.id)}
+                                        />
+                                        {material.nombre}
+                                    </label>
+                                )
+                            })}
+                        </div>
+                    </>
+                )}
+
+                {rol === 'comercio_aliado' && (
+                    <>
                         <label>Nombre del comercio</label>
-                        <input type="text"
-                        value={nombreComercio}
-                        onChange={(e) => setNombreComercio(e.target.value)}/>
+                        <input
+                            type="text"
+                            value={nombreComercio}
+                            onChange={(e) => setNombreComercio(e.target.value)}
+                        />
 
                         <label>NIT</label>
                         <input type="text"
-                        value={nit}
-                        onChange={(e) => setNit(e.target.value)}/>
+                            value={nit}
+                            onChange={(e) => setNit(e.target.value)}
+                        />
 
                         <label>Categoria del comercio</label>
                         <input type="text"
-                        value={categoria}
-                        onChange={(e) => setCategoria(e.target.value)}/>
+                            value={categoria}
+                            onChange={(e) => setCategoria(e.target.value)}
+                        />
 
                         <label>Direccion del comercio</label>
                         <input type="text"
-                        value={direccion}
-                        onChange={(e) => setDireccion(e.target.value)}/>
+                            value={direccion}
+                            onChange={(e) => setDireccion(e.target.value)}
+                        />
 
                         <label>Ciudad</label>
                         <input type="text"
-                        value={ciudad}
-                        onChange={(e) => setCiudad(e.target.value)}/>
-                        </>
-                    )}
+                            value={ciudad}
+                            onChange={(e) => setCiudad(e.target.value)}
+                        />
+                    </>
+                )}
 
-                    <button onClick={registrarUsuario}>
-                        Registrarme
-                    </button>
+                <button onClick={registrarUsuario}>
+                    Registrarme
+                </button>
 
-                    {mensaje &&(
-                        <p>{mensaje}</p>
-                    )}
+                {mensaje && (
+                    <p>{mensaje}</p>
+                )}
 
-                    <button onClick={volverLogin}>
-                        Volver al inicio de Sesion
-                    </button>
+                <button onClick={volverLogin}>
+                    Volver al inicio de Sesion
+                </button>
             </div>
         </div>
     )

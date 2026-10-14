@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css'
 function calcularDistancia(lat1,lon1,lat2,lon2){
     const radioTierrra = 6371
     const diferenciaLatitud = (lat2-lat1) * Math.PI/180
-    const diferenciaLongitud = (lon1-lon1) * Math.PI/180
+    const diferenciaLongitud = (lon2-lon1) * Math.PI/180
 
     const a =
     Math.sin(diferenciaLatitud / 2)*
