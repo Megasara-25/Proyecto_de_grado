@@ -1,0 +1,2295 @@
+/* EcoCycle: capa de diseño SOLO para pantallas móviles.
+   No reemplaza App.css ni index.css. No cambia lógica ni eventos. */
+@media (max-width: 700px) {
+  :root {
+    --eco-sea-blue: #126384;
+    --eco-green: #34B05A;
+    --eco-cerulean: #0C83A7;
+    --eco-blue: #2CB7CE;
+    --eco-kiwi: #95EB3E;
+    --eco-yellow: #FEB101;
+    --eco-golden: #FFDC07;
+    --eco-text: #20343B;
+    --eco-muted: #5B7079;
+    --eco-bg: #F3F8FA;
+    --eco-border: #DCE9ED;
+    --eco-radius: 16px;
+    --eco-shadow: 0 6px 22px rgba(18, 99, 132, .08);
+  }
+
+  body,
+  .ciudadano-pagina,
+  .comercio-pagina,
+  .admin-pagina {
+    background: var(--eco-bg);
+    color: var(--eco-text);
+  }
+
+  /* EcoCycle — capa visual móvil. Mantiene las clases y la lógica existentes. */
+  .login-pagina {
+    background: radial-gradient(circle at 10% 0%, rgba(44, 183, 206, .16), transparent 44%),
+      linear-gradient(155deg, #f1fafb 0%, #f5fbf7 100%);
+    padding-top: max(18px, env(safe-area-inset-top));
+    padding-bottom: max(18px, env(safe-area-inset-bottom));
+  }
+
+  .login-circulo1 {
+    background: var(--eco-sea-blue);
+  }
+
+  .login-circulo2 {
+    background: var(--eco-kiwi);
+  }
+
+  .login-tarjeta,
+  .tarjeta {
+    border: 1px solid var(--eco-border);
+    box-shadow: var(--eco-shadow);
+  }
+
+  .login-encabezado h1,
+  .ciudadano-bienvenida-texto h1,
+  .ciudadano-seccion-titulo h2,
+  .comercio-header h1,
+  .admin-header h1 {
+    color: var(--eco-sea-blue);
+  }
+
+  .login-formulario input:focus,
+  .comercio-validacion input:focus,
+  .comercio-validacion select:focus {
+    border-color: var(--eco-cerulean);
+    box-shadow: 0 0 0 3px rgba(44, 183, 206, .14);
+  }
+
+  .login-boton-principal,
+  .reciclador-boton-aprobar,
+  .reclador-boton-aprobar,
+  .admin-boton-aprobar,
+  .ciudadano-beneficio-contenido button:not(:disabled) {
+    background: var(--eco-green);
+    color: #fff;
+  }
+
+  .login-boton-registro,
+  .login-mostrar-password,
+  .login-recuperar-password,
+  .ciudadano-boton-salir,
+  .comercio-boton-salir {
+    color: var(--eco-sea-blue);
+    border-color: var(--eco-sea-blue);
+  }
+
+  .ciudadano-header {
+    border-bottom-color: var(--eco-border);
+  }
+
+  .ciudadano-saldo {
+    background: linear-gradient(125deg, var(--eco-sea-blue), var(--eco-cerulean));
+    box-shadow: 0 10px 26px rgba(18, 99, 132, .17);
+  }
+
+  .ciudadano-saldo strong {
+    color: var(--eco-golden);
+  }
+
+  .ciudadano-material-card,
+  .ciudadano-beneficio-card,
+  .reciclador-entrega-card,
+  .comercio-recompensa-card,
+  .admin-estadistica-card,
+  .admin-solicitud-card {
+    border-color: var(--eco-border);
+    box-shadow: var(--eco-shadow);
+  }
+
+  .ciudadano-material-card.seleccionado {
+    background: #f0fbf4;
+    border-color: var(--eco-green);
+  }
+
+  .ciudadano-material-icono {
+    background: #e9f7f0;
+    color: var(--eco-sea-blue);
+  }
+
+  .ciudadano-categoria.activa {
+    background: var(--eco-sea-blue);
+    border-color: var(--eco-sea-blue);
+  }
+
+  .ciudadano-beneficios-categoria {
+    background: #e8f6fa;
+    color: var(--eco-sea-blue);
+  }
+
+  .ciudadano-canje-codigo {
+    background: #fffbea;
+    border-color: var(--eco-yellow);
+  }
+
+  .ciudadano-canje-codigo strong {
+    color: var(--eco-sea-blue);
+  }
+
+  .comercio-estado-canje {
+    background: #e9f7ef;
+    color: #176c3a;
+  }
+
+  .login-boton-principal,
+  .login-boton-registro,
+  .ciudadano-material-card,
+  .ciudadano-categoria,
+  .ciudadano-boton-salir,
+  .comercio-boton-salir,
+  .reciclador-acciones button,
+  .admin-boton-aprobar,
+  .admin-boton-rechazar {
+    transition: transform .18s ease, background-color .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+
+  .login-boton-principal:active,
+  .login-boton-registro:active,
+  .ciudadano-material-card:active,
+  .ciudadano-categoria:active,
+  .ciudadano-boton-salir:active,
+  .comercio-boton-salir:active,
+  .reciclador-acciones button:active,
+  .admin-boton-aprobar:active,
+  .admin-boton-rechazar:active {
+    transform: scale(.98);
+  }
+
+  @media (max-width: 600px) {
+    .login-tarjeta {
+      padding: 26px 20px;
+    }
+
+    .ciudadano-header-contenido {
+      min-height: 64px;
+      gap: 10px;
+      padding: 10px 14px;
+      padding-top: max(10px, env(safe-area-inset-top));
+    }
+
+    .ciudadano-logo {
+      width: min(36vw, 145px);
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .ciudadano-header-acciones {
+      gap: 8px;
+    }
+
+    .ciudadano-boton-salir {
+      padding: 9px 11px;
+    }
+
+    .ciudadano-contenido {
+      padding: 24px 14px max(56px, env(safe-area-inset-bottom));
+    }
+
+    .ciudadano-bienvenida {
+      margin-bottom: 28px;
+    }
+
+    .ciudadano-bienvenida-texto h1 {
+      font-size: clamp(24px, 7vw, 30px);
+    }
+
+    .ciudadano-saldo {
+      padding: 20px;
+      border-radius: var(--eco-radius);
+    }
+
+    .ciudadano-material-grid,
+    .ciudadano-materiales-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .ciudadano-material-card {
+      min-width: 0;
+      min-height: 154px;
+      padding: 14px;
+    }
+
+    .ciudadano-material-info h3 {
+      font-size: 15px;
+      overflow-wrap: anywhere;
+    }
+
+    .ciudadano-centros-grid,
+    .ciudadano-beneficios-grid,
+    .comercio-recompensas-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ciudadano-material-resumen {
+      flex-wrap: wrap;
+      gap: 14px;
+      padding: 14px;
+    }
+
+    .ciudadano-mapa-contenedor .leaflet-container {
+      height: min(55vh, 360px);
+    }
+
+    .ciudadano-canje-codigo strong {
+      overflow-wrap: anywhere;
+      font-size: clamp(23px, 7vw, 30px);
+      letter-spacing: 4px;
+    }
+
+    .comercio-pagina,
+    .admin-pagina {
+      padding: 16px 12px max(28px, env(safe-area-inset-bottom));
+    }
+
+    .comercio-panel {
+      padding: 18px 14px;
+    }
+
+    .comercio-validacion,
+    .comercio-historial {
+      padding: 16px 12px;
+    }
+
+    .comercio-tabla-contenedor {
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .admin-header {
+      gap: 10px;
+    }
+
+    .admin-header .admin-boton-salir {
+      min-width: 0;
+    }
+  }
+
+  @media (max-width: 360px) {
+
+    .ciudadano-material-grid,
+    .ciudadano-materiales-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .ciudadano-saldo strong {
+    font-size: 32px;
+  }
+
+  .ciudadano-saldo span {
+    color: rgba(255, 255, 255, .88);
+  }
+
+  .ciudadano-header-contenido {
+    max-width: 1200px;
+  }
+
+  .ciudadano-boton-salir {
+    border: 1px solid var(--eco-sea-blue);
+  }
+
+  .comercio-tabla th,
+  .comercio-tabla td {
+    border-bottom: 1px solid var(--eco-border);
+  }
+
+  .reciclador-boton-aprobar {
+    background: var(--eco-green);
+  }
+
+  .lista-materiales input[type=checkbox],
+  .Lista-materiales input[type=checkbox] {
+    accent-color: var(--eco-green);
+  }
+
+  .Lista-materiales {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 12px 0 20px;
+  }
+
+  .Lista-materiales label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .Lista-materiales input[type=checkbox] {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .login-boton-principal,
+  .login-boton-registro,
+  .ciudadano-material-card,
+  .ciudadano-categoria,
+  .reciclador-acciones button {
+    transition: none;
+  }
+}
+
+/* EcoCycle - Ajustes del login móvil */
+@media (max-width: 600px) {
+
+  .login-pagina {
+    padding: 20px 16px;
+    background: linear-gradient(160deg,
+        #eaf9f6 0%,
+        #f5fbff 55%,
+        #ffffff 100%);
+  }
+
+  .login-tarjeta {
+    max-width: 420px;
+    padding: 26px 22px;
+    border-radius: 24px;
+    box-shadow: 0 12px 35px rgba(18, 99, 132, 0.09);
+  }
+
+  .login-logo {
+    width: 100%;
+    max-width: 170px;
+    height: auto;
+  }
+
+  .login-logo-contenedor {
+    margin-bottom: 12px;
+  }
+
+  .login-encabezado {
+    margin-bottom: 24px;
+  }
+
+  .login-encabezado h1 {
+    color: #126384;
+    font-size: 23px;
+  }
+
+  .login-encabezado p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .login-boton-principal {
+    background: linear-gradient(110deg,
+        #34B05A,
+        #0C83A7);
+    border-radius: 12px;
+    min-height: 48px;
+    font-weight: 700;
+  }
+
+  .login-boton-registro {
+    color: #126384;
+    border-color: #0C83A7;
+    border-radius: 12px;
+    min-height: 46px;
+  }
+
+  .login-circulo1 {
+    width: 220px;
+    height: 220px;
+    top: -100px;
+    left: -110px;
+  }
+
+  .login-circulo2 {
+    width: 170px;
+    height: 170px;
+    top: -90px;
+    left: -90px;
+  }
+}
+
+/* EcoCycle - Ajustes del login móvil */
+@media (max-width: 600px) {
+
+  .login-pagina {
+    padding: 20px 16px;
+    background: linear-gradient(160deg,
+        #eaf9f6 0%,
+        #f5fbff 55%,
+        #ffffff 100%);
+  }
+
+  .login-tarjeta {
+    max-width: 420px;
+    padding: 26px 22px;
+    border-radius: 24px;
+    box-shadow: 0 12px 35px rgba(18, 99, 132, 0.09);
+  }
+
+  .login-logo {
+    width: 100%;
+    max-width: 170px;
+    height: auto;
+  }
+
+  .login-logo-contenedor {
+    margin-bottom: 12px;
+  }
+
+  .login-encabezado {
+    margin-bottom: 24px;
+  }
+
+  .login-encabezado h1 {
+    color: #126384;
+    font-size: 23px;
+  }
+
+  .login-encabezado p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .login-boton-principal {
+    background: linear-gradient(110deg,
+        #34B05A,
+        #0C83A7);
+    border-radius: 12px;
+    min-height: 48px;
+    font-weight: 700;
+  }
+
+  .login-boton-registro {
+    color: #126384;
+    border-color: #0C83A7;
+    border-radius: 12px;
+    min-height: 46px;
+  }
+
+  .login-circulo1 {
+    width: 220px;
+    height: 220px;
+    top: -100px;
+    left: -110px;
+  }
+
+  .login-circulo2 {
+    width: 170px;
+    height: 170px;
+    top: -90px;
+    left: -90px;
+  }
+}
+
+/* ==========================================
+   ECOCYCLE - REGISTRO MÓVIL
+   Solo presentación, sin cambios funcionales
+   ========================================== */
+
+@media (max-width: 600px) {
+
+  .contenedor {
+    display: block;
+    min-height: 100dvh;
+    padding: 18px 14px 36px;
+    background: linear-gradient(160deg,
+        #edf9fa 0%,
+        #f5fbf7 65%,
+        #ffffff 100%);
+  }
+
+  .contenedor>.tarjeta {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 26px 20px 30px;
+    border: 1px solid #dce9ed;
+    border-radius: 22px;
+    background: white;
+    box-shadow: 0 8px 28px rgba(18, 99, 132, 0.08);
+  }
+
+  .contenedor>.tarjeta h2:first-child {
+    margin: 0 0 6px;
+    color: #126384;
+    font-size: 21px;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  .contenedor>.tarjeta h2:nth-child(2) {
+    margin: 0 0 28px;
+    color: #20343b;
+    font-size: 25px;
+    font-weight: 750;
+    text-align: center;
+  }
+
+  .contenedor>.tarjeta>label {
+    margin: 0 0 7px;
+    color: #263c47;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .contenedor>.tarjeta>input,
+  .contenedor>.tarjeta>select {
+    display: block;
+    width: 100%;
+    min-height: 49px;
+    margin: 0 0 19px;
+    padding: 11px 14px;
+    border: 1px solid #d7e5e9;
+    border-radius: 12px;
+    background: #fbfdfd;
+    color: #20343b;
+    font-size: 16px;
+    box-shadow: none;
+  }
+
+  .contenedor>.tarjeta>input:focus,
+  .contenedor>.tarjeta>select:focus {
+    outline: none;
+    border-color: #0c83a7;
+    box-shadow: 0 0 0 3px rgba(12, 131, 167, 0.12);
+  }
+
+  .contenedor>.tarjeta>button {
+    width: 100%;
+    min-height: 49px;
+    margin: 8px 0;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .contenedor>.tarjeta>button:first-of-type {
+    background: linear-gradient(110deg, #34b05a, #0c83a7);
+    color: white;
+    border: none;
+  }
+
+  .contenedor>.tarjeta>button:last-of-type {
+    background: white;
+    color: #126384;
+    border: 1px solid #0c83a7;
+  }
+
+  /* Selección de materiales del reciclador */
+
+  .contenedor .Lista-materiales,
+  .contenedor .lista-materiales {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin: 12px 0 24px;
+  }
+
+  .contenedor .Lista-materiales label,
+  .contenedor .lista-materiales label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 48px;
+    margin: 0;
+    padding: 11px 13px;
+    border: 1px solid #dce9ed;
+    border-radius: 12px;
+    background: #f7fbfc;
+    color: #20343b;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .contenedor .Lista-materiales input[type="checkbox"],
+  .contenedor .lista-materiales input[type="checkbox"] {
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    min-width: 19px;
+    margin: 0;
+    padding: 0;
+    accent-color: #34b05a;
+  }
+
+  /* Mapa: mantener la funcionalidad Leaflet */
+
+  .contenedor .leaflet-container {
+    max-width: 100%;
+    border-radius: 14px;
+  }
+}
+
+/* Logo y encabezado del registro */
+
+@media (max-width: 600px) {
+  .registro-logo-contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 12px;
+  }
+
+  .registro-logo {
+    display: block;
+    width: 100%;
+    max-width: 125px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .contenedor>.tarjeta>h2:first-of-type {
+    margin: 0 0 6px;
+    color: #126384;
+    font-size: 24px;
+    font-weight: 750;
+    text-align: center;
+  }
+
+  .registro-subtitulo {
+    margin: 0 0 26px;
+    color: #70828a;
+    font-size: 13px;
+    text-align: center;
+  }
+}
+
+/* Botón de búsqueda de dirección en el mapa */
+@media (max-width: 600px) {
+  .contenedor>.tarjeta button:has(+ .leaflet-container) {
+    background: linear-gradient(110deg, #34B05A, #0C83A7);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    min-height: 48px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(12, 131, 167, 0.16);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .contenedor>.tarjeta button:has(+ .leaflet-container):active {
+    transform: scale(0.98);
+  }
+}
+
+/* EcoCycle - Botón buscar ubicación */
+
+@media (max-width: 600px) {
+
+  .ecocycle-mapa-buscar {
+    display: block;
+    width: 100%;
+    min-height: 50px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border: none;
+    border-radius: 12px;
+
+    background: linear-gradient(110deg,
+        #34B05A 0%,
+        #0C83A7 100%);
+
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+
+    box-shadow: 0 4px 12px rgba(12, 131, 167, 0.16);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .ecocycle-mapa-buscar:active {
+    transform: scale(0.98);
+  }
+
+  .ecocycle-mapa-buscar:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}
+
+/* ECOCYCLE - RECUPERACIÓN DE CONTRASEÑA */
+
+.eco-reset {
+  --reset-blue: #126384;
+  --reset-teal: #0C83A7;
+  --reset-green: #34B05A;
+
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: max(24px, env(safe-area-inset-top)) 18px max(30px, env(safe-area-inset-bottom));
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  background:
+    radial-gradient(circle at 0% 0%,
+      rgba(149, 235, 62, 0.14),
+      transparent 42%),
+    linear-gradient(155deg,
+      #eaf8f9 0%,
+      #f3fafb 50%,
+      #ffffff 100%);
+
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+.eco-reset *,
+.eco-reset *::before,
+.eco-reset *::after {
+  box-sizing: border-box;
+}
+
+.eco-reset-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 30px 24px 24px;
+  border: 1px solid #e0edef;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 12px 32px rgba(18, 99, 132, 0.09);
+  animation: ecoResetEnter 0.35s ease-out both;
+}
+
+/* Encabezado */
+
+.eco-reset-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.eco-reset-logo {
+  display: block;
+  width: 128px;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 20px;
+  object-fit: contain;
+}
+
+.eco-reset-header h1 {
+  margin: 0 0 12px;
+  color: var(--reset-blue);
+  font-size: clamp(22px, 5.5vw, 25px);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+
+.eco-reset-header p {
+  max-width: 310px;
+  margin: 0 auto;
+  color: #647985;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* Formulario */
+
+.eco-reset .eco-reset-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.eco-reset-field {
+  width: 100%;
+  margin-bottom: 19px;
+}
+
+.eco-reset .eco-reset-field label {
+  display: block;
+  width: 100%;
+  margin: 0 0 9px;
+  color: #263d49;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.eco-reset .eco-reset-field input {
+  display: block;
+  width: 100%;
+  height: 52px;
+  min-height: 52px;
+  margin: 0;
+  padding: 0 15px;
+
+  border: 1px solid #d8e7e9;
+  border-radius: 12px;
+
+  background: #f9fcfd;
+  color: #20343b;
+
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+
+  outline: none;
+  box-shadow: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.eco-reset .eco-reset-field input::placeholder {
+  color: #96a6ad;
+}
+
+.eco-reset .eco-reset-field input:focus {
+  border-color: var(--reset-teal);
+  box-shadow: 0 0 0 3px rgba(12, 131, 167, 0.12);
+}
+
+/* Recomendación */
+
+.eco-reset-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  margin: 1px 0 22px;
+  padding: 12px 13px;
+
+  border-radius: 11px;
+  background: #eef9f5;
+
+  color: #46675b;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.eco-reset-hint span {
+  flex-shrink: 0;
+  color: var(--reset-green);
+  font-size: 16px;
+}
+
+/* Botón principal */
+
+.eco-reset .eco-reset-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 52px;
+  margin: 0;
+  padding: 13px 16px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: linear-gradient(110deg,
+      #34B05A 0%,
+      #0C83A7 100%) !important;
+
+  color: #ffffff !important;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+
+  cursor: pointer;
+  box-shadow: 0 5px 14px rgba(12, 131, 167, 0.17);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+.eco-reset .eco-reset-button:hover:not(:disabled) {
+  filter: brightness(1.04);
+  box-shadow: 0 7px 18px rgba(12, 131, 167, 0.22);
+}
+
+.eco-reset .eco-reset-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.eco-reset .eco-reset-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Mensajes */
+
+.eco-reset .eco-reset-message {
+  margin: 0 0 17px;
+  padding: 12px 14px;
+  border: 1px solid #f2d6b2;
+  border-radius: 11px;
+  background: #fff9ec;
+  color: #875b1b;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* Confirmación */
+
+.eco-reset-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.eco-reset-success {
+  padding: 20px 14px;
+  border-radius: 15px;
+  background: #f0fbf4;
+  text-align: center;
+}
+
+.eco-reset-success-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 14px;
+
+  border-radius: 50%;
+  background: #34B05A;
+  color: white;
+  font-size: 25px;
+}
+
+.eco-reset-success h2 {
+  margin: 0 0 10px;
+  color: #126384;
+  font-size: 19px;
+}
+
+.eco-reset-success p {
+  margin: 0;
+  color: #506b60;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Pie */
+
+.eco-reset-footer {
+  margin-top: 28px;
+  color: #91a3a9;
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.eco-reset-footer-mark {
+  color: #34B05A;
+  margin-right: 4px;
+}
+
+/* Animaciones */
+
+@keyframes ecoResetEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eco-reset-card {
+    animation: none;
+  }
+
+  .eco-reset .eco-reset-button,
+  .eco-reset .eco-reset-field input {
+    transition: none;
+  }
+}
+
+/* Pantallas pequeñas */
+
+@media (max-width: 380px) {
+  .eco-reset {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .eco-reset-card {
+    padding: 25px 18px 22px;
+  }
+
+  .eco-reset-logo {
+    width: 112px;
+  }
+}
+
+/* ==========================================
+   ECOCYCLE - CIUDADANO MÓVIL - FASE 1
+   ========================================== */
+
+@media (max-width: 700px) {
+
+  .ciudadano-pagina {
+    min-height: 100dvh;
+    background: #f3f8fa;
+    color: #20343b;
+  }
+
+  /* Encabezado */
+
+  .ciudadano-header {
+    background: #ffffff;
+    border-bottom: 1px solid #dce9ed;
+    box-shadow: 0 2px 12px rgba(18, 99, 132, 0.05);
+  }
+
+  .ciudadano-header-contenido {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .ciudadano-logo {
+    display: block;
+    width: 105px;
+    max-width: 38%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .ciudadano-header-acciones {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .ciudadano-header-acciones > span {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #126384;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .ciudadano-boton-salir {
+    padding: 9px 11px;
+    border: 1px solid #dce9ed;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #126384;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  /* Contenido */
+
+  .ciudadano-contenido {
+    width: 100%;
+    padding: 22px 16px 50px;
+  }
+
+  .ciudadano-bienvenida {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .ciudadano-etiqueta {
+    color: #0c83a7;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .ciudadano-bienvenida-texto h1 {
+    margin: 7px 0;
+    color: #126384;
+    font-size: 23px;
+    line-height: 1.25;
+  }
+
+  .ciudadano-bienvenida-texto p {
+    margin: 0;
+    color: #647985;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* Saldo EcoPuntos */
+
+  .ciudadano-saldo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    min-height: 120px;
+    padding: 22px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(
+      115deg,
+      #126384 0%,
+      #0c83a7 65%,
+      #2cb7ce 100%
+    );
+    color: #ffffff;
+    box-shadow: 0 10px 24px rgba(18, 99, 132, 0.18);
+  }
+
+  .ciudadano-saldo-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    background: rgba(255, 220, 7, 0.17);
+  }
+
+  .ciudadano-saldo-icono::before {
+    content: "★";
+    color: #ffdc07;
+    font-size: 32px;
+  }
+
+  .ciudadano-saldo span,
+  .ciudadano-saldo small {
+    display: block;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 12px;
+  }
+
+  .ciudadano-saldo strong {
+    display: block;
+    margin: 5px 0;
+    color: #ffdc07;
+    font-size: 31px;
+    line-height: 1.1;
+  }
+
+  /* Materiales */
+
+  .ciudadano-seccion-materiales {
+    margin-top: 24px;
+  }
+
+  .ciudadano-seccion-titulo {
+    margin-bottom: 17px;
+  }
+
+  .ciudadano-seccion-titulo span {
+    color: #0c83a7;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .ciudadano-seccion-titulo p {
+    margin: 6px 0 0;
+    color: #126384;
+    font-size: 20px;
+    font-weight: 800;
+  }
+
+  .ciudadano-material-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .ciudadano-material-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 0;
+    min-height: 205px;
+    padding: 13px 10px;
+    border: 1px solid #dce9ed;
+    border-radius: 17px;
+    background: #ffffff;
+    box-shadow: 0 5px 15px rgba(18, 99, 132, 0.06);
+    text-align: center;
+    transition:
+      transform 0.18s ease,
+      border-color 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+
+  .ciudadano-material-card:active {
+    transform: scale(0.97);
+  }
+
+  .ciudadano-material-card.seleccionado {
+    border: 2px solid #34b05a;
+    background: #f0fbf4;
+    box-shadow: 0 5px 18px rgba(52, 176, 90, 0.12);
+  }
+
+  .ciudadano-material-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 94px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #f1f9f7;
+  }
+
+  .ciudadano-personaje-imagen {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .ciudadano-material-info {
+    width: 100%;
+  }
+
+  .ciudadano-material-info h3 {
+    margin: 0 0 6px;
+    color: #20343b;
+    font-size: 14px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+
+  .ciudadano-material-info p {
+    margin: 0;
+    color: #647985;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .ciudadano-material-info p strong {
+    color: #34b05a;
+  }
+
+  .ciudadano-material-seleccionar {
+    margin-top: auto;
+    padding-top: 10px;
+    color: #0c83a7;
+    font-size: 11px;
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 360px) {
+  .ciudadano-material-grid {
+    gap: 8px;
+  }
+
+  .ciudadano-material-card {
+    padding: 10px 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ciudadano-material-card {
+    transition: none;
+  }
+}
+
+/* ==========================================
+   ECOCYCLE - BOTONES DEL CIUDADANO
+   ========================================== */
+
+@media (max-width: 700px) {
+
+  /* Botones principales */
+  .ciudadano-pagina .ciudadano-centro-card button,
+  .ciudadano-pagina .ciudadano-entrega-boton,
+  .ciudadano-pagina .ciudadano-beneficio-contenido button:not(:disabled),
+  .ciudadano-pagina .leaflet-popup-content button {
+    background: linear-gradient(
+      110deg,
+      #34B05A 0%,
+      #0C83A7 100%
+    ) !important;
+
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 12px;
+    min-height: 48px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(12, 131, 167, 0.16);
+    transition: transform 0.18s ease;
+  }
+
+  .ciudadano-pagina .ciudadano-centro-card button:active,
+  .ciudadano-pagina .ciudadano-entrega-boton:active,
+  .ciudadano-pagina .ciudadano-beneficio-contenido button:not(:disabled):active,
+  .ciudadano-pagina .leaflet-popup-content button:active {
+    transform: scale(0.98);
+  }
+
+  /* Botones deshabilitados: no simular disponibilidad */
+  .ciudadano-pagina .ciudadano-beneficio-contenido button:disabled {
+    background: #e5ebee !important;
+    color: #71818a !important;
+    border: none;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  /* Centro seleccionado */
+  .ciudadano-centro-card {
+    padding: 18px;
+    border: 1px solid #dce9ed;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 5px 18px rgba(18, 99, 132, 0.07);
+  }
+
+  .ciudadano-centro-card h3 {
+    margin: 10px 0;
+    color: #126384;
+    font-size: 18px;
+  }
+
+  .ciudadano-centro-card p {
+    margin: 8px 0;
+    color: #5b7079;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .ciudadano-centro-card > span {
+    color: #34B05A;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .ciudadano-centro-card button {
+    margin-top: 15px;
+  }
+
+  /* Tarjetas de recompensas */
+  .ciudadano-beneficio-contenido {
+    padding: 16px;
+  }
+
+  .ciudadano-beneficio-contenido h3 {
+    margin: 9px 0;
+    color: #20343b;
+    font-size: 17px;
+  }
+
+  .ciudadano-beneficio-contenido p {
+    color: #5b7079;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .ciudadano-beneficio-datos {
+    margin: 15px 0;
+  }
+
+  .ciudadano-beneficio-datos strong {
+    color: #126384;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ciudadano-pagina .ciudadano-centro-card button,
+  .ciudadano-pagina .ciudadano-entrega-boton,
+  .ciudadano-pagina .ciudadano-beneficio-contenido button {
+    transition: none;
+  }
+}
+
+/* ==========================================
+   ECOCYCLE - HISTORIAL DE ENTREGAS MÓVIL
+   ========================================== */
+
+@media (max-width: 700px) {
+
+  .ciudadano-historial {
+    margin: 34px 0;
+  }
+
+  .ciudadano-historial-encabezado {
+    margin-bottom: 18px;
+  }
+
+  .ciudadano-historial-encabezado > span {
+    color: #34b05a;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .ciudadano-historial-encabezado h2 {
+    margin: 5px 0;
+    color: #126384;
+    font-size: 21px;
+    text-align: left;
+  }
+
+  .ciudadano-historial-encabezado p {
+    margin: 0;
+    color: #647985;
+    font-size: 13px;
+  }
+
+  .ciudadano-historial-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ciudadano-historial-card {
+    overflow: hidden;
+    border: 1px solid #dce9ed;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 4px 14px rgba(18, 99, 132, 0.06);
+  }
+
+  .ciudadano-historial-card[open] {
+    border-color: #a8d9cb;
+  }
+
+  .ciudadano-historial-resumen {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .ciudadano-historial-resumen::-webkit-details-marker {
+    display: none;
+  }
+
+  .ciudadano-historial-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 55px;
+    height: 55px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #eef9f5;
+    color: #126384;
+    font-size: 25px;
+  }
+
+  .ciudadano-historial-icono img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ciudadano-historial-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  .ciudadano-historial-info strong {
+    color: #20343b;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+  }
+
+  .ciudadano-historial-info small {
+    color: #7b8c94;
+    font-size: 11px;
+  }
+
+  .ciudadano-historial-estado {
+    display: inline-flex;
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .ciudadano-historial-estado.aprobada {
+    background: #e8f8ed;
+    color: #218346;
+  }
+
+  .ciudadano-historial-estado.pendiente {
+    background: #fff5db;
+    color: #9a6900;
+  }
+
+  .ciudadano-historial-estado.rechazada {
+    background: #ffeded;
+    color: #bd3e3e;
+  }
+
+  .ciudadano-historial-flecha {
+    flex-shrink: 0;
+    color: #126384;
+    font-size: 24px;
+    transition: transform 0.2s ease;
+  }
+
+  .ciudadano-historial-card[open] .ciudadano-historial-flecha {
+    transform: rotate(180deg);
+  }
+
+  .ciudadano-historial-detalles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 15px;
+    border-top: 1px solid #edf2f4;
+    background: #fbfdfd;
+  }
+
+  .ciudadano-historial-detalles > div {
+    min-width: 0;
+  }
+
+  .ciudadano-historial-detalles span {
+    display: block;
+    margin-bottom: 5px;
+    color: #647985;
+    font-size: 11px;
+  }
+
+  .ciudadano-historial-detalles strong {
+    color: #126384;
+    font-size: 14px;
+  }
+
+  .ciudadano-historial-rechazo {
+    grid-column: 1 / -1;
+    padding: 12px;
+    border-radius: 10px;
+    background: #fff2f2;
+  }
+
+  .ciudadano-historial-rechazo p {
+    margin: 5px 0 0;
+    color: #a33b3b;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .ciudadano-historial-vacio {
+    padding: 25px 18px;
+    border: 1px dashed #c5dce3;
+    border-radius: 16px;
+    background: #ffffff;
+    text-align: center;
+  }
+
+  .ciudadano-historial-vacio > span {
+    font-size: 28px;
+  }
+
+  .ciudadano-historial-vacio p {
+    color: #647985;
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ciudadano-historial-flecha {
+    transition: none;
+  }
+}
+
+/* ==========================================
+   ECOCYCLE - CORRECCIÓN CIUDADANO MÓVIL
+   Botones e historial desplegable
+   ========================================== */
+
+@media (max-width: 700px) {
+
+  /* BOTONES: mismo degradado que el login */
+
+  .ciudadano-pagina button.ciudadano-entrega-boton,
+  .ciudadano-pagina .ciudadano-centro-card button,
+  .ciudadano-pagina .ciudadano-beneficio-contenido button:not(:disabled),
+  .ciudadano-pagina .leaflet-popup-content button {
+    appearance: none;
+    background: linear-gradient(
+      110deg,
+      #34B05A 0%,
+      #0C83A7 100%
+    ) !important;
+    background-color: #34B05A;
+    color: #ffffff !important;
+    border: 0 !important;
+    border-radius: 12px !important;
+    min-height: 49px;
+    padding: 12px 16px;
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(12, 131, 167, 0.16);
+  }
+
+  .ciudadano-pagina button.ciudadano-entrega-boton {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    cursor: pointer;
+  }
+
+  /* HISTORIAL: estructura limpia */
+
+  .ciudadano-pagina .ciudadano-historial-card {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #dce9ed;
+    border-radius: 18px;
+    background: #ffffff;
+    box-sizing: border-box;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-resumen {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    list-style: none;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-info {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-flecha {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* Área que se abre al tocar la entrega */
+
+  .ciudadano-pagina .ciudadano-historial-detalles {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    padding: 0 16px 16px;
+    border-top: 1px solid #edf2f4;
+    background: #fbfdfd;
+    box-sizing: border-box;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    width: 100%;
+    min-width: 0;
+    padding: 13px 0;
+    border-bottom: 1px solid #edf2f4;
+    box-sizing: border-box;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles > div:last-child {
+    border-bottom: none;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles > div > span {
+    display: block;
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    color: #647985;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles > div > strong {
+    display: block;
+    flex-shrink: 0;
+    margin: 0;
+    color: #126384;
+    font-size: 14px;
+    font-weight: 800;
+    text-align: right;
+  }
+
+  /* Motivo del rechazo */
+
+  .ciudadano-pagina .ciudadano-historial-detalles
+  > .ciudadano-historial-rechazo {
+    display: block;
+    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #fff2f2;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-rechazo p {
+    margin: 6px 0 0;
+    color: #a33b3b;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+}
+
+/* ==========================================
+   ECOCYCLE - CORRECCIONES MÓVILES
+   ========================================== */
+
+@media (max-width: 700px) {
+
+  /* Botones principales del ciudadano */
+
+  .ciudadano-pagina .ciudadano-entrega-boton,
+  .ciudadano-pagina .ciudadano-centro-card button,
+  .ciudadano-pagina .ecocycle-mapa-seleccionar,
+  .ciudadano-pagina .ciudadano-beneficio-contenido button:not(:disabled) {
+    background: linear-gradient(
+      110deg,
+      #34B05A 0%,
+      #0C83A7 100%
+    ) !important;
+
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 12px;
+    min-height: 48px;
+    font-weight: 700;
+  }
+
+  /* Recompensas sin puntos suficientes o agotadas */
+
+  .ciudadano-pagina .ciudadano-beneficio-contenido button:disabled {
+    background: #e5ebee !important;
+    color: #71818a !important;
+    box-shadow: none;
+  }
+
+  /* Historial desplegable */
+
+  .ciudadano-pagina .ciudadano-historial-detalles {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 16px 16px;
+    border-top: 1px solid #edf2f4;
+    background: #fbfdfd;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #edf2f4;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles > div > span {
+    flex: 1;
+    margin: 0;
+    color: #647985;
+    font-size: 12px;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles > div > strong {
+    margin: 0;
+    color: #126384;
+    font-size: 14px;
+    text-align: right;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles
+  > .ciudadano-historial-rechazo {
+    display: block;
+    padding: 12px;
+    background: #fff2f2;
+    border-radius: 10px;
+  }
+}
+
+/* Navegación del ciudadano: visible solamente en móvil */
+.eco-ciudadano-navegacion {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .ciudadano-pagina .eco-ciudadano-navegacion {
+    display: flex;
+    gap: 9px;
+    overflow-x: auto;
+    max-width: 100%;
+    padding: 4px 1px 12px;
+    margin-bottom: 20px;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ciudadano-pagina .eco-ciudadano-tab {
+    flex: 0 0 auto;
+    min-height: 43px;
+    padding: 10px 15px;
+    border: 1px solid #dce9ed;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #126384;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .ciudadano-pagina .eco-ciudadano-tab.activa {
+    border-color: #126384;
+    background: #126384;
+    color: #ffffff;
+  }
+
+  .ciudadano-pagina .eco-ciudadano-tab:focus-visible {
+    outline: 3px solid #2cb7ce;
+    outline-offset: 2px;
+  }
+
+  .ciudadano-pagina .eco-ciudadano-vista:not([data-activa="true"]) {
+    display: none;
+  }
+
+  /* Evita que los personajes crezcan fuera de sus tarjetas */
+  .ciudadano-pagina .ciudadano-material-icono {
+    width: 100%;
+    height: 94px;
+    min-height: 94px;
+    overflow: hidden;
+  }
+
+  .ciudadano-pagina .ciudadano-material-icono > img.ciudadano-personaje-imagen {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 94px;
+    object-fit: contain;
+  }
+
+  .ciudadano-pagina .eco-perfil {
+    padding: 24px 18px;
+    border: 1px solid #dce9ed;
+    border-radius: 18px;
+    background: #ffffff;
+  }
+
+  .ciudadano-pagina .eco-perfil-avatar {
+    display: grid;
+    place-items: center;
+    width: 68px;
+    height: 68px;
+    margin-bottom: 14px;
+    border-radius: 50%;
+    background: #e8f6fa;
+    color: #126384;
+    font-size: 28px;
+    font-weight: 800;
+  }
+
+  .ciudadano-pagina .eco-perfil h2 { color: #126384; }
+  .ciudadano-pagina .eco-perfil > p { color: #647985; }
+  .ciudadano-pagina .eco-perfil-dato {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid #edf2f4;
+  }
+  .ciudadano-pagina .eco-perfil-dato span { color: #647985; }
+  .ciudadano-pagina .eco-perfil-dato strong { color: #126384; text-align: right; }
+  .ciudadano-pagina .eco-perfil-salir {
+    width: 100%;
+    min-height: 46px;
+    margin-top: 22px;
+    border: 1px solid #126384;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #126384;
+    font-weight: 700;
+  }
+}
+
+/* ==========================================
+   ECOCYCLE - REPARACIÓN NAVEGACIÓN MÓVIL
+   ========================================== */
+
+@media (max-width: 700px) {
+
+  /* Contenedor de las cinco pestañas */
+  .ciudadano-pagina .eco-ciudadano-navegacion {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    width: 100%;
+    overflow-x: auto;
+    padding: 8px 0 14px;
+    margin-bottom: 18px;
+    scrollbar-width: none;
+  }
+
+  /* Botones pequeños y horizontales */
+  .ciudadano-pagina .eco-ciudadano-navegacion .eco-ciudadano-tab {
+    display: flex !important;
+    flex: 0 0 90px !important;
+    width: 90px !important;
+    min-width: 90px !important;
+    max-width: 90px !important;
+    min-height: 55px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 6px !important;
+    border: 1px solid #dce9ed !important;
+    border-radius: 14px !important;
+    background: #ffffff !important;
+    color: #126384 !important;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* Pestaña seleccionada */
+  .ciudadano-pagina .eco-ciudadano-navegacion .eco-ciudadano-tab.activa {
+    background: linear-gradient(
+      110deg,
+      #34b05a,
+      #0c83a7
+    ) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+  }
+
+  /* Mostrar la sección activa */
+  .ciudadano-pagina .eco-ciudadano-vista:not([hidden]) {
+    display: block !important;
+  }
+
+  /* Ocultar las secciones inactivas */
+  .ciudadano-pagina .eco-ciudadano-vista[hidden] {
+    display: none !important;
+  }
+}
+
+/* ==========================================
+   ECOCYCLE - PERFIL EDITABLE
+   ========================================== */
+
+@media (max-width: 700px) {
+
+  .ciudadano-pagina .eco-perfil-editable {
+    width: 100%;
+    max-width: 100%;
+    padding: 22px 16px;
+    border-radius: 22px;
+    background: #ffffff;
+    box-sizing: border-box;
+  }
+
+  .ciudadano-pagina .eco-perfil-encabezado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .ciudadano-pagina .eco-perfil-foto-contenedor {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    border: 4px solid #34b05a;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8f5f9;
+  }
+
+  .ciudadano-pagina .eco-perfil-fotografia {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .ciudadano-pagina .eco-perfil-foto-contenedor
+  .eco-perfil-avatar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #126384;
+    color: white;
+    font-size: 42px;
+    font-weight: 700;
+  }
+
+  .ciudadano-pagina .eco-perfil-encabezado h2 {
+    margin: 4px 0 0;
+    color: #126384;
+    font-size: 24px;
+  }
+
+  .ciudadano-pagina .eco-perfil-encabezado p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+  }
+
+  .ciudadano-pagina .eco-perfil-cambiar-foto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .ciudadano-pagina .eco-perfil-boton-foto {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 11px 18px;
+    border-radius: 12px;
+    background: #e8f5f9;
+    color: #126384;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .ciudadano-pagina .eco-perfil-cambiar-foto small {
+    font-size: 11px;
+    color: #64748b;
+  }
+
+  .ciudadano-pagina .eco-perfil-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+  }
+
+  .ciudadano-pagina .eco-perfil-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    width: 100%;
+  }
+
+  .ciudadano-pagina .eco-perfil-campo label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #126384;
+  }
+
+  .ciudadano-pagina .eco-perfil-campo input {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-height: 46px;
+    padding: 11px 13px;
+    border: 1px solid #dce7ec;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #263b45;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  .ciudadano-pagina .eco-perfil-campo input:disabled {
+    background: #f3f7f8;
+    color: #64748b;
+    opacity: 1;
+  }
+
+  .ciudadano-pagina .eco-perfil-campo input:focus {
+    outline: none;
+    border-color: #0c83a7;
+    box-shadow: 0 0 0 3px rgba(12, 131, 167, 0.12);
+  }
+
+  .ciudadano-pagina .eco-perfil-campo small {
+    font-size: 11px;
+    color: #64748b;
+  }
+
+  .ciudadano-pagina .eco-perfil-puntos {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px;
+    border-radius: 16px;
+    background: linear-gradient(
+      110deg,
+      #126384,
+      #0c83a7
+    );
+    color: white;
+  }
+
+  .ciudadano-pagina .eco-perfil-puntos span {
+    font-size: 13px;
+  }
+
+  .ciudadano-pagina .eco-perfil-puntos strong {
+    font-size: 32px;
+    color: #ffdc07;
+  }
+
+  .ciudadano-pagina .eco-perfil-puntos small {
+    font-size: 11px;
+    color: #e5f6fa;
+  }
+
+  .ciudadano-pagina .eco-perfil-mensaje {
+    padding: 12px;
+    border-radius: 12px;
+    background: #e8f5f9;
+    color: #126384;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .ciudadano-pagina .eco-perfil-acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ciudadano-pagina .eco-perfil-guardar,
+  .ciudadano-pagina .eco-perfil-editar {
+    display: block;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(
+      110deg,
+      #34b05a,
+      #0c83a7
+    );
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .ciudadano-pagina .eco-perfil-cancelar {
+    width: 100%;
+    min-height: 46px;
+    border: 1px solid #dce7ec;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #126384;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .ciudadano-pagina .eco-perfil-salir {
+    width: 100%;
+    min-height: 46px;
+    padding: 12px;
+    border: 1px solid #dce7ec;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #126384;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .ciudadano-pagina .eco-perfil-guardar:disabled,
+  .ciudadano-pagina .eco-perfil-cancelar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+/* Botón confirmar ubicación - Registro EcoCycle */
+@media (max-width: 700px) {
+  .eco-boton-confirmar-ubicacion {
+    background: linear-gradient(135deg, #126384, #0C83A7) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    min-height: 52px;
+    box-shadow: 0 4px 12px rgba(18, 99, 132, 0.18);
+  }
+
+  .eco-boton-confirmar-ubicacion:active {
+    background: #0A5977 !important;
+    transform: scale(0.99);
+  }
+}
+/* Botón confirmar ubicación - EcoCycle */
+@media (max-width: 700px) {
+  .eco-boton-confirmar-ubicacion {
+    background: linear-gradient(
+      110deg,
+      #45B96B 0%,
+      #2696B2 100%
+    ) !important;
+
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 14px !important;
+    font-weight: 700 !important;
+    min-height: 54px;
+    box-shadow: 0 5px 14px rgba(18, 99, 132, 0.12);
+  }
+
+  .eco-boton-confirmar-ubicacion:active {
+    filter: brightness(0.92);
+  }
+}

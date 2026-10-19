@@ -75,7 +75,7 @@ export default function MapaSeleccionUbicacion({
     function confirmarUbicacion() {
         setConfirmada(true);
         onSeleccionar(ubicacion);
-        setMensaje('✅ Ubicación confirmada y lista para guardar.');
+        setMensaje(' Ubicación confirmada y lista para guardar.');
     }
 
     async function buscarDireccion() {
@@ -164,7 +164,7 @@ export default function MapaSeleccionUbicacion({
                 setSoloUbicacionCiudad(true);
                 setUbicacion({ latitud: Number(rc.lat), longitud: Number(rc.lon) });
                 setMensaje(
-                    '⚠️ No encontramos la dirección exacta. El mapa se centró en ' +
+                    'No encontramos la dirección exacta. El mapa se centró en ' +
                     ciudad + '. Haz clic en el mapa para colocar el marcador en la ' +
                     'ubicación real del centro de reciclaje.'
                 );
@@ -193,16 +193,15 @@ export default function MapaSeleccionUbicacion({
             { }
             <button
                 type="button"
+                className="ecocycle-mapa-buscar"
                 onClick={buscarDireccion}
                 disabled={buscando}
             >
                 {buscando ? 'Buscando...' : 'Buscar dirección en el mapa'}
             </button>
 
-            {/* Mensaje de estado */}
             {mensaje && <p style={{ marginTop: '8px' }}>{mensaje}</p>}
 
-            {/* Mapa */}
             <div style={{ marginTop: '12px' }}>
                 <MapContainer
                     center={[4.6097, -74.0817]}
@@ -223,7 +222,6 @@ export default function MapaSeleccionUbicacion({
                         onClickMapa={manejarClickMapa}
                     />
 
-                    {/* Marcador: se muestra solo cuando NO es centro de ciudad */}
                     {ubicacion && !soloUbicacionCiudad && (
                         <Marker
                             position={[ubicacion.latitud, ubicacion.longitud]}
@@ -232,29 +230,27 @@ export default function MapaSeleccionUbicacion({
                 </MapContainer>
             </div>
 
-            {/* Botón de confirmación */}
             {mostrarBotonConfirmar && (
                 <button
+                    className='eco-boton-confirmar-ubicacion'
                     type="button"
                     onClick={confirmarUbicacion}
                     style={{ marginTop: '10px' }}
                 >
-                    Confirmar ubicación del centro
+                    Confirmar ubicacion del centro
                 </button>
             )}
 
-            {/* Coordenadas confirmadas */}
             {ubicacion && confirmada && (
                 <p style={{ marginTop: '8px' }}>
-                    ✅ Ubicación confirmada: {ubicacion.latitud.toFixed(6)},{' '}
+                    Ubicacion confirmada: {ubicacion.latitud.toFixed(6)},{' '}
                     {ubicacion.longitud.toFixed(6)}
                 </p>
             )}
 
-            {/* Aviso cuando hay marcador pendiente de confirmar */}
             {ubicacion && !confirmada && !soloUbicacionCiudad && (
                 <p style={{ marginTop: '8px', color: '#b45309' }}>
-                    ⏳ Ubicación pendiente de confirmación.
+                    Ubicacion pendiente de confirmacion.
                 </p>
             )}
         </div>

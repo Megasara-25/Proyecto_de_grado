@@ -1,36 +1,40 @@
 :root {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  color: #243029;
-  background: #f4f7f5;
+  --eco-sea-blue: #126384;
+  --eco-green: #34B05A;
+  --eco-cerulean: #0C83A7;
+  --eco-blue: #2CB7CE;
+  --eco-kiwi: #95EB3E;
+  --eco-yellow: #FEB101;
+  --eco-golden: #FFDC07;
+  --eco-text: #20343B;
+  --eco-muted: #5B7079;
+  --eco-bg: #F3F8FA;
+  --eco-surface: #FFFFFF;
+  --eco-border: #DCE9ED;
+  --eco-radius: 16px;
+  --eco-shadow: 0 6px 22px rgba(18, 99, 132, .08);
+
+  color: var(--eco-text);
+  background: var(--eco-bg);
 }
 
-*{
-  box-sizing: border-box;
+*, *::before, *::after { box-sizing: border-box; }
+html, body, #root { width: 100%; min-height: 100%; margin: 0; padding: 0; }
+body { min-width: 320px; min-height: 100vh; background: var(--eco-bg); color: var(--eco-text); }
+#root { min-height: 100vh; }
+button, input, select, textarea { font: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visible {
+  outline: 3px solid var(--eco-blue);
+  outline-offset: 2px;
 }
-
-html, body, #root{
-  width: 100%;
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-body{
-  min-width: 320px;
-  min-height: 100vh;
-  background: #f4f7f6;
-  color: #243029;
-}
-#root{
-  width: 100%;
-  min-height: 100vh;
-}
-
-button, input, select, textarea{
-  font: inherit;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }

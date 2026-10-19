@@ -353,7 +353,7 @@ button:hover {
 
 .ciudadano-header-contenido{
   width: 100%;
-  max-width: 1200%;
+  max-width: 1200px;
   min-height: 78px;
   margin: 0 auto;
   padding: 12px 28px;
@@ -395,7 +395,7 @@ button:hover {
   background: #ffffff;
   color: #2e7d32;
 
-  border: 1px1 solid #2e7d32;
+  border: 1px solid #2e7d32;
   border-radius: 10px;
 
   font-size: 14px;
@@ -508,7 +508,7 @@ button:hover {
 .ciudadano-saldo span{
   display: block;
   margin-bottom: 3px;
-  color: rgb (255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.82);
   font-size: 13px;
 }
 
@@ -516,7 +516,7 @@ button:hover {
   display: block;
   margin-bottom: 2px;
   color: white;
-  font-family: 36px;
+  font-size: 36px;
   line-height: 1.1;
 }
 
@@ -656,12 +656,14 @@ button:hover {
 }
 
 @media (max-width: 850px){
+  .ciudadano-material-grid,
   .ciudadano-materiales-grid{
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 520px){
+  .ciudadano-material-grid,
   .ciudadano-materiales-grid{
     grid-template-columns: 1fr;
   }
@@ -720,7 +722,7 @@ button:hover {
   color: #243029;
   border:  1px solid #edf7e1;
   border-radius:  16px;
-  box-shadow:  0 5px 18 px rgb(28, 62, 37, 0.05);
+  box-shadow:  0 5px 18px rgb(28, 62, 37, 0.05);
   transition: 0.2s ease;
 }
 
@@ -812,6 +814,7 @@ button:hover {
   font-weight: 600;
 }
 
+.reciclador-boton-aprobar,
 .reclador-boton-aprobar{
   background: #2e7d32;
   color: white;
@@ -924,8 +927,7 @@ button:hover {
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.07);
-  transition: trasnform 0.2s ease; 
-  box-shadow: 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .ciudadano-beneficio-card:hover{
@@ -1333,7 +1335,7 @@ button:hover {
 .comercio-tabla th,
 .comercio-tabla td{
   padding: 14px;
-  border-bottom: 1px salid #e5ebe6;
+  border-bottom: 1px solid #e5ebe6;
   font-size: 14px;
 }
 
@@ -1672,4 +1674,99 @@ button:hover {
   padding: 0;
   accent-color: #238636;
   cursor: pointer;
+}
+
+/* EcoCycle — capa visual móvil. Mantiene las clases y la lógica existentes. */
+.login-pagina {
+  background: radial-gradient(circle at 10% 0%, rgba(44,183,206,.16), transparent 44%),
+              linear-gradient(155deg, #f1fafb 0%, #f5fbf7 100%);
+  padding-top: max(18px, env(safe-area-inset-top));
+  padding-bottom: max(18px, env(safe-area-inset-bottom));
+}
+.login-circulo1 { background: var(--eco-sea-blue); }
+.login-circulo2 { background: var(--eco-kiwi); }
+.login-tarjeta, .tarjeta {
+  border: 1px solid var(--eco-border);
+  box-shadow: var(--eco-shadow);
+}
+.login-encabezado h1, .ciudadano-bienvenida-texto h1,
+.ciudadano-seccion-titulo h2, .comercio-header h1,
+.admin-header h1 { color: var(--eco-sea-blue); }
+.login-formulario input:focus, .comercio-validacion input:focus,
+.comercio-validacion select:focus { border-color: var(--eco-cerulean); box-shadow: 0 0 0 3px rgba(44,183,206,.14); }
+.login-boton-principal, .reciclador-boton-aprobar,
+.reclador-boton-aprobar, .admin-boton-aprobar,
+.ciudadano-beneficio-contenido button:not(:disabled) {
+  background: var(--eco-green);
+  color: #fff;
+}
+.login-boton-registro, .login-mostrar-password,
+.login-recuperar-password, .ciudadano-boton-salir,
+.comercio-boton-salir { color: var(--eco-sea-blue); border-color: var(--eco-sea-blue); }
+.ciudadano-header { border-bottom-color: var(--eco-border); }
+.ciudadano-saldo {
+  background: linear-gradient(125deg, var(--eco-sea-blue), var(--eco-cerulean));
+  box-shadow: 0 10px 26px rgba(18,99,132,.17);
+}
+.ciudadano-saldo strong { color: var(--eco-golden); }
+.ciudadano-material-card, .ciudadano-beneficio-card,
+.reciclador-entrega-card, .comercio-recompensa-card,
+.admin-estadistica-card, .admin-solicitud-card {
+  border-color: var(--eco-border);
+  box-shadow: var(--eco-shadow);
+}
+.ciudadano-material-card.seleccionado {
+  background: #f0fbf4;
+  border-color: var(--eco-green);
+}
+.ciudadano-material-icono { background: #e9f7f0; color: var(--eco-sea-blue); }
+.ciudadano-categoria.activa { background: var(--eco-sea-blue); border-color: var(--eco-sea-blue); }
+.ciudadano-beneficios-categoria { background: #e8f6fa; color: var(--eco-sea-blue); }
+.ciudadano-canje-codigo { background: #fffbea; border-color: var(--eco-yellow); }
+.ciudadano-canje-codigo strong { color: var(--eco-sea-blue); }
+.comercio-estado-canje { background: #e9f7ef; color: #176c3a; }
+.login-boton-principal, .login-boton-registro,
+.ciudadano-material-card, .ciudadano-categoria,
+.ciudadano-boton-salir, .comercio-boton-salir,
+.reciclador-acciones button, .admin-boton-aprobar,
+.admin-boton-rechazar {
+  transition: transform .18s ease, background-color .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.login-boton-principal:active, .login-boton-registro:active,
+.ciudadano-material-card:active, .ciudadano-categoria:active,
+.ciudadano-boton-salir:active, .comercio-boton-salir:active,
+.reciclador-acciones button:active, .admin-boton-aprobar:active,
+.admin-boton-rechazar:active { transform: scale(.98); }
+@media (max-width: 600px) {
+  .login-tarjeta { padding: 26px 20px; }
+  .ciudadano-header-contenido {
+    min-height: 64px;
+    gap: 10px;
+    padding: 10px 14px;
+    padding-top: max(10px, env(safe-area-inset-top));
+  }
+  .ciudadano-logo { width: min(36vw, 145px); max-width: 100%; object-fit: contain; }
+  .ciudadano-header-acciones { gap: 8px; }
+  .ciudadano-boton-salir { padding: 9px 11px; }
+  .ciudadano-contenido { padding: 24px 14px max(56px, env(safe-area-inset-bottom)); }
+  .ciudadano-bienvenida { margin-bottom: 28px; }
+  .ciudadano-bienvenida-texto h1 { font-size: clamp(24px, 7vw, 30px); }
+  .ciudadano-saldo { padding: 20px; border-radius: var(--eco-radius); }
+  .ciudadano-material-grid, .ciudadano-materiales-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .ciudadano-material-card { min-width: 0; min-height: 154px; padding: 14px; }
+  .ciudadano-material-info h3 { font-size: 15px; overflow-wrap: anywhere; }
+  .ciudadano-centros-grid, .ciudadano-beneficios-grid,
+  .comercio-recompensas-grid { grid-template-columns: minmax(0, 1fr); }
+  .ciudadano-material-resumen { flex-wrap: wrap; gap: 14px; padding: 14px; }
+  .ciudadano-mapa-contenedor .leaflet-container { height: min(55vh, 360px); }
+  .ciudadano-canje-codigo strong { overflow-wrap: anywhere; font-size: clamp(23px, 7vw, 30px); letter-spacing: 4px; }
+  .comercio-pagina, .admin-pagina { padding: 16px 12px max(28px, env(safe-area-inset-bottom)); }
+  .comercio-panel { padding: 18px 14px; }
+  .comercio-validacion, .comercio-historial { padding: 16px 12px; }
+  .comercio-tabla-contenedor { -webkit-overflow-scrolling: touch; }
+  .admin-header { gap: 10px; }
+  .admin-header .admin-boton-salir { min-width: 0; }
+}
+@media (max-width: 360px) {
+  .ciudadano-material-grid, .ciudadano-materiales-grid { grid-template-columns: 1fr; }
 }

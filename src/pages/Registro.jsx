@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { supabase } from '../lib/supabase';
 import MapaSeleccionUbicacion from "../components/MapaSeleccionUbicacion";
+import logoEcocycle from '../assets/ecocycle-logo.png'
 
 function Registro({ volverLogin }) {
     const [nombre, setNombre] = useState('')
@@ -159,8 +160,18 @@ function Registro({ volverLogin }) {
     return (
         <div className="contenedor">
             <div className="tarjeta">
-                <h2>EcoCycle</h2>
+                <div className="registro-logo-contenedor">
+                    <img
+                        src={logoEcocycle}
+                        alt="EcoCycle"
+                        className="registro-logo"
+                    />
+                </div>
+
                 <h2>Crear cuenta</h2>
+                <p className="registro-descripcion">
+                    Unete y separte del cambio
+                </p>
 
                 <label>Nombre completo</label>
                 <input

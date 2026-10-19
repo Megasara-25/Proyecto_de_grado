@@ -74,11 +74,11 @@ function MapaReciclaje({recicladores = [], onSeleccionarCentro}) {
                 {recicladores.map((item)=>{
                     const centro = item.reciclador
 
-                    if(!centro || 
-                        centro.latitud === null || 
+                    if(!centro ||
+                        centro.latitud === null ||
                         centro.longitud === null ||
                         centro.latitud === undefined ||
-                        centro.longitud === undefined 
+                        centro.longitud === undefined
                     ){
                         return null
                     }
@@ -123,7 +123,9 @@ function MapaReciclaje({recicladores = [], onSeleccionarCentro}) {
                                 )}
                                 <br />
 
-                                <button type="button" onClick={() => onSeleccionarCentro({
+                                <button
+                                    type="button"
+                                    onClick={()=> onSeleccionarCentro ({
                                     ...centro,
                                     distancia: distancia
                                 })}>
