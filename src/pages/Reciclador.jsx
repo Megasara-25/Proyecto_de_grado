@@ -4,13 +4,13 @@ import logoEcocycle from '../assets/ecocycle-logo.png'
 
 function Reciclador({ perfil, cerrarSesion }) {
   const [recicladorId, setRecicladorId] = useState(null)
-  const [entregas, setEntregas] = useState ([])
+  const [entregas, setEntregas] = useState([])
   const [mensaje, setMensaje] = useState('')
   const [motivoRechazo, setMotivoRechazo] = useState('')
   const [entregaARechazar, setEntregaARechazar] = useState(null)
   const [pestanaActiva, setPestanaActiva] = useState('inicio')
   const [editandoPerfil, setEditandoPerfil] = useState(false)
-  const [guardandoPerfil, setGuardandoPerfil]= useState(false)
+  const [guardandoPerfil, setGuardandoPerfil] = useState(false)
   const [mensajePerfil, setMensajePerfil] = useState('')
   const [fotoSeleccionada, setFotoSeleccionada] = useState(null)
   const [fotoVistaPrevia, setFotoVistaPrevia] = useState(null)
@@ -24,13 +24,13 @@ function Reciclador({ perfil, cerrarSesion }) {
 
   const cargarReciclador = async () => {
 
-    const {data, error} = await supabase
+    const { data, error } = await supabase
       .from('reciclador')
       .select('id')
       .eq('usuarioid', perfil.id)
       .single()
 
-    if (error){
+    if (error) {
       console.error('Error al cargar reciclador:', error)
       return
     }
@@ -39,13 +39,13 @@ function Reciclador({ perfil, cerrarSesion }) {
     cargarEntrega(data.id)
   }
 
-  const cargarEntrega = async(idReciclador)=>{
+  const cargarEntrega = async (idReciclador) => {
 
     console.log('ID reciclador usado para buscar entregas:', idReciclador)
 
-    const {data, error} = await supabase
-    .from('entrega')
-    .select(`
+    const { data, error } = await supabase
+      .from('entrega')
+      .select(`
       id,
       cantidad,
       puntos_obtenidos,
@@ -58,7 +58,7 @@ function Reciclador({ perfil, cerrarSesion }) {
       .eq('recicladorid', idReciclador)
       .eq('estado', 'Pendiente')
 
-    if (error){
+    if (error) {
       console.error('Error al cargar entregas: ', error)
       return
     }
@@ -71,54 +71,54 @@ function Reciclador({ perfil, cerrarSesion }) {
     entregaId,
     nuevoEstado,
     motivo = null
-  ) =>{
+  ) => {
     setMensaje('')
 
-    const {data, error} = await supabase.rpc(
+    const { data, error } = await supabase.rpc(
       'actualizar_estado_entrega_reciclador',
       {
-        p_entrega_id : entregaId,
+        p_entrega_id: entregaId,
         p_estado: nuevoEstado,
         p_motivo_rechazo: motivo
       }
     )
 
-    if(error){
-      console.error('Error al actualizar entrega',error)
+    if (error) {
+      console.error('Error al actualizar entrega', error)
 
       setMensaje('No fue posible actualizar la entrega')
       return
     }
 
-    if(!data){
+    if (!data) {
       setMensaje('La entrega no pudo ser actualizada')
       return
     }
 
-    if(nuevoEstado === 'Aprobada'){
+    if (nuevoEstado === 'Aprobada') {
       setMensaje('Entrega aprobada correctamente')
     }
 
-    if(nuevoEstado === 'Rechazada'){
+    if (nuevoEstado === 'Rechazada') {
       setMensaje('Entrega rechazada correctamente')
     }
     cargarEntrega(recicladorId)
   }
 
-  const aprobarEntrega = async(entregaId)=>{
+  const aprobarEntrega = async (entregaId) => {
     await actualizandoEstadoEntrega(
       entregaId, 'Aprobada'
     )
   }
 
-  const rechazarEntrega = async(entregaId)=>{
+  const rechazarEntrega = async (entregaId) => {
     setEntregaARechazar(entregaId)
     setMotivoRechazo('')
     setMensaje('')
   }
 
   const confirmarRechazo = async () => {
-    if(!motivoRechazo.trim()){
+    if (!motivoRechazo.trim()) {
       setMensaje('Debes indicar el motivo del rechazo')
       return
     }
@@ -134,39 +134,39 @@ function Reciclador({ perfil, cerrarSesion }) {
   }
 
   const cargarDatosPerfil = async () => {
-    const{data,error} = await supabase
+    const { data, error } = await supabase
       .from('usuario')
       .select('nombre, correo, telefono, fecha_nacimiento, foto_perfil_url')
       .eq('id', perfil.id)
       .single()
 
-  if(error){
-    console.error('Error al cargar perfil:', error)
-    setMensajePerfil('No se pudo cargar tu perfil')
-    return
-  }
+    if (error) {
+      console.error('Error al cargar perfil:', error)
+      setMensajePerfil('No se pudo cargar tu perfil')
+      return
+    }
 
-  setDatosPerfil({
-    nombre:data.nombre || '',
-    correo: data.correo || '',
-    foto_perfil_url: data.foto_perfil_url || null
-  })
+    setDatosPerfil({
+      nombre: data.nombre || '',
+      correo: data.correo || '',
+      foto_perfil_url: data.foto_perfil_url || null
+    })
 
-  if(data.foto_perfil_url){
-    const {data:imagen, error: errorImagen} =
-      await supabase.storage
-        .from('foto-perfil')
-        .createSignedUrl(data.foto_perfil_url, 3600)
+    if (data.foto_perfil_url) {
+      const { data: imagen, error: errorImagen } =
+        await supabase.storage
+          .from('foto-perfil')
+          .createSignedUrl(data.foto_perfil_url, 3600)
 
-      if (errorImagen){
+      if (errorImagen) {
         console.error('Error al consultar fotografia:', errorImagen)
       }
 
       setFotoActual(imagen?.signedUrl || null)
-  } else {
-    setFotoActual(null)
+    } else {
+      setFotoActual(null)
+    }
   }
-}
 
   const seleccionarFotoPerfil = (event) => {
     const archivo = event.target.files?.[0]
@@ -253,10 +253,10 @@ function Reciclador({ perfil, cerrarSesion }) {
 
       await cargarDatosPerfil()
       if (fotoVistaPrevia) URL.revokeObjectURL(fotoVistaPrevia)
-        setFotoSeleccionada(null)
-        setFotoVistaPrevia(null)
-        setEditandoPerfil(false)
-        setMensajePerfil('Perfil actualizado correctamente')
+      setFotoSeleccionada(null)
+      setFotoVistaPrevia(null)
+      setEditandoPerfil(false)
+      setMensajePerfil('Perfil actualizado correctamente')
     } catch (error) {
       console.error('Error al actualizar perfil:', error)
       if (rutaNuevaFoto && !perfilActualizado) {
@@ -281,22 +281,22 @@ function Reciclador({ perfil, cerrarSesion }) {
     cargarDatosPerfil()
   }
 
-  useEffect(() =>{
+  useEffect(() => {
     cargarReciclador()
-  },[])
+  }, [])
 
   useEffect(() => {
-    if(perfil?.id){
+    if (perfil?.id) {
       cargarDatosPerfil()
     }
-  },[perfil?.id])
+  }, [perfil?.id])
 
   const pestanasReciclador = [
-    {id: 'inicio', nombre: 'Inicio'},
-    {id: 'entregas', nombre: 'Entregas'},
-    {id: 'historial', nombre: 'Historial'},
-    {id: 'centro', nombre: 'Mi centro'},
-    {id: 'perfil', nombre: 'Perfil'}
+    { id: 'inicio', nombre: 'Inicio' },
+    { id: 'entregas', nombre: 'Entregas' },
+    { id: 'historial', nombre: 'Historial' },
+    { id: 'centro', nombre: 'Mi centro' },
+    { id: 'perfil', nombre: 'Perfil' }
   ]
 
   return (
@@ -309,14 +309,6 @@ function Reciclador({ perfil, cerrarSesion }) {
             className="eco-reciclador-logo"
           />
         </div>
-
-        <button
-          type="button"
-          className="eco-reciclador-salir"
-          onClick={cerrarSesion}
-        >
-          Cerrar Sesion
-        </button>
       </header>
 
       <main className="eco-reciclador-contenido">
@@ -324,12 +316,12 @@ function Reciclador({ perfil, cerrarSesion }) {
           className="eco-reciclador-navegacion"
           aria-label="navegacion del reciclador"
         >
-          {pestanasReciclador.map((pestana)=>(
+          {pestanasReciclador.map((pestana) => (
             <button
               key={pestana.id}
               type="button"
               className={'eco-reciclador-tab ' +
-                (pestanaActiva === pestana.id ? 'activa': '')
+                (pestanaActiva === pestana.id ? 'activa' : '')
               }
               aria-current={pestanaActiva === pestana.id ? 'page' : undefined}
 
@@ -346,7 +338,7 @@ function Reciclador({ perfil, cerrarSesion }) {
           </p>
         )}
 
-        {pestanaActiva  === 'inicio' && (
+        {pestanaActiva === 'inicio' && (
           <section className="eco-reciclador-vista">
             <div className="eco-reciclador-bienvenida">
               <span>Panel del reciclador</span>
@@ -373,7 +365,7 @@ function Reciclador({ perfil, cerrarSesion }) {
           </section>
         )}
 
-        {pestanaActiva === 'entregas' &&(
+        {pestanaActiva === 'entregas' && (
           <section className="eco-reciclador-vista">
             <div className="eco-reciclador-titulo">
               <h2>Entregas pendientes</h2>
@@ -444,7 +436,7 @@ function Reciclador({ perfil, cerrarSesion }) {
                       <div className="eco-reciclador-acciones-rechazo">
                         <button
                           type="button"
-                          onClick={()=>{
+                          onClick={() => {
                             setEntregaARechazar(null)
                             setMotivoRechazo('')
                           }}
@@ -511,7 +503,7 @@ function Reciclador({ perfil, cerrarSesion }) {
                     alt="Fotografia de perfil"
                     className="eco-reciclador-foto"
                   />
-                ):(
+                ) : (
                   <span>
                     {datosPerfil.nombre?.charAt(0).toUpperCase() || 'R'}
                   </span>
@@ -548,7 +540,7 @@ function Reciclador({ perfil, cerrarSesion }) {
                   </label>
 
                   <input
-                    id= 'reciclador-nombre'
+                    id='reciclador-nombre'
                     type="text"
                     maxLength={150}
                     value={datosPerfil.nombre}
@@ -587,50 +579,50 @@ function Reciclador({ perfil, cerrarSesion }) {
                 </p>
               )}
 
-                 <div className="eco-reciclador-botones-perfil">
-                    {!editandoPerfil ? (
-                      <button
-                        type="button"
-                        className="eco-reciclador-editar-perfil"
-                        onClick={() => {
-                          setMensajePerfil('')
-                          setEditandoPerfil(true)
-                        }}
-                      >
-                        Editar perfil
-                      </button>
-                    ) : (
-                      <>
-                        <button
-                          type="button"
-                          className="eco-reciclador-guardar-perfil"
-                          onClick={guardarCambiosPerfil}
-                          disabled={guardandoPerfil}
-                        >
-                          {guardandoPerfil
-                            ? 'Guardando...'
-                            : 'Guardar cambios'}
-                        </button>
-
-                        <button
-                          type="button"
-                          className="eco-reciclador-cancelar-perfil"
-                          onClick={cancelarEdicionPerfil}
-                          disabled={guardandoPerfil}
-                        >
-                          Cancelar
-                        </button>
-                      </>
-                    )}
-                  </div>
-
+              <div className="eco-reciclador-botones-perfil">
+                {!editandoPerfil ? (
                   <button
                     type="button"
-                    className="eco-reciclador-salir-perfil"
-                    onClick={cerrarSesion}
+                    className="eco-reciclador-editar-perfil"
+                    onClick={() => {
+                      setMensajePerfil('')
+                      setEditandoPerfil(true)
+                    }}
                   >
-                    Cerrar sesion
+                    Editar perfil
                   </button>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      className="eco-reciclador-guardar-perfil"
+                      onClick={guardarCambiosPerfil}
+                      disabled={guardandoPerfil}
+                    >
+                      {guardandoPerfil
+                        ? 'Guardando...'
+                        : 'Guardar cambios'}
+                    </button>
+
+                    <button
+                      type="button"
+                      className="eco-reciclador-cancelar-perfil"
+                      onClick={cancelarEdicionPerfil}
+                      disabled={guardandoPerfil}
+                    >
+                      Cancelar
+                    </button>
+                  </>
+                )}
+              </div>
+
+              <button
+                type="button"
+                className="eco-reciclador-salir-perfil"
+                onClick={cerrarSesion}
+              >
+                Cerrar sesion
+              </button>
             </div>
           </section>
         )}

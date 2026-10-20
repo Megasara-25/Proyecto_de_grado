@@ -3,16 +3,13 @@ import { useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import MapaReciclaje from '../components/MapaReciclaje'
 
-import huevosImg from '../assets/recompensas/huevos.png'
-import mercadoImg from '../assets/recompensas/mercado.png'
-import comidaImg from '../assets/recompensas/comida.png'
-import cuidadoImg from '../assets/recompensas/cuidado_personal.png'
 import paperyus from '../assets/personajes/paperyus.jpeg'
 import ferrax from '../assets/personajes/ferrax.jpeg'
 import flurosil from '../assets/personajes/flurosil.jpeg'
 import polaris from '../assets/personajes/polaris.jpeg'
 import tetrax from '../assets/personajes/tetrax.jpeg'
 import voltaje from '../assets/personajes/voltaje.jpeg'
+import logoEcocycle from '../assets/ecocycle-logo.png'
 import { Evented } from 'leaflet'
 
 const imagenesMateriales = {
@@ -56,18 +53,11 @@ function Ciudadano({ perfil, cerrarSesion }) {
   })
 
   const [editandoPerfil, setEditandoPerfil] = useState(false)
-  const [guardandoPerfil, setGuardandoPerfil]= useState(false)
+  const [guardandoPerfil, setGuardandoPerfil] = useState(false)
   const [mensajePerfil, setMensajePerfil] = useState('')
   const [fotoSeleccionada, setFotoSeleccionada] = useState(null)
   const [fotoVistaPrevia, setFotoVistaPrevia] = useState(null)
   const [fotoActual, setFotoActual] = useState(null)
-
-  const imagenesRecompensas = {
-    2: huevosImg,
-    3: mercadoImg,
-    4: comidaImg,
-    5: cuidadoImg
-  }
 
   const cargarMateriales = async () => {
 
@@ -294,19 +284,19 @@ function Ciudadano({ perfil, cerrarSesion }) {
   }
 
   const cargarDatosPerfil = async () => {
-    const {data, error} = await supabase
+    const { data, error } = await supabase
       .from('usuario')
-        .select(`
+      .select(`
       nombre,
       correo,
       telefono,
       fecha_nacimiento,
       foto_perfil_url
     `)
-    .eq('id', perfil.id)
-    .single()
+      .eq('id', perfil.id)
+      .single()
 
-    if(error){
+    if (error) {
       console.error('Errore al cargar perfil:', error)
       setMensajePerfil('No se pudo cargar tu perfil')
       return
@@ -316,21 +306,21 @@ function Ciudadano({ perfil, cerrarSesion }) {
       nombre: data.nombre || '',
       correo: data.correo || '',
       telefono: data.telefono || '',
-      foto_perfil_url: data. foto_perfil_url || null
+      foto_perfil_url: data.foto_perfil_url || null
     })
 
-    if(data.foto_perfil_url){
-      const {data: imagen, error: errorImagen} =
-      await supabase.storage
-        .from('foto-perfil')
-        .createSignedUrl(data.foto_perfil_url, 3600)
+    if (data.foto_perfil_url) {
+      const { data: imagen, error: errorImagen } =
+        await supabase.storage
+          .from('foto-perfil')
+          .createSignedUrl(data.foto_perfil_url, 3600)
 
-        if(!errorImagen && imagen?.signedUrl){
-          setFotoActual(imagen.signedUrl)
-        } else {
-          setFotoActual(null)
-        }
-    } else{
+      if (!errorImagen && imagen?.signedUrl) {
+        setFotoActual(imagen.signedUrl)
+      } else {
+        setFotoActual(null)
+      }
+    } else {
       setFotoActual(null)
     }
   }
@@ -338,7 +328,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
   const seleccionarFotoPerfil = (event) => {
     const archivo = event.target.files?.[0]
 
-    if(!archivo) return
+    if (!archivo) return
 
     const fomratoPermitidos = [
       'image/jpeg',
@@ -346,21 +336,21 @@ function Ciudadano({ perfil, cerrarSesion }) {
       'image/png'
     ]
 
-    if(!fomratoPermitidos.includes(archivo.type)){
+    if (!fomratoPermitidos.includes(archivo.type)) {
       setMensajePerfil('Selecciona una imagen JPG o PNG')
 
       event.target.value = ''
       return
     }
 
-    if(archivo.size > 2 * 1024 * 1024){
+    if (archivo.size > 2 * 1024 * 1024) {
       setMensajePerfil('La fotografia no puede superar los 2MB')
 
       event.target.value = ''
       return
     }
 
-    if(fotoVistaPrevia){
+    if (fotoVistaPrevia) {
       URL.revokeObjectURL(fotoVistaPrevia)
     }
 
@@ -370,33 +360,33 @@ function Ciudadano({ perfil, cerrarSesion }) {
   }
 
   const guardarCambiosPerfil = async () => {
-    if(guardandoPerfil) return
+    if (guardandoPerfil) return
 
     setMensajePerfil('')
 
     const nombre = datosPerfil.nombre.trim()
     const telefono = datosPerfil.telefono.trim()
 
-    if(!nombre){
+    if (!nombre) {
       setMensajePerfil('Debes ingresar tu nombre')
       return
     }
 
-    if(nombre.length > 30){
+    if (nombre.length > 30) {
       setMensajePerfil('El nombre es demasiado largo')
       return
     }
 
-    if(nombre.length > 11){
+    if (nombre.length > 11) {
       setMensajePerfil('El telefono es demasiado largo ')
       return
     }
 
-    if(
+    if (
       datosPerfil.fecha_nacimiento &&
       datosPerfil.fecha_nacimiento >
-        new Date().toLocaleDateString('en-CA')
-    ){
+      new Date().toLocaleDateString('en-CA')
+    ) {
       setMensajePerfil('Dato incorrecto')
       return
     }
@@ -405,9 +395,9 @@ function Ciudadano({ perfil, cerrarSesion }) {
     let rutaFoto = datosPerfil.foto_perfil_url
     let rutaNuevaFoto = null
 
-    try{
-      const {data: autenticacion, error: errorAuth} =
-      await supabase.auth.getUser()
+    try {
+      const { data: autenticacion, error: errorAuth } =
+        await supabase.auth.getUser()
 
       if (
         errorAuth ||
@@ -417,7 +407,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
         throw new Error(' No se pudo verificar tu sesion. Inicia sesion nuevamente.')
       }
 
-      if(fotoSeleccionada){
+      if (fotoSeleccionada) {
         const extensionPorTipo = {
           'image/jpeg': 'jpg',
           'image/jpeg': 'jpeg',
@@ -426,35 +416,35 @@ function Ciudadano({ perfil, cerrarSesion }) {
 
         const extension = extensionPorTipo[fotoSeleccionada.type]
 
-        const nombreArchivo =  `${crypto.randomUUID()}.${extension}`
+        const nombreArchivo = `${crypto.randomUUID()}.${extension}`
 
         rutaNuevaFoto = `${perfil.id}/${nombreArchivo}`
 
-        const {error: errorSubida} =
+        const { error: errorSubida } =
           await supabase.storage
-          .from('foto-perfil')
-          .upload(rutaNuevaFoto, fotoSeleccionada, {
-            contentType: fotoSeleccionada.type,
-            upsert: false
-          })
+            .from('foto-perfil')
+            .upload(rutaNuevaFoto, fotoSeleccionada, {
+              contentType: fotoSeleccionada.type,
+              upsert: false
+            })
 
-        if(errorSubida){
+        if (errorSubida) {
           throw errorSubida
         }
 
         rutaFoto = rutaNuevaFoto
       }
 
-      const {error: errorActualizacion} =
-      await supabase.rpc('actualizar_mi_perfil', {
-        p_nombre: nombre,
-        p_telefono: telefono || null,
-        p_fecha_nacimiento:
-          datosPerfil.perfil_nacimiento || null,
-        p_foto_perfil_url: rutaFoto
-      })
+      const { error: errorActualizacion } =
+        await supabase.rpc('actualizar_mi_perfil', {
+          p_nombre: nombre,
+          p_telefono: telefono || null,
+          p_fecha_nacimiento:
+            datosPerfil.perfil_nacimiento || null,
+          p_foto_perfil_url: rutaFoto
+        })
 
-      if(errorActualizacion){
+      if (errorActualizacion) {
         throw errorActualizacion
       }
 
@@ -462,7 +452,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
 
       setFotoSeleccionada(null)
 
-      if(fotoVistaPrevia){
+      if (fotoVistaPrevia) {
         URL.revokeObjectURL(fotoVistaPrevia)
       }
 
@@ -470,28 +460,28 @@ function Ciudadano({ perfil, cerrarSesion }) {
       setEditandoPerfil(false)
 
       setMensajePerfil('Perfil actualizado correctmanete')
-    }catch (error){
+    } catch (error) {
       console.error('Error al actualizar perfil:', error)
 
-      if(rutaNuevaFoto) {
-        const {error: errorLimpieza} =
+      if (rutaNuevaFoto) {
+        const { error: errorLimpieza } =
           await supabase.storage
-          .from('foto-perfil')
-          .remove([rutaNuevaFoto])
+            .from('foto-perfil')
+            .remove([rutaNuevaFoto])
 
-        if(errorLimpieza){
+        if (errorLimpieza) {
           console.error('No se pudo cargar la fotografia', errorLimpieza)
         }
       }
 
       setMensajePerfil(error.message || ' No se puedo actualizar el perfil')
-    } finally{
+    } finally {
       setGuardandoPerfil(false)
     }
   }
 
   const cancelarEdicionPerfil = () => {
-    if(fotoVistaPrevia){
+    if (fotoVistaPrevia) {
       URL.revokeObjectURL(fotoVistaPrevia)
     }
 
@@ -530,14 +520,6 @@ function Ciudadano({ perfil, cerrarSesion }) {
 
           <div className="ciudadano-header-acciones">
             <span>{perfil.nombre}</span>
-
-            <button
-              type="button"
-              className="ciudadano-boton-salir"
-              onClick={cerrarSesion}
-            >
-              Cerrar sesion
-            </button>
           </div>
         </div>
       </header>
@@ -549,18 +531,23 @@ function Ciudadano({ perfil, cerrarSesion }) {
           aria-label="Navegacion del ciudadano"
         >
           {[
-            {id: 'inicio', nombre: 'Inicio'},
-            {id: 'reciclar', nombre: 'Reciclar'},
-            {id: 'historial', nombre: 'Historial'},
-            {id: 'beneficios', nombre: 'Beneficios'},
-            {id: 'perfil', nombre: 'perfil'},
-          ].map((pestana)=>(
+            { id: 'inicio', nombre: 'Inicio' },
+            { id: 'reciclar', nombre: 'Reciclar' },
+            { id: 'historial', nombre: 'Historial' },
+            { id: 'beneficios', nombre: 'Beneficios' },
+            { id: 'perfil', nombre: 'perfil' },
+          ].map((pestana) => (
             <button
-                key={pestana.id}
-                type="button"
-                className={`eco-ciudadano-tab ${pestanaActiva === pestana.id ? 'activa' : ''
-              }`}
-              onClick={() => setPestanaActiva(pestana.id)}
+              key={pestana.id}
+              type="button"
+              className={`eco-ciudadano-tab ${pestanaActiva === pestana.id ? 'activa' : ''
+                }`}
+              onClick={() => {
+                setPestanaActiva(pestana.id)
+                if (pestana.id === 'beneficios') {
+                  cargarRecompensas()
+                }
+              }}
               aria-current={
                 pestanaActiva === pestana.id ? 'page' : undefined
               }
@@ -956,10 +943,11 @@ function Ciudadano({ perfil, cerrarSesion }) {
                     className="ciudadano-beneficio-card"
                   >
                     <div className="ciudadano-beneficio-imagen">
-                      {imagenesRecompensas[recompensa.id] ? (
+                      {recompensa.imagen_url ? (
                         <img
-                          src={imagenesRecompensas[recompensa.id]}
+                          src={recompensa.imagen_url}
                           alt={recompensa.nombre}
+                          loading="lazy"
                         />
                       ) : (
                         <span>♻️</span>
@@ -1060,7 +1048,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
                     alt='Fotografia de perfil'
                     className='eco-perfil-fotografia'
                   />
-                ): (
+                ) : (
                   <div className='eco-perfil-avatar'>
                     {datosPerfil.nombre
                       ?.trim()
@@ -1087,7 +1075,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
                     type="file"
                     accept='image/jpeg,image/jpg,image/png'
                     onChange={seleccionarFotoPerfil}
-                    style={{display: 'none'}}
+                    style={{ display: 'none' }}
                   />
 
                   <small>
@@ -1104,7 +1092,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
                 </label>
 
                 <input
-                  id= 'eco-perfil-nombre'
+                  id='eco-perfil-nombre'
                   type="text"
                   maxLength={30}
                   value={datosPerfil.nombre}
@@ -1148,7 +1136,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
                   value={datosPerfil.telefono}
                   disabled={!editandoPerfil || guardandoPerfil}
                   onChange={(e) =>
-                    setDatosPerfil ({
+                    setDatosPerfil({
                       ...datosPerfil,
                       telefono: e.target.value
                     })
@@ -1179,7 +1167,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
                 <strong>{saldoEcopuntos}</strong>
               </div>
 
-              {mensaje &&(
+              {mensaje && (
                 <div className='eco-perfil-mensaje' role='status'>{mensajePerfil}</div>
               )}
 
@@ -1192,7 +1180,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
                     disabled={guardandoPerfil}
                   >
                     {guardandoPerfil
-                      ?'Guardadno cambios...'
+                      ? 'Guardadno cambios...'
                       : 'Guardar cambios'}
                   </button>
 
@@ -1205,7 +1193,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
                     Cancelar
                   </button>
                 </div>
-              ):(
+              ) : (
                 <button
                   type='button'
                   className='eco-perfil-editar'
@@ -1219,9 +1207,9 @@ function Ciudadano({ perfil, cerrarSesion }) {
               )}
 
               <button
-              type='button'
-              className='eco-perfil-salir'
-              onClick={cerrarSesion}
+                type='button'
+                className='eco-perfil-salir'
+                onClick={cerrarSesion}
               >
                 Cerrar sesion
               </button>
