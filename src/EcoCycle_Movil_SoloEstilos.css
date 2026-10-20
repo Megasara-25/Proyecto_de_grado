@@ -2293,3 +2293,490 @@
     filter: brightness(0.92);
   }
 }
+
+/* ==========================================
+   ECOCYCLE - MÓDULO RECICLADOR MÓVIL
+   ========================================== */
+
+@media (max-width: 700px) {
+
+  .eco-reciclador-pagina {
+    min-height: 100vh;
+    background: #f3f8fa;
+    color: #173b4c;
+  }
+
+  .eco-reciclador-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 16px;
+    background: #ffffff;
+    border-bottom: 1px solid #dbe8ee;
+  }
+
+  .eco-reciclador-marca h1 {
+    margin: 0;
+    color: #126384;
+    font-size: 24px;
+    font-weight: 800;
+  }
+
+  .eco-reciclador-marca span {
+    font-size: 12px;
+    color: #607d8b;
+  }
+
+  .eco-reciclador-salir {
+    width: auto;
+    padding: 10px 12px;
+    border: 1px solid #cbdfe8;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #126384;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .eco-reciclador-contenido {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px 14px 40px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .eco-reciclador-navegacion {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 4px 0 14px;
+    margin-bottom: 16px;
+    scrollbar-width: none;
+  }
+
+  .eco-reciclador-navegacion::-webkit-scrollbar {
+    display: none;
+  }
+
+  .eco-reciclador-tab {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 42px;
+    padding: 10px 16px;
+    border: 1px solid #d6e5eb;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #126384;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .eco-reciclador-tab.activa {
+    border-color: #126384;
+    background: #126384;
+    color: #ffffff;
+  }
+
+  .eco-reciclador-vista {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  .eco-reciclador-bienvenida {
+    padding: 8px 2px;
+  }
+
+  .eco-reciclador-bienvenida span {
+    color: #34b05a;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .eco-reciclador-bienvenida h2 {
+    margin: 8px 0;
+    color: #126384;
+    font-size: 26px;
+    line-height: 1.2;
+  }
+
+  .eco-reciclador-bienvenida p,
+  .eco-reciclador-titulo p {
+    margin: 0;
+    color: #607d8b;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .eco-reciclador-resumen {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 22px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #126384, #0c83a7);
+    color: #ffffff;
+  }
+
+  .eco-reciclador-resumen span {
+    font-size: 14px;
+  }
+
+  .eco-reciclador-resumen strong {
+    font-size: 42px;
+    line-height: 1.1;
+    color: #ffdc07;
+  }
+
+  .eco-reciclador-resumen small {
+    font-size: 12px;
+    color: #e6f5fa;
+  }
+
+  .eco-reciclador-boton-principal {
+    width: 100%;
+    min-height: 50px;
+    padding: 12px;
+    border: 0;
+    border-radius: 14px;
+    background: linear-gradient(110deg, #45b96b, #2696b2);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .eco-reciclador-titulo h2 {
+    margin: 0 0 6px;
+    color: #126384;
+    font-size: 23px;
+  }
+
+  .eco-reciclador-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .eco-reciclador-lista .reciclador-entregas-card {
+    padding: 18px;
+    border: 1px solid #dce9ef;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 5px 16px rgba(18, 99, 132, 0.06);
+  }
+
+  .eco-reciclador-lista .reciclador-entregas-card h3 {
+    margin: 0 0 12px;
+    color: #126384;
+    font-size: 18px;
+  }
+
+  .eco-reciclador-lista .reciclador-entregas-card p {
+    margin: 7px 0;
+    font-size: 14px;
+  }
+
+  .eco-reciclador-lista .reciclador-accciones {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .eco-reciclador-lista .reciclador-accciones button {
+    flex: 1;
+    min-width: 0;
+    min-height: 44px;
+    border-radius: 12px;
+    font-weight: 700;
+  }
+
+  .eco-reciclador-lista .reciclador-boton-aprobar {
+    background: #34b05a;
+    color: #ffffff;
+  }
+
+  .eco-reciclador-lista .reciclador-boton-rechazar {
+    background: #fff0f0;
+    color: #b42318;
+    border: 1px solid #f4c7c7;
+  }
+
+  .eco-reciclador-rechazo,
+  .reciclador-rechazo {
+    margin-top: 14px;
+  }
+
+  .eco-reciclador-acciones-rechazo {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .eco-reciclador-acciones-rechazo button {
+    flex: 1;
+    min-width: 0;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+
+  .eco-reciclador-vacio {
+    padding: 24px 18px;
+    border: 1px solid #dce9ef;
+    border-radius: 16px;
+    background: #ffffff;
+    color: #607d8b;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .eco-reciclador-mensaje {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #e9f6ee;
+    color: #17643a;
+    font-size: 13px;
+  }
+
+  .eco-reciclador-perfil {
+    padding: 24px 18px;
+    border: 1px solid #dce9ef;
+    border-radius: 20px;
+    background: #ffffff;
+    text-align: center;
+  }
+
+  .eco-reciclador-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 14px;
+    border: 3px solid #34b05a;
+    border-radius: 50%;
+    background: #126384;
+    color: #ffffff;
+    font-size: 38px;
+    font-weight: 800;
+  }
+
+  .eco-reciclador-perfil h2 {
+    margin: 0 0 8px;
+    color: #126384;
+    font-size: 24px;
+  }
+
+  .eco-reciclador-perfil > p {
+    margin-bottom: 24px;
+    color: #607d8b;
+    font-size: 13px;
+  }
+
+  .eco-reciclador-dato {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid #e4edf1;
+    text-align: left;
+    font-size: 13px;
+  }
+
+  .eco-reciclador-dato strong {
+    color: #126384;
+    text-align: right;
+  }
+
+  .eco-reciclador-salir-perfil {
+    width: 100%;
+    min-height: 46px;
+    margin-top: 20px;
+    border: 1px solid #126384;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #126384;
+    font-weight: 700;
+  }
+}
+@media (max-width: 700px) {
+  .eco-reciclador-logo {
+    display: block;
+    width: 100px;
+    height: 85px;
+    object-fit: contain;
+  }
+
+  .eco-reciclador-header {
+    min-height: 105px;
+  }
+}
+
+/* ==========================================
+   PERFIL EDITABLE DEL RECICLADOR
+   ========================================== */
+
+@media (max-width: 700px) {
+
+  .eco-reciclador-perfil-editable {
+    padding: 22px 18px !important;
+    border-radius: 20px;
+    background: #ffffff;
+    text-align: center;
+  }
+
+  .eco-reciclador-perfil-editable .eco-reciclador-avatar {
+    width: 92px;
+    height: 92px;
+    margin: 0 auto 12px;
+    padding: 0;
+    overflow: hidden;
+    border: 3px solid #34b05a;
+    border-radius: 50%;
+    background: #126384;
+  }
+
+  .eco-reciclador-foto {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .eco-reciclador-foto-accion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .eco-reciclador-cambiar-foto {
+    display: inline-block;
+    padding: 9px 16px;
+    border: 1px solid #126384;
+    border-radius: 12px;
+    color: #126384;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .eco-reciclador-foto-accion small {
+    color: #607d8b;
+    font-size: 11px;
+  }
+
+  .eco-reciclador-perfil-editable h2 {
+    margin: 10px 0 6px;
+    color: #126384;
+    font-size: 23px;
+  }
+
+  .eco-reciclador-perfil-editable > p {
+    margin: 0 0 20px;
+    color: #607d8b;
+    font-size: 13px;
+  }
+
+  .eco-reciclador-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 18px;
+    text-align: left;
+  }
+
+  .eco-reciclador-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0;
+  }
+
+  .eco-reciclador-campo label {
+    color: #126384;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .eco-reciclador-campo input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 46px;
+    min-height: 46px;
+    margin: 0;
+    padding: 10px 12px;
+    border: 1px solid #d5e5ec;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #173b4c;
+    font-size: 14px;
+  }
+
+  .eco-reciclador-campo input:disabled {
+    background: #f1f6f8;
+    color: #567384;
+    opacity: 1;
+  }
+
+  .eco-reciclador-campo small {
+    color: #607d8b;
+    font-size: 11px;
+  }
+
+  .eco-reciclador-mensaje-perfil {
+    margin: 16px 0;
+    padding: 12px;
+    border-radius: 12px;
+    background: #eaf6ef;
+    color: #17643a;
+    font-size: 13px;
+  }
+
+  .eco-reciclador-botones-perfil {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .eco-reciclador-editar-perfil,
+  .eco-reciclador-guardar-perfil {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px;
+    border: 0;
+    border-radius: 12px;
+    background: linear-gradient(110deg, #45b96b, #2696b2);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .eco-reciclador-cancelar-perfil {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px;
+    border: 1px solid #cbdfe8;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #126384;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .eco-reciclador-botones-perfil button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .eco-reciclador-salir-perfil {
+    margin-top: 16px;
+  }
+}

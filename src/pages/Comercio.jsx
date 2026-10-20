@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
+import logoEcocycle from '../assets/ecocycle-logo.png'
 
 function Comercio({ perfil, cerrarSesion }) {
   const [tipoDocumento, setTipoDocumento] = useState('')
@@ -232,7 +233,7 @@ function Comercio({ perfil, cerrarSesion }) {
 
   const editarRecompensa = (recompensa) => {
     console.log('Editar recompensa seleccionada:', recompensa)
-    
+
     setRecompensaEditando({
       id: recompensa.id,
       nombre: recompensa.nombre,
@@ -297,9 +298,12 @@ function Comercio({ perfil, cerrarSesion }) {
     <div className="comercio-pagina">
       <div className="comercio-panel">
         <header className='comercio-header'>
-          <div>
-            <h1>EcoCycle</h1>
-            <h2>Panel del comercio aliado</h2>
+          <div className='eco-reciclador-marca'>
+            <img
+              src={logoEcocycle}
+              alt='EcoCycle'
+              className="eco-reciclador-logo"
+            />
           </div>
 
           <button

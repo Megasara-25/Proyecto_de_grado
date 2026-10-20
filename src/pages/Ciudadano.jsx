@@ -13,7 +13,6 @@ import flurosil from '../assets/personajes/flurosil.jpeg'
 import polaris from '../assets/personajes/polaris.jpeg'
 import tetrax from '../assets/personajes/tetrax.jpeg'
 import voltaje from '../assets/personajes/voltaje.jpeg'
-import logoEcocycle from '../assets/ecocycle-logo.png'
 import { Evented } from 'leaflet'
 
 const imagenesMateriales = {
