@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import logoEcocycle from '../assets/ecocycle-logo.png'
+import { Capacitor } from '@capacitor/core'
 
 function Login({ irARegistro }) {
   const [correo, setCorreo] = useState('')
@@ -22,7 +23,9 @@ function Login({ irARegistro }) {
     const {error} = await supabase.auth.resetPasswordForEmail(
       correo.trim(),
       {
-        redirectTo: window.location.origin
+        redirectTo: Capacitor.isNativePlatform()
+        ? 'com.ecocycle.app://auth/reset-password'
+        : `${window.location.origin}/?type=recovery`
       }
     )
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import logoEcocycle from '../assets/ecocycle-logo.png'
 
-function RecuperarCotrasena() {
+function RecuperarContrasena() {
     const [contrasena, setContrasena] = useState('')
     const [confirmarContrasena, setConfirmarContrasena] = useState('')
     const [mensaje, setMensaje] = useState('')
@@ -164,4 +164,4 @@ function RecuperarCotrasena() {
     )
 }
 
-export default RecuperarCotrasena
+export default RecuperarContrasena

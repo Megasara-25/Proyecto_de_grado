@@ -409,77 +409,6 @@
 }
 
 @media (max-width: 600px) {
-  .login-pagina {
-    padding: 20px 16px;
-    background: linear-gradient(160deg,
-        #eaf9f6 0%,
-        #f5fbff 55%,
-        #ffffff 100%);
-  }
-
-  .login-tarjeta {
-    max-width: 420px;
-    padding: 26px 22px;
-    border-radius: 24px;
-    box-shadow: 0 12px 35px rgba(18, 99, 132, 0.09);
-  }
-
-  .login-logo {
-    width: 100%;
-    max-width: 170px;
-    height: auto;
-  }
-
-  .login-logo-contenedor {
-    margin-bottom: 12px;
-  }
-
-  .login-encabezado {
-    margin-bottom: 24px;
-  }
-
-  .login-encabezado h1 {
-    color: #126384;
-    font-size: 23px;
-  }
-
-  .login-encabezado p {
-    font-size: 13px;
-    line-height: 1.5;
-  }
-
-  .login-boton-principal {
-    background: linear-gradient(110deg,
-        #34B05A,
-        #0C83A7);
-    border-radius: 12px;
-    min-height: 48px;
-    font-weight: 700;
-  }
-
-  .login-boton-registro {
-    color: #126384;
-    border-color: #0C83A7;
-    border-radius: 12px;
-    min-height: 46px;
-  }
-
-  .login-circulo1 {
-    width: 220px;
-    height: 220px;
-    top: -100px;
-    left: -110px;
-  }
-
-  .login-circulo2 {
-    width: 170px;
-    height: 170px;
-    top: -90px;
-    left: -90px;
-  }
-}
-
-@media (max-width: 600px) {
   .contenedor {
     display: block;
     min-height: 100dvh;
@@ -4147,5 +4076,165 @@
   .comercio-recompensas-grid,
   .reciclador-entregas-grid {
     min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .ciudadano-mapa-contenedor .eco-mapa-marco .leaflet-container {
+    height: min(53dvh, 370px);
+    min-height: 290px;
+    border-radius: 0;
+  }
+
+  .eco-mapa-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .eco-mapa-leyenda {
+    gap: 10px;
+  }
+
+  .eco-mapa-leyenda span {
+    font-size: 11px;
+  }
+
+  .eco-mapa-acciones {
+    flex-wrap: wrap;
+  }
+
+  .eco-mapa .eco-mapa-ruta,
+  .eco-mapa .eco-mapa-reciclar {
+    min-width: 125px;
+  }
+}
+
+@media (max-width: 700px) {
+  .eco-reciclador-pagina .eco-reciclador-navegacion {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 7px;
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+    padding: 4px 0 14px;
+    margin-bottom: 15px;
+  }
+
+  .eco-reciclador-pagina .eco-reciclador-navegacion .eco-reciclador-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 49px;
+    padding: 9px 3px;
+    border: 1px solid #dce9ed;
+    border-radius: 13px;
+    background: #fff;
+    color: #126384;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .eco-reciclador-pagina .eco-reciclador-navegacion .eco-reciclador-tab.activa {
+    background: linear-gradient(110deg, #34b05a, #0c83a7);
+    color: #fff;
+    border-color: transparent;
+  }
+
+  .eco-reciclador-pagina .eco-reciclador-historial-resumen {
+    min-height: 84px;
+    padding: 13px;
+    gap: 11px;
+  }
+
+  .eco-reciclador-pagina .eco-reciclador-historial-icono {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .eco-reciclador-pagina .eco-reciclador-historial-identidad>strong {
+    font-size: 14px;
+  }
+
+  .eco-reciclador-pagina .eco-reciclador-historial-detalles {
+    padding: 4px 14px 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .eco-reciclador-pagina .eco-reciclador-navegacion {
+    gap: 5px;
+  }
+
+  .eco-reciclador-pagina .eco-reciclador-navegacion .eco-reciclador-tab {
+    padding: 9px 1px;
+    font-size: 11px;
+  }
+}
+
+@media(max-width:700px) {
+  .comercio-pagina .comercio-navegacion-movil {
+    width: 100%;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+    padding: 7px 3px;
+    overflow: visible;
+  }
+
+  .comercio-pagina .comercio-navegacion-movil button {
+    width: 100%;
+    min-width: 0;
+    min-height: 64px;
+    padding: 7px 1px;
+    gap: 5px;
+    font-size: clamp(9px, 2.4vw, 11px);
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  .comercio-pagina .comercio-navegacion-movil .comercio-nav-icono {
+    font-size: 21px;
+    min-height: 22px;
+  }
+
+  .comercio-pagina .comercio-historial {
+    padding: 18px 14px;
+  }
+
+  .comercio-pagina .comercio-historial-card-datos {
+    gap: 8px;
+  }
+
+  .comercio-pagina .comercio-validacion {
+    padding: 18px 14px;
+  }
+}
+
+@media (max-width: 700px) {
+  .comercio-pagina .comercio-navegacion-movil {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .comercio-pagina .comercio-navegacion-movil button {
+    min-width: 0;
+    padding: 9px 2px;
+    font-size: 10px;
+    overflow-wrap: anywhere;
+  }
+
+  .comercio-pagina .eco-comercio-historial-lista {
+    grid-template-columns: 1fr;
+  }
+
+  .comercio-pagina .eco-comercio-canje-campos {
+    grid-template-columns: 1fr;
   }
 }

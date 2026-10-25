@@ -18,6 +18,7 @@ function Comercio({ perfil, cerrarSesion }) {
   const [comercioId, setComercioId] = useState(null)
   const [canjeEncontrado, setCanjeEncontrado] = useState(null)
   const [confirmandoCanje, setConfirmandoCanje] = useState(false)
+  const [buscandoCanje, setBuscandoCanje] = useState(false)
   const [datosComercio, setDatosComercio] = useState(null)
   const [misRecompensas, setMisRecompensas] = useState([])
   const [historialCanjes, setHistorialCanjes] = useState([])
@@ -70,18 +71,47 @@ function Comercio({ perfil, cerrarSesion }) {
   }
 
   const subirFotoRecompensa = async (archivo) => {
-    if (!archivo) return null
-    if (!datosComercio?.id) throw new Error('No se identifico el comercio')
-    const extension = archivo.type === 'image/png' ? 'png' : archivo.type === 'image/jepg' ? 'jpeg' : 'jpg'
-    const nombreUnico = `${Date.now()}-${Math.random().toString(36).slice(2, 12)}.${extension}`
-    const ruta = `${datosComercio.id}/${nombreUnico}`
-    const { error } = await supabase.storage
-      .from('imagenes-recompensas')
-      .upload(ruta, archivo, { contentType: archivo.type, upsert: false })
-    if (error) throw error
-    const { data } = supabase.storage.from('imagenes-recompensas').getPublicUrl(ruta)
-    return { url: data.publicUrl, ruta }
+  if (!archivo) return null
+
+  if (!datosComercio?.id) {
+    throw new Error('No se identificó el comercio')
   }
+
+  const formatos = ['image/jpeg', 'image/png', 'image/webp']
+
+  if (!formatos.includes(archivo.type)) {
+    throw new Error('Selecciona una imagen JPG, PNG o WebP')
+  }
+
+  if (archivo.size > 5 * 1024 * 1024) {
+    throw new Error('La fotografía no puede superar 5 MB')
+  }
+
+  const formulario = new FormData()
+  formulario.append('file', archivo)
+  formulario.append('upload_preset', 'ecocycle_rewards')
+
+  const respuesta = await fetch(
+    'https://api.cloudinary.com/v1_1/kncy2koo/image/upload',
+    {
+      method: 'POST',
+      body: formulario
+    }
+  )
+
+  const resultado = await respuesta.json()
+
+  if (!respuesta.ok || !resultado.secure_url) {
+    throw new Error(
+      resultado.error?.message || 'No se pudo cargar la fotografía'
+    )
+  }
+
+  return {
+    url: resultado.secure_url,
+    publicId: resultado.public_id
+  }
+}
 
   const limpiarFotoNueva = () => {
     setFotoNueva(null)
@@ -152,8 +182,12 @@ function Comercio({ perfil, cerrarSesion }) {
     console.log('Historial del comercio:', data)
   }
 
-  const buscarCanje = async () => {
+  useEffect(() => {
+    if (pestanaActiva === 'historial') cargarHistorialCanjes()
+  }, [pestanaActiva])
 
+  const buscarCanje = async () => {
+    if (buscandoCanje || confirmandoCanje) return
     setMensaje('')
     setCanjeEncontrado(null)
 
@@ -167,30 +201,28 @@ function Comercio({ perfil, cerrarSesion }) {
       return
     }
 
-    const { data, error } = await supabase.rpc(
-      'buscar_canje_comercio',
-      {
-        p_tipo_documento: tipoDocumento,
-        p_numero_documento: numeroDocumento,
-        p_codigo_canje: codigoCanje
+    setBuscandoCanje(true)
+    try {
+      const { data, error } = await supabase.rpc(
+        'buscar_canje_comercio',
+        {
+          p_tipo_documento: tipoDocumento,
+          p_numero_documento: numeroDocumento.trim(),
+          p_codigo_canje: codigoCanje.trim()
+        }
+      )
+      if (error) throw error
+      if (!data?.length) {
+        setMensaje('No se encontró un canje válido con estos datos.')
+        return
       }
-    )
-
-    if (error) {
+      setCanjeEncontrado(data[0])
+    } catch (error) {
       console.error('Error al buscar canje:', error)
-      setMensaje('No te fue posible validar el canje')
-      return
+      setMensaje('No fue posible consultar el canje. Intenta nuevamente.')
+    } finally {
+      setBuscandoCanje(false)
     }
-
-    if (data.length === 0) {
-      setCanjeEncontrado(null)
-      setMensaje('No se encontro un canje valido')
-      return
-    }
-    setCanjeEncontrado(data[0])
-    setMensaje('')
-
-    console.log('Canje encontrado:', data)
   }
 
   const confirmarCanje = async () => {
@@ -294,7 +326,6 @@ function Comercio({ perfil, cerrarSesion }) {
       setMensajeRecompensa('Recompensa creada correctamente')
     } catch (error) {
       console.error('Error al crear recompensa:', error)
-      if (fotoSubida) await supabase.storage.from('imagenes-recompensas').remove([fotoSubida.ruta])
       setMensajeRecompensa(`No fue posible crear la recompensa: ${error.message || 'Error desconocido'}`)
     } finally {
       setGuardarRecompensas(false)
@@ -366,7 +397,7 @@ function Comercio({ perfil, cerrarSesion }) {
       setMensajeRecompensa('Recompensa actualizada correctamente')
     } catch (error) {
       console.error('Error al actualizar recompensa:', error)
-      if (fotoSubida) await supabase.storage.from('imagenes-recompensas').remove([fotoSubida.ruta])
+      
       setMensajeRecompensa(`No fue posible actualizar la recompensa: ${error.message || 'Error desconocido'}`)
     } finally {
       setGuardandoEdicion(false)
@@ -389,7 +420,15 @@ function Comercio({ perfil, cerrarSesion }) {
       setFotoPerfilFirmada('')
       return
     }
-
+    if (
+  usuario.foto_perfil_url.startsWith(
+    'https://res.cloudinary.com/kncy2koo/'
+    )
+    ) {
+      setFotoPerfilFirmada(usuario.foto_perfil_url)
+      return
+    }
+    
     let ruta = usuario.foto_perfil_url
 
     if (ruta.includes('/storage/v1/object/')) {
@@ -457,6 +496,42 @@ function Comercio({ perfil, cerrarSesion }) {
     setMensajePerfil('')
   }
 
+  const subirFotoPerfil = async (archivo) => {
+  if (!archivo) return null
+
+  const formatos = ['image/jpeg', 'image/png', 'image/webp']
+
+  if (!formatos.includes(archivo.type)) {
+    throw new Error('Selecciona una fotografía JPG, PNG o WebP.')
+  }
+
+  if (archivo.size > 5 * 1024 * 1024) {
+    throw new Error('La fotografía no puede superar los 5 MB.')
+  }
+
+  const formulario = new FormData()
+  formulario.append('file', archivo)
+  formulario.append('upload_preset', 'ecocycle_profiles')
+
+  const respuesta = await fetch(
+    'https://api.cloudinary.com/v1_1/kncy2koo/image/upload',
+    {
+      method: 'POST',
+      body: formulario
+    }
+  )
+
+  const resultado = await respuesta.json()
+
+  if (!respuesta.ok || !resultado.secure_url) {
+    throw new Error(
+      resultado.error?.message || 'No se pudo cargar la fotografía.'
+    )
+  }
+
+  return resultado.secure_url
+}
+
   const guardarPerfilComercio = async (evento) => {
     evento.preventDefault()
     if (guardandoPerfil) return
@@ -470,24 +545,11 @@ function Comercio({ perfil, cerrarSesion }) {
     setGuardandoPerfil(true)
     setMensajePerfil('')
     let rutaSubida = null
-    let rpcConfirmada = false
+    
 
     try {
       if (fotoPerfil) {
-        const extension = fotoPerfil.type === 'image/png'
-          ? 'png'
-          : fotoPerfil.type === 'image/webp' ? 'webp' : 'jpg'
-
-        rutaSubida = `${perfil.id}/comercio-${Date.now()}-${Math.random().toString(36).slice(2, 9)}.${extension}`
-
-        const { error: errorSubida } = await supabase.storage
-          .from('foto-perfil')
-          .upload(rutaSubida, fotoPerfil, {
-            contentType: fotoPerfil.type,
-            upsert: false
-          })
-
-        if (errorSubida) throw errorSubida
+        rutaSubida = await subirFotoPerfil(fotoPerfil)
       }
 
       const { data, error } = await supabase.rpc('actualizar_perfil_comercio', {
@@ -497,7 +559,7 @@ function Comercio({ perfil, cerrarSesion }) {
 
       if (error) throw error
       if (data !== true) throw new Error('No se confirmó la actualización del perfil.')
-      rpcConfirmada = true
+      
 
       setDatosComercio(actual => ({ ...actual, nombre_comercio: nombre }))
       setEditandoPerfil(false)
@@ -512,12 +574,7 @@ function Comercio({ perfil, cerrarSesion }) {
       }
     } catch (error) {
       console.error('Error al actualizar perfil:', error)
-      if (rutaSubida && !rpcConfirmada) {
-        const { error: errorBorrado } = await supabase.storage
-          .from('foto-perfil')
-          .remove([rutaSubida])
-        if (errorBorrado) console.error('No se pudo limpiar la fotografía pendiente:', errorBorrado)
-      }
+    
       setMensajePerfil(`No fue posible actualizar el perfil: ${error.message || 'Error desconocido'}`)
     } finally {
       setGuardandoPerfil(false)
@@ -545,10 +602,8 @@ function Comercio({ perfil, cerrarSesion }) {
               aria-current={pestanaActiva === pestana.id ? 'page' : undefined}
               onClick={() => {
                 setPestanaActiva(pestana.id)
-                window.scrollTo({ top: 0, behavior: 'smooth' })
               }}
             >
-              <span className="comercio-nav-icono" aria-hidden="true">{pestana.icono}</span>
               <span>{pestana.nombre}</span>
             </button>
           ))}
@@ -794,6 +849,7 @@ function Comercio({ perfil, cerrarSesion }) {
                   >
                     {recompensa.imagen_url ? (
                       <img
+                        className='eco-comercio-recompensa-imagen'
                         src={recompensa.imagen_url}
                         alt={recompensa.nombre}
                         loading="lazy"
@@ -806,6 +862,7 @@ function Comercio({ perfil, cerrarSesion }) {
                       />
                     ) : (
                       <div
+                        className='eco-comercio-sin-imagen'
                         style={{
                           padding: 24,
                           textAlign: 'center',
@@ -816,7 +873,7 @@ function Comercio({ perfil, cerrarSesion }) {
                         Sin fotografía
                       </div>
                     )}
-                    <span>{recompensa.categoria}</span>
+                    {recompensa.categoria && <span className='eco-comercio-categoria'>{recompensa.categoria}</span>}
 
                     <h3>{recompensa.nombre}</h3>
 
@@ -830,7 +887,7 @@ function Comercio({ perfil, cerrarSesion }) {
                       Disponibles:{recompensa.cantidad_disponible}
                     </p>
 
-                    <p>Estado:{recompensa.estado}</p>
+                    <span className={`eco-comercio-recompensa-estado ${recompensa.estado === 'Activa' ? 'activa' : 'inactiva'}`}>{recompensa.estado}</span>
 
                     <button
                       type='button'
@@ -849,80 +906,63 @@ function Comercio({ perfil, cerrarSesion }) {
         {pestanaActiva === 'canjes' && (
           <section className='comercio-validacion'>
             <div className='comercio-validacion-encabezado'>
-              <span>Gestion de beneficios</span>
+              <span>Gestión de beneficios</span>
               <h2>Validar canje</h2>
-
-              <p>
-                Ingresa el documento del ciudadano y su codigo,
-                para consultar y confirmar la recompensa.
-              </p>
+              <p>Ingresa los datos del ciudadano y el código de seis dígitos para comprobar la recompensa antes de entregarla.</p>
             </div>
-
-            <label>tipo de documento</label>
-            <select
-              value={tipoDocumento}
-              onChange={(e) => setTipoDocumento(e.target.value)}
-            >
-              <option value="">Seleccione</option>
-              <option value="CC">CC</option>
-              <option value="TI">TI</option>
-              <option value="CE">CE</option>
-              <option value="PASAPORTE">Pasaporte</option>
-            </select>
-
-            <label>Numero de documento</label>
-            <input
-              type="text"
-              value={numeroDocumento}
-              onChange={(e) => setNumeroDocumento(e.target.value)}
-              placeholder='Numero de coumento'
-            />
-
-            <label>Codigo de canje</label>
-            <input type="text"
-              value={codigoCanje}
-              onChange={(e) => setCodigoCanje(e.target.value)}
-              placeholder='Codigo de 6 digitos'
-            />
-            <button onClick={buscarCanje}>
-              Validar canje
-            </button>
-
-            {canjeEncontrado && (
+            <div className='eco-comercio-canje-campos'>
               <div>
-
-                <h3>Canje encontrado</h3>
-
-                <p>
-                  Ciudadano: {canjeEncontrado.nombre_ciudadano}
-                </p>
-
-                <p>
-                  Recompensa: {canjeEncontrado.nombre_recompensa}
-                </p>
-
-                <p>
-                  EcoPunto utilizados: {canjeEncontrado.puntos_canje}
-                </p>
-
-                <p>
-                  Estado: {canjeEncontrado.estado_canje}
-                </p>
-
+                <label htmlFor='comercio-tipo-documento'>Tipo de documento</label>
+                <select id='comercio-tipo-documento' value={tipoDocumento}
+                  disabled={confirmandoCanje || buscandoCanje}
+                  onChange={(e) => { setTipoDocumento(e.target.value); setCanjeEncontrado(null); setMensaje('') }}>
+                  <option value=''>Selecciona un documento</option>
+                  <option value='CC'>CC</option>
+                  <option value='TI'>TI</option>
+                  <option value='CE'>CE</option>
+                  <option value='PASAPORTE'>Pasaporte</option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor='comercio-numero-documento'>Número de documento</label>
+                <input id='comercio-numero-documento' type='text' inputMode='numeric'
+                  autoComplete='off' value={numeroDocumento} disabled={confirmandoCanje || buscandoCanje}
+                  onChange={(e) => { setNumeroDocumento(e.target.value); setCanjeEncontrado(null); setMensaje('') }}
+                  placeholder='Número de documento' />
+              </div>
+              <div>
+                <label htmlFor='comercio-codigo-canje'>Código de canje</label>
+                <input id='comercio-codigo-canje' type='text' inputMode='numeric'
+                  maxLength={6} autoComplete='off' value={codigoCanje}
+                  disabled={confirmandoCanje || buscandoCanje}
+                  onChange={(e) => { setCodigoCanje(e.target.value.replace(/\D/g, '').slice(0, 6)); setCanjeEncontrado(null); setMensaje('') }}
+                  placeholder='6 dígitos' />
+              </div>
+            </div>
+            <button type='button' className='eco-comercio-validar-boton'
+              disabled={buscandoCanje || confirmandoCanje || !tipoDocumento || !numeroDocumento.trim() || codigoCanje.length !== 6}
+              onClick={buscarCanje}>
+              {buscandoCanje ? 'Consultando...' : 'Buscar canje'}
+            </button>
+            {canjeEncontrado && (
+              <div className='comercio-canje-detalle'>
+                <div className='eco-comercio-canje-cabecera'>
+                  <h3>Canje encontrado</h3>
+                  <span className={`eco-comercio-estado ${canjeEncontrado.estado_canje === 'Pendiente' ? 'pendiente' : 'canjeado'}`}>
+                    {canjeEncontrado.estado_canje}
+                  </span>
+                </div>
+                <div className='eco-comercio-canje-dato'><span>Ciudadano</span><strong>{canjeEncontrado.nombre_ciudadano}</strong></div>
+                <div className='eco-comercio-canje-dato'><span>Recompensa</span><strong>{canjeEncontrado.nombre_recompensa}</strong></div>
+                <div className='eco-comercio-canje-dato'><span>EcoPuntos utilizados</span><strong>{canjeEncontrado.puntos_canje}</strong></div>
                 {canjeEncontrado.estado_canje === 'Pendiente' && (
-
-                  <button
-                    onClick={confirmarCanje}
-                    disabled={confirmandoCanje}
-                  >
-                    {confirmandoCanje ? 'Confirmando...' : 'Confirmar canje'}
+                  <button type='button' onClick={confirmarCanje} disabled={confirmandoCanje}>
+                    {confirmandoCanje ? 'Confirmando...' : 'Confirmar entrega del beneficio'}
                   </button>
                 )}
               </div>
             )}
-            {mensaje && (
-              <p>{mensaje}</p>
-            )}
+            {mensaje && <p className='comercio-canje-mensaje' role='status'>{mensaje}</p>}
           </section>
         )}
 
@@ -930,40 +970,27 @@ function Comercio({ perfil, cerrarSesion }) {
           <section className='comercio-historial'>
             <div className='comercio-historial-encabezado'>
               <h2>Historial de canjes</h2>
-              <p>Consulta las recompensas utilizadas en tu comercio</p>
+              <p>Consulta las recompensas utilizadas en tu comercio.</p>
             </div>
-
             {historialCanjes.length === 0 ? (
-              <p>Todavia no hay canjes confirmados</p>
+              <div className='eco-comercio-historial-vacio'>Todavía no hay canjes registrados.</div>
             ) : (
-              <div className='comercio-tabla-contenedor'>
-                <table className='comercio-tabla'>
-                  <thead>
-                    <tr>
-                      <th>Recompensas</th>
-                      <th>Ecopuntos</th>
-                      <th>Fecha</th>
-                      <th>Estado</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {historialCanjes.map((canje) => (
-                      <tr key={canje.canje_id}>
-                        <td>{canje.nombre_recompensa}</td>
-                        <td>{canje.puntos_utilizados}</td>
-                        <td>
-                          {new Date(canje.fecha_canje).toLocaleDateString('es-CO')}
-                        </td>
-                        <td>
-                          <span className='comercio-estado-canje'>
-                            {canje.estado_canje}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className='eco-comercio-historial-lista'>
+                {historialCanjes.map((canje) => (
+                  <article className='eco-comercio-historial-tarjeta' key={canje.canje_id}>
+                    <div className='eco-comercio-historial-superior'>
+                      <div>
+                        <span className='eco-comercio-historial-etiqueta'>Recompensa</span>
+                        <h3>{canje.nombre_recompensa}</h3>
+                      </div>
+                      <span className='comercio-estado-canje'>{canje.estado_canje}</span>
+                    </div>
+                    <div className='eco-comercio-historial-datos'>
+                      <div><span>EcoPuntos utilizados</span><strong>{canje.puntos_utilizados}</strong></div>
+                      <div><span>Fecha</span><strong>{canje.fecha_canje ? new Date(canje.fecha_canje).toLocaleDateString('es-CO') : 'No disponible'}</strong></div>
+                    </div>
+                  </article>
+                ))}
               </div>
             )}
           </section>

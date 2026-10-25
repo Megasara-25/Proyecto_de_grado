@@ -3,14 +3,15 @@ import { useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import MapaReciclaje from '../components/MapaReciclaje'
 
-import paperyus from '../assets/personajes/paperyus.jpeg'
-import ferrax from '../assets/personajes/ferrax.jpeg'
-import flurosil from '../assets/personajes/flurosil.jpeg'
-import polaris from '../assets/personajes/polaris.jpeg'
-import tetrax from '../assets/personajes/tetrax.jpeg'
-import voltaje from '../assets/personajes/voltaje.jpeg'
+import paperyus from '../assets/personajes/paperyus.png'
+import ferrax from '../assets/personajes/ferrax.png'
+import flurosil from '../assets/personajes/flurosil.png'
+import polaris from '../assets/personajes/polaris.png'
+import tetrax from '../assets/personajes/tetrax.png'
+import voltaje from '../assets/personajes/voltaje.png'
 import logoEcocycle from '../assets/ecocycle-logo.png'
 import { Evented } from 'leaflet'
+import { validarTelefonoColombiano } from '../utils/validaciones'
 
 const imagenesMateriales = {
   papel: paperyus,
@@ -44,6 +45,8 @@ function Ciudadano({ perfil, cerrarSesion }) {
   const [saldoEcopuntos, setSaldoEcopuntos] = useState(perfil.ecopuntos)
   const [recompensaCanjeando, setRecompensaCanjeando] = useState(null)
 
+  const [nombreMostrado, setNombreMostrado] = useState(perfil.nombre || '')
+
   const [datosPerfil, setDatosPerfil] = useState({
     nombre: perfil.nombre || '',
     correo: perfil.correo || '',
@@ -58,6 +61,58 @@ function Ciudadano({ perfil, cerrarSesion }) {
   const [fotoSeleccionada, setFotoSeleccionada] = useState(null)
   const [fotoVistaPrevia, setFotoVistaPrevia] = useState(null)
   const [fotoActual, setFotoActual] = useState(null)
+
+  const videosEducativos =[
+    {
+      id:'paperyus',
+      personaje: 'Paperyus',
+      material: 'Papel',
+      descripcion: 'Aprende a separar y preparar el papel para reciclarlo',
+      imagen: paperyus,
+      url: 'https://www.youtube.com/watch?v=F9w85cYCnkM' 
+    },
+
+    {
+      id:'Tetrax',
+      personaje: 'Tetrax',
+      material: 'Carton',
+      descripcion: 'Descubre como aprovechar y reciclar el carton',
+      imagen: tetrax,
+      url: 'https://www.youtube.com/watch?v=dUKOHLl-vHg'
+    },
+    {
+      id:'Polaris',
+      personaje: 'Polaris',
+      material: 'Plastico',
+      descripcion: 'Aprende a reconocer y seprar residuos plasticos',
+      imagen: polaris,
+      url:'https://www.youtube.com/watch?v=AXpnghigdkU'
+    },
+    {
+      id:'Flurosil',
+      personaje: 'Flurosil',
+      material: 'Vidrio',
+      descripcion: 'Conoce como entregar adecuadamente los envases de vidrio',
+      imagen: flurosil,
+      url: 'https://www.youtube.com/watch?v=zof_Kw9aW8I'
+    }, 
+    {
+      id:'Voltaje',
+      personaje: 'Voltaje',
+      material: 'Pilas y baterias',
+      descripcion: 'Aprende para que sirven las pilas y como reciclarlas',
+      imagen: voltaje,
+      url: 'https://www.youtube.com/watch?v=pDnRzqEFSMs'
+    },
+    {
+      id:'ferrax',
+      personaje: 'Ferrax',
+      material: 'Latas y metales',
+      descripcion: 'Aprende a separar las latas y otros residuos etalicos',
+      imagen: ferrax,
+      url: 'https://www.youtube.com/watch?v=OJHAUWLSi_E'
+    }
+  ]
 
   const cargarMateriales = async () => {
 
@@ -302,6 +357,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
       return
     }
 
+    setNombreMostrado(data.nombre || '')
     setDatosPerfil({
       nombre: data.nombre || '',
       correo: data.correo || '',
@@ -377,8 +433,8 @@ function Ciudadano({ perfil, cerrarSesion }) {
       return
     }
 
-    if (nombre.length > 11) {
-      setMensajePerfil('El telefono es demasiado largo ')
+    if (telefono && !validarTelefonoColombiano(telefono)) {
+      setMensajePerfil('Ingresa un celular valido')
       return
     }
 
@@ -440,7 +496,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
           p_nombre: nombre,
           p_telefono: telefono || null,
           p_fecha_nacimiento:
-            datosPerfil.perfil_nacimiento || null,
+            datosPerfil.fecha_nacimiento || null,
           p_foto_perfil_url: rutaFoto
         })
 
@@ -448,6 +504,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
         throw errorActualizacion
       }
 
+      setNombreMostrado(nombre)
       await cargarDatosPerfil()
 
       setFotoSeleccionada(null)
@@ -459,7 +516,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
       setFotoVistaPrevia(null)
       setEditandoPerfil(false)
 
-      setMensajePerfil('Perfil actualizado correctmanete')
+      setMensajePerfil('Perfil actualizado correctamente')
     } catch (error) {
       console.error('Error al actualizar perfil:', error)
 
@@ -507,6 +564,22 @@ function Ciudadano({ perfil, cerrarSesion }) {
     cargarDatosPerfil()
   }, [perfil.id])
 
+  const abrirVideoEducativo = async (url) => {
+    try{
+      const { Capacitor } = await import('@capacitor/core')
+
+      if (Capacitor.isNativePlatform()) {
+        const { Browser } = await import('@capacitor/browser')
+        await Browser.open({ url })
+      } else {
+        window.open(url, '_blank', 'noopener, noreferrer')
+      }
+    } catch (error) {
+      console.error('No fue posible abrir el video:', error)
+      window.location.href = url
+    }
+  }
+
   return (
     <div className="ciudadano-pagina">
 
@@ -519,7 +592,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
           />
 
           <div className="ciudadano-header-acciones">
-            <span>{perfil.nombre}</span>
+            <span>{nombreMostrado}</span>
           </div>
         </div>
       </header>
@@ -567,7 +640,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
                 Panel del ciudadano
               </span>
 
-              <h1>Hola, {perfil.nombre}</h1>
+              <h1>Hola, {nombreMostrado}</h1>
 
               <p>
                 Recicla, acumula EcoPuntos y obten beneficios
@@ -585,6 +658,45 @@ function Ciudadano({ perfil, cerrarSesion }) {
               </div>
             </div>
           </section>
+
+           <section className='eco-educacion-preview'>
+            <header className='eco-educacion-encabezado'>
+                <span>Aprende con EcoCycle</span>
+                <h2>¿Sabes como reciclar?</h2>
+                <p>
+                  Conoce nuestros superheroes y aprende a separa 
+                  correctamente tus residuos reciclables
+                </p>
+              </header>
+
+              <div className='eco-educacion-grid'>
+                {videosEducativos.map((video) => (
+                  <article key={video.id} className='eco-educacion-card'>
+                    <div className='eco-educacion-card-imagen'>
+                      <img 
+                        src={video.imagen} 
+                        alt={`Personaje ${video.personaje}`}
+                        loading='lazy'
+                      />
+                    </div>
+
+                    <div className='eco-educacion-card-contenido'>
+                      <span>{video.material}</span>
+                      <h3>{video.personaje}</h3>
+                      <p>{video.descripcion}</p>
+
+                      <button
+                        type='button'
+                        className='eco-educacion-boton'
+                        onClick={() => abrirVideoEducativo(video.url)}
+                      >
+                        Ver video
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
         </div>
 
         {mensaje && (
@@ -592,6 +704,21 @@ function Ciudadano({ perfil, cerrarSesion }) {
             {mensaje}
           </div>
         )}
+
+        <div
+          className='eco-ciudadano-vista'
+          hidden={pestanaActiva !== 'aprender'}
+        >
+          <section className='eco-educacion-pagina'>
+            <button
+              type='button'
+              className='eco-educacion-volver'
+              onClick={() => setPestanaActiva('inicio')}
+            >
+              Volver al inicio
+            </button>
+          </section>
+        </div>
 
         <div
           className="eco-ciudadano-vista"
@@ -691,33 +818,22 @@ function Ciudadano({ perfil, cerrarSesion }) {
               </div>
 
               <div className="ciudadano-centros-grid">
+                
                 {recicladorSeleccionado && (
-                  <div className="ciudadano-centro-card seleccionado">
-                    <div className="ciudadano-centro-icono" />
-
-                    <span>Centro seleccionado</span>
-
-                    <h3>{recicladorSeleccionado.nombre_centro}</h3>
-                    <p>{recicladorSeleccionado.direccion}</p>
-                    <p>{recicladorSeleccionado.ciudad}</p>
-
-                    {recicladorSeleccionado.distancia !== null &&
-                      recicladorSeleccionado.distancia !== undefined && (
-                        <p>
-                          <strong>
-                            A {recicladorSeleccionado.distancia.toFixed(2)}
-                            {' '}km de tu ubicacion
-                          </strong>
-                        </p>
-                      )}
-
-                    <p>
-                      Material seleccionado:{' '}
-                      <strong>{materialSeleccionado.nombre}</strong>
-                    </p>
+                  <div className="ciudadano-centro-card seleccionado eco-centro-resumen">
+                    <div className="eco-centro-resumen-contenido">
+                      <div>
+                        <span className="eco-centro-resumen-etiqueta">
+                          CENTRO SELECCIONADO
+                        </span>
+                        <h3>{recicladorSeleccionado.nombre_centro}</h3>
+                        <p>{recicladorSeleccionado.ciudad}</p>
+                      </div>
+                    </div>
 
                     <button
                       type="button"
+                      className="eco-centro-cambiar"
                       onClick={() => setRecicladorSeleccionado(null)}
                     >
                       Cambiar centro
@@ -743,7 +859,7 @@ function Ciudadano({ perfil, cerrarSesion }) {
 
               {cantidad > 0 && materialSeleccionado && (
                 <div className="ciudadano-puntos-estimados">
-                  <p>EcoPuntos estimados</p>
+                  <p>ECOPUNTOS</p>
 
                   <strong>
                     {Math.floor(
@@ -758,6 +874,14 @@ function Ciudadano({ perfil, cerrarSesion }) {
                   </span>
                 </div>
               )}
+                              
+              <div className="eco-entrega-aviso" role="note">
+                <span aria-hidden="true"></span>
+                <p>
+                  Los EcoPuntos se sumaran a tu saldo cuando
+                  el reciclador valide y apruebe la entrega
+                </p>
+              </div>
 
               <button
                 type="button"
@@ -1117,10 +1241,6 @@ function Ciudadano({ perfil, cerrarSesion }) {
                   value={datosPerfil.correo}
                   disabled
                 />
-
-                <small>
-                  El correo no se puede modificar desde aqui
-                </small>
               </div>
 
               <div className='eco-perfil-campo'>

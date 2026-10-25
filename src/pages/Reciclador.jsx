@@ -1,13 +1,19 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { supabase } from '../lib/supabase'
 import logoEcocycle from '../assets/ecocycle-logo.png'
 
 function Reciclador({ perfil, cerrarSesion }) {
   const [recicladorId, setRecicladorId] = useState(null)
   const [entregas, setEntregas] = useState([])
+  const [historialEntregas, setHistorialEntregas] = useState([])
+  const [cargandoHistorial, setCargandoHistorial] = useState(false)
+  const [errorHistorial, setErrorHistorial] = useState('')
+  const [nombreMostrado, setNombreMostrado] = useState(perfil.nombre || '')
   const [mensaje, setMensaje] = useState('')
   const [motivoRechazo, setMotivoRechazo] = useState('')
   const [entregaARechazar, setEntregaARechazar] = useState(null)
+  const [entregaProcesando, setEntregaProcesando] = useState(null)
+  const operacionEntregaEnCurso = useRef(false)
   const [pestanaActiva, setPestanaActiva] = useState('inicio')
   const [editandoPerfil, setEditandoPerfil] = useState(false)
   const [guardandoPerfil, setGuardandoPerfil] = useState(false)
@@ -67,70 +73,122 @@ function Reciclador({ perfil, cerrarSesion }) {
     console.log('Entregas pendientes: ', data)
   }
 
+  // El historial es una consulta independiente de las entregas pendientes.
+  const cargarHistorial = async (idReciclador) => {
+    if (!idReciclador) return
+    setCargandoHistorial(true)
+    setErrorHistorial('')
+
+    try {
+      const { data, error } = await supabase
+        .from('entrega')
+        .select(`
+          id,
+          cantidad,
+          puntos_obtenidos,
+          estado,
+          fecha,
+          motivo_rechazo,
+          material(nombre)
+        `)
+        .eq('recicladorid', idReciclador)
+        .in('estado', ['Aprobada', 'Aprobado', 'Rechazada', 'Rechazado'])
+        .order('fecha', { ascending: false })
+
+      if (error) throw error
+      setHistorialEntregas(data || [])
+    } catch (error) {
+      console.error('Error al consultar historial del reciclador:', error)
+      setErrorHistorial('No fue posible consultar el historial. Verifica los permisos de lectura y vuelve a intentarlo.')
+    } finally {
+      setCargandoHistorial(false)
+    }
+  }
+
   const actualizandoEstadoEntrega = async (
     entregaId,
     nuevoEstado,
     motivo = null
   ) => {
+    // Evita solicitudes repetidas incluso con dos pulsaciones muy rápidas.
+    if (operacionEntregaEnCurso.current) return false
+
+    operacionEntregaEnCurso.current = true
+    setEntregaProcesando(entregaId)
     setMensaje('')
 
-    const { data, error } = await supabase.rpc(
-      'actualizar_estado_entrega_reciclador',
-      {
-        p_entrega_id: entregaId,
-        p_estado: nuevoEstado,
-        p_motivo_rechazo: motivo
+    try {
+      const { data, error } = await supabase.rpc(
+        'actualizar_estado_entrega_reciclador',
+        {
+          p_entrega_id: entregaId,
+          p_estado: nuevoEstado,
+          p_motivo_rechazo: motivo
+        }
+      )
+
+      if (error) {
+        console.error('Error al actualizar entrega:', error)
+        setMensaje('No fue posible actualizar la entrega')
+        return false
       }
-    )
 
-    if (error) {
-      console.error('Error al actualizar entrega', error)
+      if (!data) {
+        setMensaje('La entrega no pudo ser actualizada')
+        return false
+      }
 
-      setMensaje('No fue posible actualizar la entrega')
-      return
+      setMensaje(
+        nuevoEstado === 'Aprobada'
+          ? 'Entrega aprobada correctamente'
+          : 'Entrega rechazada correctamente'
+      )
+
+      await cargarEntrega(recicladorId)
+      await cargarHistorial(recicladorId)
+      return true
+    } catch (error) {
+      console.error('Error al procesar entrega:', error)
+      setMensaje('Ocurrió un error al procesar la entrega')
+      return false
+    } finally {
+      operacionEntregaEnCurso.current = false
+      setEntregaProcesando(null)
     }
-
-    if (!data) {
-      setMensaje('La entrega no pudo ser actualizada')
-      return
-    }
-
-    if (nuevoEstado === 'Aprobada') {
-      setMensaje('Entrega aprobada correctamente')
-    }
-
-    if (nuevoEstado === 'Rechazada') {
-      setMensaje('Entrega rechazada correctamente')
-    }
-    cargarEntrega(recicladorId)
   }
 
   const aprobarEntrega = async (entregaId) => {
-    await actualizandoEstadoEntrega(
-      entregaId, 'Aprobada'
-    )
+    await actualizandoEstadoEntrega(entregaId, 'Aprobada')
   }
 
-  const rechazarEntrega = async (entregaId) => {
+  const rechazarEntrega = (entregaId) => {
+    if (operacionEntregaEnCurso.current) return
     setEntregaARechazar(entregaId)
     setMotivoRechazo('')
     setMensaje('')
   }
 
   const confirmarRechazo = async () => {
+    if (operacionEntregaEnCurso.current) return
+
     if (!motivoRechazo.trim()) {
       setMensaje('Debes indicar el motivo del rechazo')
       return
     }
 
-    await actualizandoEstadoEntrega(
+    if (entregaARechazar === null) return
+
+    const actualizado = await actualizandoEstadoEntrega(
       entregaARechazar,
       'Rechazada',
-      motivoRechazo
+      motivoRechazo.trim()
     )
 
-    setEntregaARechazar(null)
-    setMotivoRechazo('')
+    // Solo cerramos el formulario cuando Supabase confirma el rechazo.
+    if (actualizado) {
+      setEntregaARechazar(null)
+      setMotivoRechazo('')
+    }
   }
 
   const cargarDatosPerfil = async () => {
@@ -146,6 +204,7 @@ function Reciclador({ perfil, cerrarSesion }) {
       return
     }
 
+    setNombreMostrado(data.nombre || perfil.nombre || '')
     setDatosPerfil({
       nombre: data.nombre || '',
       correo: data.correo || '',
@@ -250,6 +309,7 @@ function Reciclador({ perfil, cerrarSesion }) {
       })
       if (errorActualizacion) throw errorActualizacion
       perfilActualizado = true
+      setNombreMostrado(nombre)
 
       await cargarDatosPerfil()
       if (fotoVistaPrevia) URL.revokeObjectURL(fotoVistaPrevia)
@@ -291,11 +351,16 @@ function Reciclador({ perfil, cerrarSesion }) {
     }
   }, [perfil?.id])
 
+  useEffect(() => {
+    if (pestanaActiva === 'historial' && recicladorId) {
+      cargarHistorial(recicladorId)
+    }
+  }, [pestanaActiva, recicladorId])
+
   const pestanasReciclador = [
     { id: 'inicio', nombre: 'Inicio' },
     { id: 'entregas', nombre: 'Entregas' },
     { id: 'historial', nombre: 'Historial' },
-    { id: 'centro', nombre: 'Mi centro' },
     { id: 'perfil', nombre: 'Perfil' }
   ]
 
@@ -342,7 +407,7 @@ function Reciclador({ perfil, cerrarSesion }) {
           <section className="eco-reciclador-vista">
             <div className="eco-reciclador-bienvenida">
               <span>Panel del reciclador</span>
-              <h2>Hola,{perfil.nombre}</h2>
+              <h2>Hola, {nombreMostrado}</h2>
               <p>
                 Gestiona las entregas de materiales reciclables
                 registradas en tu centro
@@ -406,14 +471,16 @@ function Reciclador({ perfil, cerrarSesion }) {
                       type="button"
                       className="reciclador-boton-aprobar"
                       onClick={() => aprobarEntrega(entrega.id)}
+                      disabled={entregaProcesando !== null || entregaARechazar !== null}
                     >
-                      Aprobar
+                      {entregaProcesando === entrega.id ? 'Procesando...' : 'Aprobar'}
                     </button>
 
                     <button
                       type="button"
                       className="reciclador-boton-rechazar"
                       onClick={() => rechazarEntrega(entrega.id)}
+                      disabled={entregaProcesando !== null || entregaARechazar !== null}
                     >
                       Rechazar
                     </button>
@@ -428,9 +495,10 @@ function Reciclador({ perfil, cerrarSesion }) {
                       <textarea
                         id={`motivo-${entrega.id}`}
                         className="reciclador-rechazo-textarea"
-                        placeholder="Ejemplo: la cantidad de entrega no coincide con lo regiistrado"
+                        placeholder="Ejemplo: la cantidad de entrega no coincide con lo registrado"
                         value={motivoRechazo}
                         onChange={(e) => setMotivoRechazo(e.target.value)}
+                        disabled={entregaProcesando !== null}
                       />
 
                       <div className="eco-reciclador-acciones-rechazo">
@@ -440,6 +508,7 @@ function Reciclador({ perfil, cerrarSesion }) {
                             setEntregaARechazar(null)
                             setMotivoRechazo('')
                           }}
+                          disabled={entregaProcesando !== null}
                         >
                           Cancelar
                         </button>
@@ -447,8 +516,11 @@ function Reciclador({ perfil, cerrarSesion }) {
                         <button
                           type="button"
                           onClick={confirmarRechazo}
+                          disabled={entregaProcesando !== null || !motivoRechazo.trim()}
                         >
-                          Confirmar rechazo
+                          {entregaProcesando === entrega.id
+                            ? 'Procesando...'
+                            : 'Confirmar rechazo'}
                         </button>
                       </div>
                     </div>
@@ -463,32 +535,57 @@ function Reciclador({ perfil, cerrarSesion }) {
           <section className="eco-reciclador-vista">
             <div className="eco-reciclador-titulo">
               <h2>Historial</h2>
-              <p>
-                Aqui podras consultar las entregas que
-                ya fueron aprobadas o rechazadas
-              </p>
+              <p>Consulta las entregas aprobadas y rechazadas de tu centro.</p>
             </div>
 
-            <div className="eco-reciclador-vacio">
-              Estamos preparando la consulta del historial
-            </div>
-          </section>
-        )}
-
-        {pestanaActiva === 'centro' && (
-          <section className="eco-reciclador-vista">
-            <div className="eco-reciclador-titulo">
-              <h2>Mi centro de reciclaje</h2>
-              <p>
-                Informacion del centro, ubicacion y
-                materiales que recibe
-              </p>
-            </div>
-
-            <div className="eco-reciclador-vacio">
-              La informacion del centro se conectara
-              con los datos registrados
-            </div>
+            {cargandoHistorial ? (
+              <div className="eco-reciclador-vacio" role="status">
+                Cargando historial...
+              </div>
+            ) : errorHistorial ? (
+              <div className="eco-reciclador-vacio" role="alert">
+                <p>{errorHistorial}</p>
+                <button
+                  type="button"
+                  className="eco-reciclador-boton-principal"
+                  onClick={() => cargarHistorial(recicladorId)}
+                >
+                  Reintentar
+                </button>
+              </div>
+            ) : historialEntregas.length === 0 ? (
+              <div className="eco-reciclador-vacio">
+                Todavía no hay entregas aprobadas o rechazadas en este centro.
+              </div>
+            ) : (
+              <div className="eco-reciclador-lista">
+                {historialEntregas.map((entrega) => {
+                  const aprobada = ['Aprobada', 'Aprobado'].includes(entrega.estado)
+                  return (
+                    <article key={entrega.id} className="reciclador-entregas-card">
+                      <h3>{entrega.material?.nombre || 'Material reciclable'}</h3>
+                      <p><strong>Estado: </strong>{aprobada ? 'Aprobada' : 'Rechazada'}</p>
+                      <p><strong>Cantidad: </strong>{entrega.cantidad} kg</p>
+                      <p>
+                        <strong>Fecha: </strong>
+                        {entrega.fecha
+                          ? new Date(entrega.fecha).toLocaleDateString('es-CO')
+                          : 'No disponible'}
+                      </p>
+                      {aprobada && (
+                        <p><strong>EcoPuntos: </strong>{entrega.puntos_obtenidos ?? 0}</p>
+                      )}
+                      {!aprobada && entrega.motivo_rechazo && (
+                        <div className="reciclador-rechazo">
+                          <strong>Motivo del rechazo</strong>
+                          <p>{entrega.motivo_rechazo}</p>
+                        </div>
+                      )}
+                    </article>
+                  )
+                })}
+              </div>
+            )}
           </section>
         )}
 
@@ -564,10 +661,6 @@ function Reciclador({ perfil, cerrarSesion }) {
                     value={datosPerfil.correo}
                     disabled
                   />
-
-                  <small>
-                    El correo no se puede modificar desde aqui
-                  </small>
                 </div>
               </div>
               {mensajePerfil && (

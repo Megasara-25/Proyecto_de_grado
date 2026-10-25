@@ -34,7 +34,7 @@ function Admin({ perfil, cerrarSesion }) {
       setSolicitudes(data || [])
     } catch (error) {
       console.error('Error al cargar solicitudes:', error)
-      setMensaje('No fue posible cargar las solicitudes.')
+      setMensaje('No fue posible cargar las solicitudes')
     } finally {
       setCargando(false)
     }
@@ -51,7 +51,7 @@ function Admin({ perfil, cerrarSesion }) {
 
     if (error) {
       console.error('Error al consultar perfil:', error)
-      setMensajePerfil('No fue posible consultar los datos del perfil.')
+      setMensajePerfil('No fue posible consultar los datos del perfil')
       return
     }
     setDatosPerfil(data)
@@ -112,13 +112,13 @@ function Admin({ perfil, cerrarSesion }) {
       await cargarSolicitudes()
 
       setMensaje(!data
-        ? 'La solicitud ya no estaba pendiente.'
+        ? 'La solicitud ya no estaba pendiente'
         : nuevoEstado === 'Aprobado'
-          ? 'Solicitud aprobada correctamente.'
-          : 'Solicitud rechazada correctamente.')
+          ? 'Solicitud aprobada correctamente'
+          : 'Solicitud rechazada correctamente')
     } catch (error) {
       console.error('Error al gestionar solicitud:', error)
-      setMensaje('No fue posible actualizar la solicitud.')
+      setMensaje('No fue posible actualizar la solicitud')
     } finally {
       setSolicitudProcesando(null)
     }
@@ -127,11 +127,11 @@ function Admin({ perfil, cerrarSesion }) {
   const elegirFoto = (archivo) => {
     if (!archivo) return
     if (!['image/jpeg', 'image/png', 'image/jpeg'].includes(archivo.type)) {
-      setMensajePerfil('Selecciona una fotografia JPG, PNG o JPEG.')
+      setMensajePerfil('Selecciona una fotografia JPG, PNG o JPEG')
       return
     }
     if (archivo.size > 2 * 1024 * 1024) {
-      setMensajePerfil('La fotografia no puede superar los 2 MB.')
+      setMensajePerfil('La fotografia no puede superar los 2 MB')
       return
     }
     const lector = new FileReader()
@@ -141,7 +141,7 @@ function Admin({ perfil, cerrarSesion }) {
       setVistaPrevia(String(lector.result))
       setMensajePerfil('')
     }
-    lector.onerror = () => setMensajePerfil('No se pudo leer la fotografia.')
+    lector.onerror = () => setMensajePerfil('No se pudo leer la fotografia')
     lector.readAsDataURL(archivo)
   }
 
@@ -160,7 +160,7 @@ function Admin({ perfil, cerrarSesion }) {
     if (guardando) return
 
     if (!nombreEdicion.trim()) {
-      setMensajePerfil('El nombre es obligatorio.')
+      setMensajePerfil('El nombre es obligatorio')
       return
     }
     setGuardando(true)
@@ -188,7 +188,7 @@ function Admin({ perfil, cerrarSesion }) {
       })
       if (error) throw error
 
-      if (data === false) throw new Error('No se confirmo la actualizacion.')
+      if (data === false) throw new Error('No se confirmo la actualizacion')
 
       guardadoConfirmado = true
       setEditando(false)
@@ -200,7 +200,7 @@ function Admin({ perfil, cerrarSesion }) {
         telefono: telefonoEdicion.trim() || null,
         foto_perfil_url: rutaNueva || actual?.foto_perfil_url || null
       }))
-      setMensajePerfil('Perfil actualizado correctamente.')
+      setMensajePerfil('Perfil actualizado correctamente')
 
       try {
         await cargarPerfil()
