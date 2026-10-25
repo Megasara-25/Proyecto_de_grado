@@ -1,0 +1,4240 @@
+@media (max-width: 700px) {
+  :root {
+    --eco-sea-blue: #126384;
+    --eco-green: #34B05A;
+    --eco-cerulean: #0C83A7;
+    --eco-blue: #2CB7CE;
+    --eco-kiwi: #95EB3E;
+    --eco-yellow: #FEB101;
+    --eco-golden: #FFDC07;
+    --eco-text: #20343B;
+    --eco-muted: #5B7079;
+    --eco-bg: #F3F8FA;
+    --eco-border: #DCE9ED;
+    --eco-radius: 16px;
+    --eco-shadow: 0 6px 22px rgba(18, 99, 132, .08);
+  }
+
+  body,
+  .ciudadano-pagina,
+  .comercio-pagina,
+  .admin-pagina {
+    background: var(--eco-bg);
+    color: var(--eco-text);
+  }
+
+  .login-pagina {
+    background: radial-gradient(circle at 10% 0%, rgba(44, 183, 206, .16), transparent 44%),
+      linear-gradient(155deg, #f1fafb 0%, #f5fbf7 100%);
+    padding-top: max(18px, env(safe-area-inset-top));
+    padding-bottom: max(18px, env(safe-area-inset-bottom));
+  }
+
+  .login-circulo1 {
+    background: var(--eco-sea-blue);
+  }
+
+  .login-circulo2 {
+    background: var(--eco-kiwi);
+  }
+
+  .login-tarjeta,
+  .tarjeta {
+    border: 1px solid var(--eco-border);
+    box-shadow: var(--eco-shadow);
+  }
+
+  .login-encabezado h1,
+  .ciudadano-bienvenida-texto h1,
+  .ciudadano-seccion-titulo h2,
+  .comercio-header h1,
+  .admin-header h1 {
+    color: var(--eco-sea-blue);
+  }
+
+  .login-formulario input:focus,
+  .comercio-validacion input:focus,
+  .comercio-validacion select:focus {
+    border-color: var(--eco-cerulean);
+    box-shadow: 0 0 0 3px rgba(44, 183, 206, .14);
+  }
+
+  .login-boton-principal,
+  .reciclador-boton-aprobar,
+  .reclador-boton-aprobar,
+  .admin-boton-aprobar,
+  .ciudadano-beneficio-contenido button:not(:disabled) {
+    background: var(--eco-green);
+    color: #fff;
+  }
+
+  .login-boton-registro,
+  .login-mostrar-password,
+  .login-recuperar-password,
+  .ciudadano-boton-salir,
+  .comercio-boton-salir {
+    color: var(--eco-sea-blue);
+    border-color: var(--eco-sea-blue);
+  }
+
+  .ciudadano-header {
+    border-bottom-color: var(--eco-border);
+  }
+
+  .ciudadano-saldo {
+    background: linear-gradient(125deg, var(--eco-sea-blue), var(--eco-cerulean));
+    box-shadow: 0 10px 26px rgba(18, 99, 132, .17);
+  }
+
+  .ciudadano-saldo strong {
+    color: var(--eco-golden);
+  }
+
+  .ciudadano-material-card,
+  .ciudadano-beneficio-card,
+  .reciclador-entrega-card,
+  .comercio-recompensa-card,
+  .admin-estadistica-card,
+  .admin-solicitud-card {
+    border-color: var(--eco-border);
+    box-shadow: var(--eco-shadow);
+  }
+
+  .ciudadano-material-card.seleccionado {
+    background: #f0fbf4;
+    border-color: var(--eco-green);
+  }
+
+  .ciudadano-material-icono {
+    background: #e9f7f0;
+    color: var(--eco-sea-blue);
+  }
+
+  .ciudadano-categoria.activa {
+    background: var(--eco-sea-blue);
+    border-color: var(--eco-sea-blue);
+  }
+
+  .ciudadano-beneficios-categoria {
+    background: #e8f6fa;
+    color: var(--eco-sea-blue);
+  }
+
+  .ciudadano-canje-codigo {
+    background: #fffbea;
+    border-color: var(--eco-yellow);
+  }
+
+  .ciudadano-canje-codigo strong {
+    color: var(--eco-sea-blue);
+  }
+
+  .comercio-estado-canje {
+    background: #e9f7ef;
+    color: #176c3a;
+  }
+
+  .login-boton-principal,
+  .login-boton-registro,
+  .ciudadano-material-card,
+  .ciudadano-categoria,
+  .ciudadano-boton-salir,
+  .comercio-boton-salir,
+  .reciclador-acciones button,
+  .admin-boton-aprobar,
+  .admin-boton-rechazar {
+    transition: transform .18s ease, background-color .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+
+  .login-boton-principal:active,
+  .login-boton-registro:active,
+  .ciudadano-material-card:active,
+  .ciudadano-categoria:active,
+  .ciudadano-boton-salir:active,
+  .comercio-boton-salir:active,
+  .reciclador-acciones button:active,
+  .admin-boton-aprobar:active,
+  .admin-boton-rechazar:active {
+    transform: scale(.98);
+  }
+
+  @media (max-width: 600px) {
+    .login-tarjeta {
+      padding: 26px 20px;
+    }
+
+    .ciudadano-header-contenido {
+      min-height: 64px;
+      gap: 10px;
+      padding: 10px 14px;
+      padding-top: max(10px, env(safe-area-inset-top));
+    }
+
+    .ciudadano-logo {
+      width: min(36vw, 145px);
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .ciudadano-header-acciones {
+      gap: 8px;
+    }
+
+    .ciudadano-boton-salir {
+      padding: 9px 11px;
+    }
+
+    .ciudadano-contenido {
+      padding: 24px 14px max(56px, env(safe-area-inset-bottom));
+    }
+
+    .ciudadano-bienvenida {
+      margin-bottom: 28px;
+    }
+
+    .ciudadano-bienvenida-texto h1 {
+      font-size: clamp(24px, 7vw, 30px);
+    }
+
+    .ciudadano-saldo {
+      padding: 20px;
+      border-radius: var(--eco-radius);
+    }
+
+    .ciudadano-material-grid,
+    .ciudadano-materiales-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .ciudadano-material-card {
+      min-width: 0;
+      min-height: 154px;
+      padding: 14px;
+    }
+
+    .ciudadano-material-info h3 {
+      font-size: 15px;
+      overflow-wrap: anywhere;
+    }
+
+    .ciudadano-centros-grid,
+    .ciudadano-beneficios-grid,
+    .comercio-recompensas-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ciudadano-material-resumen {
+      flex-wrap: wrap;
+      gap: 14px;
+      padding: 14px;
+    }
+
+    .ciudadano-mapa-contenedor .leaflet-container {
+      height: min(55vh, 360px);
+    }
+
+    .ciudadano-canje-codigo strong {
+      overflow-wrap: anywhere;
+      font-size: clamp(23px, 7vw, 30px);
+      letter-spacing: 4px;
+    }
+
+    .comercio-pagina,
+    .admin-pagina {
+      padding: 16px 12px max(28px, env(safe-area-inset-bottom));
+    }
+
+    .comercio-panel {
+      padding: 18px 14px;
+    }
+
+    .comercio-validacion,
+    .comercio-historial {
+      padding: 16px 12px;
+    }
+
+    .comercio-tabla-contenedor {
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .admin-header {
+      gap: 10px;
+    }
+
+    .admin-header .admin-boton-salir {
+      min-width: 0;
+    }
+  }
+
+  @media (max-width: 360px) {
+
+    .ciudadano-material-grid,
+    .ciudadano-materiales-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .ciudadano-saldo strong {
+    font-size: 32px;
+  }
+
+  .ciudadano-saldo span {
+    color: rgba(255, 255, 255, .88);
+  }
+
+  .ciudadano-header-contenido {
+    max-width: 1200px;
+  }
+
+  .ciudadano-boton-salir {
+    border: 1px solid var(--eco-sea-blue);
+  }
+
+  .comercio-tabla th,
+  .comercio-tabla td {
+    border-bottom: 1px solid var(--eco-border);
+  }
+
+  .reciclador-boton-aprobar {
+    background: var(--eco-green);
+  }
+
+  .lista-materiales input[type=checkbox],
+  .Lista-materiales input[type=checkbox] {
+    accent-color: var(--eco-green);
+  }
+
+  .Lista-materiales {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 12px 0 20px;
+  }
+
+  .Lista-materiales label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .Lista-materiales input[type=checkbox] {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .login-boton-principal,
+  .login-boton-registro,
+  .ciudadano-material-card,
+  .ciudadano-categoria,
+  .reciclador-acciones button {
+    transition: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .login-pagina {
+    padding: 20px 16px;
+    background: linear-gradient(160deg,
+        #eaf9f6 0%,
+        #f5fbff 55%,
+        #ffffff 100%);
+  }
+
+  .login-tarjeta {
+    max-width: 420px;
+    padding: 26px 22px;
+    border-radius: 24px;
+    box-shadow: 0 12px 35px rgba(18, 99, 132, 0.09);
+  }
+
+  .login-logo {
+    width: 100%;
+    max-width: 170px;
+    height: auto;
+  }
+
+  .login-logo-contenedor {
+    margin-bottom: 12px;
+  }
+
+  .login-encabezado {
+    margin-bottom: 24px;
+  }
+
+  .login-encabezado h1 {
+    color: #126384;
+    font-size: 23px;
+  }
+
+  .login-encabezado p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .login-boton-principal {
+    background: linear-gradient(110deg,
+        #34B05A,
+        #0C83A7);
+    border-radius: 12px;
+    min-height: 48px;
+    font-weight: 700;
+  }
+
+  .login-boton-registro {
+    color: #126384;
+    border-color: #0C83A7;
+    border-radius: 12px;
+    min-height: 46px;
+  }
+
+  .login-circulo1 {
+    width: 220px;
+    height: 220px;
+    top: -100px;
+    left: -110px;
+  }
+
+  .login-circulo2 {
+    width: 170px;
+    height: 170px;
+    top: -90px;
+    left: -90px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contenedor {
+    display: block;
+    min-height: 100dvh;
+    padding: 18px 14px 36px;
+    background: linear-gradient(160deg,
+        #edf9fa 0%,
+        #f5fbf7 65%,
+        #ffffff 100%);
+  }
+
+  .contenedor>.tarjeta {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 26px 20px 30px;
+    border: 1px solid #dce9ed;
+    border-radius: 22px;
+    background: white;
+    box-shadow: 0 8px 28px rgba(18, 99, 132, 0.08);
+  }
+
+  .contenedor>.tarjeta h2:first-child {
+    margin: 0 0 6px;
+    color: #126384;
+    font-size: 21px;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  .contenedor>.tarjeta h2:nth-child(2) {
+    margin: 0 0 28px;
+    color: #20343b;
+    font-size: 25px;
+    font-weight: 750;
+    text-align: center;
+  }
+
+  .contenedor>.tarjeta>label {
+    margin: 0 0 7px;
+    color: #263c47;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .contenedor>.tarjeta>input,
+  .contenedor>.tarjeta>select {
+    display: block;
+    width: 100%;
+    min-height: 49px;
+    margin: 0 0 19px;
+    padding: 11px 14px;
+    border: 1px solid #d7e5e9;
+    border-radius: 12px;
+    background: #fbfdfd;
+    color: #20343b;
+    font-size: 16px;
+    box-shadow: none;
+  }
+
+  .contenedor>.tarjeta>input:focus,
+  .contenedor>.tarjeta>select:focus {
+    outline: none;
+    border-color: #0c83a7;
+    box-shadow: 0 0 0 3px rgba(12, 131, 167, 0.12);
+  }
+
+  .contenedor>.tarjeta>button {
+    width: 100%;
+    min-height: 49px;
+    margin: 8px 0;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .contenedor>.tarjeta>button:first-of-type {
+    background: linear-gradient(110deg, #34b05a, #0c83a7);
+    color: white;
+    border: none;
+  }
+
+  .contenedor>.tarjeta>button:last-of-type {
+    background: white;
+    color: #126384;
+    border: 1px solid #0c83a7;
+  }
+
+  .contenedor .Lista-materiales,
+  .contenedor .lista-materiales {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin: 12px 0 24px;
+  }
+
+  .contenedor .Lista-materiales label,
+  .contenedor .lista-materiales label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 48px;
+    margin: 0;
+    padding: 11px 13px;
+    border: 1px solid #dce9ed;
+    border-radius: 12px;
+    background: #f7fbfc;
+    color: #20343b;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .contenedor .Lista-materiales input[type="checkbox"],
+  .contenedor .lista-materiales input[type="checkbox"] {
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    min-width: 19px;
+    margin: 0;
+    padding: 0;
+    accent-color: #34b05a;
+  }
+
+  .contenedor .leaflet-container {
+    max-width: 100%;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .registro-logo-contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 12px;
+  }
+
+  .registro-logo {
+    display: block;
+    width: 100%;
+    max-width: 125px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .contenedor>.tarjeta>h2:first-of-type {
+    margin: 0 0 6px;
+    color: #126384;
+    font-size: 24px;
+    font-weight: 750;
+    text-align: center;
+  }
+
+  .registro-subtitulo {
+    margin: 0 0 26px;
+    color: #70828a;
+    font-size: 13px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .contenedor>.tarjeta button:has(+ .leaflet-container) {
+    background: linear-gradient(110deg, #34B05A, #0C83A7);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    min-height: 48px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(12, 131, 167, 0.16);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .contenedor>.tarjeta button:has(+ .leaflet-container):active {
+    transform: scale(0.98);
+  }
+}
+
+@media (max-width: 600px) {
+  .ecocycle-mapa-buscar {
+    display: block;
+    width: 100%;
+    min-height: 50px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(110deg,
+        #34B05A 0%,
+        #0C83A7 100%);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(12, 131, 167, 0.16);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .ecocycle-mapa-buscar:active {
+    transform: scale(0.98);
+  }
+
+  .ecocycle-mapa-buscar:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}
+
+.eco-reset {
+  --reset-blue: #126384;
+  --reset-teal: #0C83A7;
+  --reset-green: #34B05A;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: max(24px, env(safe-area-inset-top)) 18px max(30px, env(safe-area-inset-bottom));
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background:
+    radial-gradient(circle at 0% 0%,
+      rgba(149, 235, 62, 0.14),
+      transparent 42%),
+    linear-gradient(155deg,
+      #eaf8f9 0%,
+      #f3fafb 50%,
+      #ffffff 100%);
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+.eco-reset *,
+.eco-reset *::before,
+.eco-reset *::after {
+  box-sizing: border-box;
+}
+
+.eco-reset-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 30px 24px 24px;
+  border: 1px solid #e0edef;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 12px 32px rgba(18, 99, 132, 0.09);
+  animation: ecoResetEnter 0.35s ease-out both;
+}
+
+.eco-reset-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.eco-reset-logo {
+  display: block;
+  width: 128px;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 20px;
+  object-fit: contain;
+}
+
+.eco-reset-header h1 {
+  margin: 0 0 12px;
+  color: var(--reset-blue);
+  font-size: clamp(22px, 5.5vw, 25px);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+
+.eco-reset-header p {
+  max-width: 310px;
+  margin: 0 auto;
+  color: #647985;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.eco-reset .eco-reset-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.eco-reset-field {
+  width: 100%;
+  margin-bottom: 19px;
+}
+
+.eco-reset .eco-reset-field label {
+  display: block;
+  width: 100%;
+  margin: 0 0 9px;
+  color: #263d49;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.eco-reset .eco-reset-field input {
+  display: block;
+  width: 100%;
+  height: 52px;
+  min-height: 52px;
+  margin: 0;
+  padding: 0 15px;
+  border: 1px solid #d8e7e9;
+  border-radius: 12px;
+  background: #f9fcfd;
+  color: #20343b;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  outline: none;
+  box-shadow: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.eco-reset .eco-reset-field input::placeholder {
+  color: #96a6ad;
+}
+
+.eco-reset .eco-reset-field input:focus {
+  border-color: var(--reset-teal);
+  box-shadow: 0 0 0 3px rgba(12, 131, 167, 0.12);
+}
+
+.eco-reset-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 1px 0 22px;
+  padding: 12px 13px;
+  border-radius: 11px;
+  background: #eef9f5;
+  color: #46675b;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.eco-reset-hint span {
+  flex-shrink: 0;
+  color: var(--reset-green);
+  font-size: 16px;
+}
+
+.eco-reset .eco-reset-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 52px;
+  margin: 0;
+  padding: 13px 16px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(110deg,
+      #34B05A 0%,
+      #0C83A7 100%) !important;
+  color: #ffffff !important;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 5px 14px rgba(12, 131, 167, 0.17);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+.eco-reset .eco-reset-button:hover:not(:disabled) {
+  filter: brightness(1.04);
+  box-shadow: 0 7px 18px rgba(12, 131, 167, 0.22);
+}
+
+.eco-reset .eco-reset-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.eco-reset .eco-reset-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.eco-reset .eco-reset-message {
+  margin: 0 0 17px;
+  padding: 12px 14px;
+  border: 1px solid #f2d6b2;
+  border-radius: 11px;
+  background: #fff9ec;
+  color: #875b1b;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.eco-reset-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.eco-reset-success {
+  padding: 20px 14px;
+  border-radius: 15px;
+  background: #f0fbf4;
+  text-align: center;
+}
+
+.eco-reset-success-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: #34B05A;
+  color: white;
+  font-size: 25px;
+}
+
+.eco-reset-success h2 {
+  margin: 0 0 10px;
+  color: #126384;
+  font-size: 19px;
+}
+
+.eco-reset-success p {
+  margin: 0;
+  color: #506b60;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.eco-reset-footer {
+  margin-top: 28px;
+  color: #91a3a9;
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.eco-reset-footer-mark {
+  color: #34B05A;
+  margin-right: 4px;
+}
+
+@keyframes ecoResetEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eco-reset-card {
+    animation: none;
+  }
+
+  .eco-reset .eco-reset-button,
+  .eco-reset .eco-reset-field input {
+    transition: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .eco-reset {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .eco-reset-card {
+    padding: 25px 18px 22px;
+  }
+
+  .eco-reset-logo {
+    width: 112px;
+  }
+}
+
+@media (max-width: 700px) {
+  .ciudadano-pagina {
+    min-height: 100dvh;
+    background: #f3f8fa;
+    color: #20343b;
+  }
+
+  .ciudadano-header {
+    background: #ffffff;
+    border-bottom: 1px solid #dce9ed;
+    box-shadow: 0 2px 12px rgba(18, 99, 132, 0.05);
+  }
+
+  .ciudadano-header-contenido {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .ciudadano-logo {
+    display: block;
+    width: 105px;
+    max-width: 38%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .ciudadano-header-acciones {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .ciudadano-header-acciones>span {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #126384;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .ciudadano-boton-salir {
+    padding: 9px 11px;
+    border: 1px solid #dce9ed;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #126384;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .ciudadano-contenido {
+    width: 100%;
+    padding: 22px 16px 50px;
+  }
+
+  .ciudadano-bienvenida {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .ciudadano-etiqueta {
+    color: #0c83a7;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .ciudadano-bienvenida-texto h1 {
+    margin: 7px 0;
+    color: #126384;
+    font-size: 23px;
+    line-height: 1.25;
+  }
+
+  .ciudadano-bienvenida-texto p {
+    margin: 0;
+    color: #647985;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .ciudadano-saldo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    min-height: 120px;
+    padding: 22px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(115deg,
+        #126384 0%,
+        #0c83a7 65%,
+        #2cb7ce 100%);
+    color: #ffffff;
+    box-shadow: 0 10px 24px rgba(18, 99, 132, 0.18);
+  }
+
+  .ciudadano-saldo-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    background: rgba(255, 220, 7, 0.17);
+  }
+
+  .ciudadano-saldo-icono::before {
+    content: "★";
+    color: #ffdc07;
+    font-size: 32px;
+  }
+
+  .ciudadano-saldo span,
+  .ciudadano-saldo small {
+    display: block;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 12px;
+  }
+
+  .ciudadano-saldo strong {
+    display: block;
+    margin: 5px 0;
+    color: #ffdc07;
+    font-size: 31px;
+    line-height: 1.1;
+  }
+
+  .ciudadano-seccion-materiales {
+    margin-top: 24px;
+  }
+
+  .ciudadano-seccion-titulo {
+    margin-bottom: 17px;
+  }
+
+  .ciudadano-seccion-titulo span {
+    color: #0c83a7;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .ciudadano-seccion-titulo p {
+    margin: 6px 0 0;
+    color: #126384;
+    font-size: 20px;
+    font-weight: 800;
+  }
+
+  .ciudadano-material-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .ciudadano-material-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 0;
+    min-height: 205px;
+    padding: 13px 10px;
+    border: 1px solid #dce9ed;
+    border-radius: 17px;
+    background: #ffffff;
+    box-shadow: 0 5px 15px rgba(18, 99, 132, 0.06);
+    text-align: center;
+    transition:
+      transform 0.18s ease,
+      border-color 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+
+  .ciudadano-material-card:active {
+    transform: scale(0.97);
+  }
+
+  .ciudadano-material-card.seleccionado {
+    border: 2px solid #34b05a;
+    background: #f0fbf4;
+    box-shadow: 0 5px 18px rgba(52, 176, 90, 0.12);
+  }
+
+  .ciudadano-material-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 94px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #f1f9f7;
+  }
+
+  .ciudadano-personaje-imagen {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .ciudadano-material-info {
+    width: 100%;
+  }
+
+  .ciudadano-material-info h3 {
+    margin: 0 0 6px;
+    color: #20343b;
+    font-size: 14px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+
+  .ciudadano-material-info p {
+    margin: 0;
+    color: #647985;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .ciudadano-material-info p strong {
+    color: #34b05a;
+  }
+
+  .ciudadano-material-seleccionar {
+    margin-top: auto;
+    padding-top: 10px;
+    color: #0c83a7;
+    font-size: 11px;
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 360px) {
+  .ciudadano-material-grid {
+    gap: 8px;
+  }
+
+  .ciudadano-material-card {
+    padding: 10px 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ciudadano-material-card {
+    transition: none;
+  }
+}
+
+@media (max-width: 700px) {
+
+  .ciudadano-pagina .ciudadano-centro-card button,
+  .ciudadano-pagina .ciudadano-entrega-boton,
+  .ciudadano-pagina .ciudadano-beneficio-contenido button:not(:disabled),
+  .ciudadano-pagina .leaflet-popup-content button {
+    background: linear-gradient(110deg,
+        #34B05A 0%,
+        #0C83A7 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 12px;
+    min-height: 48px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(12, 131, 167, 0.16);
+    transition: transform 0.18s ease;
+  }
+
+  .ciudadano-pagina .ciudadano-centro-card button:active,
+  .ciudadano-pagina .ciudadano-entrega-boton:active,
+  .ciudadano-pagina .ciudadano-beneficio-contenido button:not(:disabled):active,
+  .ciudadano-pagina .leaflet-popup-content button:active {
+    transform: scale(0.98);
+  }
+
+  .ciudadano-pagina .ciudadano-beneficio-contenido button:disabled {
+    background: #e5ebee !important;
+    color: #71818a !important;
+    border: none;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  .ciudadano-centro-card {
+    padding: 18px;
+    border: 1px solid #dce9ed;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 5px 18px rgba(18, 99, 132, 0.07);
+  }
+
+  .ciudadano-centro-card h3 {
+    margin: 10px 0;
+    color: #126384;
+    font-size: 18px;
+  }
+
+  .ciudadano-centro-card p {
+    margin: 8px 0;
+    color: #5b7079;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .ciudadano-centro-card>span {
+    color: #34B05A;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .ciudadano-centro-card button {
+    margin-top: 15px;
+  }
+
+  .ciudadano-beneficio-contenido {
+    padding: 16px;
+  }
+
+  .ciudadano-beneficio-contenido h3 {
+    margin: 9px 0;
+    color: #20343b;
+    font-size: 17px;
+  }
+
+  .ciudadano-beneficio-contenido p {
+    color: #5b7079;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .ciudadano-beneficio-datos {
+    margin: 15px 0;
+  }
+
+  .ciudadano-beneficio-datos strong {
+    color: #126384;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .ciudadano-pagina .ciudadano-centro-card button,
+  .ciudadano-pagina .ciudadano-entrega-boton,
+  .ciudadano-pagina .ciudadano-beneficio-contenido button {
+    transition: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .ciudadano-historial {
+    margin: 34px 0;
+  }
+
+  .ciudadano-historial-encabezado {
+    margin-bottom: 18px;
+  }
+
+  .ciudadano-historial-encabezado>span {
+    color: #34b05a;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .ciudadano-historial-encabezado h2 {
+    margin: 5px 0;
+    color: #126384;
+    font-size: 21px;
+    text-align: left;
+  }
+
+  .ciudadano-historial-encabezado p {
+    margin: 0;
+    color: #647985;
+    font-size: 13px;
+  }
+
+  .ciudadano-historial-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ciudadano-historial-card {
+    overflow: hidden;
+    border: 1px solid #dce9ed;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 4px 14px rgba(18, 99, 132, 0.06);
+  }
+
+  .ciudadano-historial-card[open] {
+    border-color: #a8d9cb;
+  }
+
+  .ciudadano-historial-resumen {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .ciudadano-historial-resumen::-webkit-details-marker {
+    display: none;
+  }
+
+  .ciudadano-historial-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 55px;
+    height: 55px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #eef9f5;
+    color: #126384;
+    font-size: 25px;
+  }
+
+  .ciudadano-historial-icono img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ciudadano-historial-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  .ciudadano-historial-info strong {
+    color: #20343b;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+  }
+
+  .ciudadano-historial-info small {
+    color: #7b8c94;
+    font-size: 11px;
+  }
+
+  .ciudadano-historial-estado {
+    display: inline-flex;
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .ciudadano-historial-estado.aprobada {
+    background: #e8f8ed;
+    color: #218346;
+  }
+
+  .ciudadano-historial-estado.pendiente {
+    background: #fff5db;
+    color: #9a6900;
+  }
+
+  .ciudadano-historial-estado.rechazada {
+    background: #ffeded;
+    color: #bd3e3e;
+  }
+
+  .ciudadano-historial-flecha {
+    flex-shrink: 0;
+    color: #126384;
+    font-size: 24px;
+    transition: transform 0.2s ease;
+  }
+
+  .ciudadano-historial-card[open] .ciudadano-historial-flecha {
+    transform: rotate(180deg);
+  }
+
+  .ciudadano-historial-detalles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 15px;
+    border-top: 1px solid #edf2f4;
+    background: #fbfdfd;
+  }
+
+  .ciudadano-historial-detalles>div {
+    min-width: 0;
+  }
+
+  .ciudadano-historial-detalles span {
+    display: block;
+    margin-bottom: 5px;
+    color: #647985;
+    font-size: 11px;
+  }
+
+  .ciudadano-historial-detalles strong {
+    color: #126384;
+    font-size: 14px;
+  }
+
+  .ciudadano-historial-rechazo {
+    grid-column: 1 / -1;
+    padding: 12px;
+    border-radius: 10px;
+    background: #fff2f2;
+  }
+
+  .ciudadano-historial-rechazo p {
+    margin: 5px 0 0;
+    color: #a33b3b;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .ciudadano-historial-vacio {
+    padding: 25px 18px;
+    border: 1px dashed #c5dce3;
+    border-radius: 16px;
+    background: #ffffff;
+    text-align: center;
+  }
+
+  .ciudadano-historial-vacio>span {
+    font-size: 28px;
+  }
+
+  .ciudadano-historial-vacio p {
+    color: #647985;
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ciudadano-historial-flecha {
+    transition: none;
+  }
+}
+
+@media (max-width: 700px) {
+
+  .ciudadano-pagina button.ciudadano-entrega-boton,
+  .ciudadano-pagina .ciudadano-centro-card button,
+  .ciudadano-pagina .ciudadano-beneficio-contenido button:not(:disabled),
+  .ciudadano-pagina .leaflet-popup-content button {
+    appearance: none;
+    background: linear-gradient(110deg,
+        #34B05A 0%,
+        #0C83A7 100%) !important;
+    background-color: #34B05A;
+    color: #ffffff !important;
+    border: 0 !important;
+    border-radius: 12px !important;
+    min-height: 49px;
+    padding: 12px 16px;
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(12, 131, 167, 0.16);
+  }
+
+  .ciudadano-pagina button.ciudadano-entrega-boton {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    cursor: pointer;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-card {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #dce9ed;
+    border-radius: 18px;
+    background: #ffffff;
+    box-sizing: border-box;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-resumen {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    list-style: none;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-info {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-flecha {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    padding: 0 16px 16px;
+    border-top: 1px solid #edf2f4;
+    background: #fbfdfd;
+    box-sizing: border-box;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles>div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    width: 100%;
+    min-width: 0;
+    padding: 13px 0;
+    border-bottom: 1px solid #edf2f4;
+    box-sizing: border-box;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles>div:last-child {
+    border-bottom: none;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles>div>span {
+    display: block;
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    color: #647985;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles>div>strong {
+    display: block;
+    flex-shrink: 0;
+    margin: 0;
+    color: #126384;
+    font-size: 14px;
+    font-weight: 800;
+    text-align: right;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles>.ciudadano-historial-rechazo {
+    display: block;
+    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #fff2f2;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-rechazo p {
+    margin: 6px 0 0;
+    color: #a33b3b;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 700px) {
+
+  .ciudadano-pagina .ciudadano-entrega-boton,
+  .ciudadano-pagina .ciudadano-centro-card button,
+  .ciudadano-pagina .ecocycle-mapa-seleccionar,
+  .ciudadano-pagina .ciudadano-beneficio-contenido button:not(:disabled) {
+    background: linear-gradient(110deg,
+        #34B05A 0%,
+        #0C83A7 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 12px;
+    min-height: 48px;
+    font-weight: 700;
+  }
+
+  .ciudadano-pagina .ciudadano-beneficio-contenido button:disabled {
+    background: #e5ebee !important;
+    color: #71818a !important;
+    box-shadow: none;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 16px 16px;
+    border-top: 1px solid #edf2f4;
+    background: #fbfdfd;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles>div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #edf2f4;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles>div>span {
+    flex: 1;
+    margin: 0;
+    color: #647985;
+    font-size: 12px;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles>div>strong {
+    margin: 0;
+    color: #126384;
+    font-size: 14px;
+    text-align: right;
+  }
+
+  .ciudadano-pagina .ciudadano-historial-detalles>.ciudadano-historial-rechazo {
+    display: block;
+    padding: 12px;
+    background: #fff2f2;
+    border-radius: 10px;
+  }
+}
+
+.eco-ciudadano-navegacion {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .ciudadano-pagina .eco-ciudadano-navegacion {
+    display: flex;
+    gap: 9px;
+    overflow-x: auto;
+    max-width: 100%;
+    padding: 4px 1px 12px;
+    margin-bottom: 20px;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ciudadano-pagina .eco-ciudadano-tab {
+    flex: 0 0 auto;
+    min-height: 43px;
+    padding: 10px 15px;
+    border: 1px solid #dce9ed;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #126384;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .ciudadano-pagina .eco-ciudadano-tab.activa {
+    border-color: #126384;
+    background: #126384;
+    color: #ffffff;
+  }
+
+  .ciudadano-pagina .eco-ciudadano-tab:focus-visible {
+    outline: 3px solid #2cb7ce;
+    outline-offset: 2px;
+  }
+
+  .ciudadano-pagina .eco-ciudadano-vista:not([data-activa="true"]) {
+    display: none;
+  }
+
+  .ciudadano-pagina .ciudadano-material-icono {
+    width: 100%;
+    height: 94px;
+    min-height: 94px;
+    overflow: hidden;
+  }
+
+  .ciudadano-pagina .ciudadano-material-icono>img.ciudadano-personaje-imagen {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 94px;
+    object-fit: contain;
+  }
+
+  .ciudadano-pagina .eco-perfil {
+    padding: 24px 18px;
+    border: 1px solid #dce9ed;
+    border-radius: 18px;
+    background: #ffffff;
+  }
+
+  .ciudadano-pagina .eco-perfil-avatar {
+    display: grid;
+    place-items: center;
+    width: 68px;
+    height: 68px;
+    margin-bottom: 14px;
+    border-radius: 50%;
+    background: #e8f6fa;
+    color: #126384;
+    font-size: 28px;
+    font-weight: 800;
+  }
+
+  .ciudadano-pagina .eco-perfil h2 {
+    color: #126384;
+  }
+
+  .ciudadano-pagina .eco-perfil>p {
+    color: #647985;
+  }
+
+  .ciudadano-pagina .eco-perfil-dato {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid #edf2f4;
+  }
+
+  .ciudadano-pagina .eco-perfil-dato span {
+    color: #647985;
+  }
+
+  .ciudadano-pagina .eco-perfil-dato strong {
+    color: #126384;
+    text-align: right;
+  }
+
+  .ciudadano-pagina .eco-perfil-salir {
+    width: 100%;
+    min-height: 46px;
+    margin-top: 22px;
+    border: 1px solid #126384;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #126384;
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 700px) {
+  .ciudadano-pagina .eco-ciudadano-navegacion {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    width: 100%;
+    overflow-x: auto;
+    padding: 8px 0 14px;
+    margin-bottom: 18px;
+    scrollbar-width: none;
+  }
+
+  .ciudadano-pagina .eco-ciudadano-navegacion .eco-ciudadano-tab {
+    display: flex !important;
+    flex: 0 0 90px !important;
+    width: 90px !important;
+    min-width: 90px !important;
+    max-width: 90px !important;
+    min-height: 55px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 6px !important;
+    border: 1px solid #dce9ed !important;
+    border-radius: 14px !important;
+    background: #ffffff !important;
+    color: #126384 !important;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .ciudadano-pagina .eco-ciudadano-navegacion .eco-ciudadano-tab.activa {
+    background: linear-gradient(110deg,
+        #34b05a,
+        #0c83a7) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+  }
+
+  .ciudadano-pagina .eco-ciudadano-vista:not([hidden]) {
+    display: block !important;
+  }
+
+  .ciudadano-pagina .eco-ciudadano-vista[hidden] {
+    display: none !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .ciudadano-pagina .eco-perfil-editable {
+    width: 100%;
+    max-width: 100%;
+    padding: 22px 16px;
+    border-radius: 22px;
+    background: #ffffff;
+    box-sizing: border-box;
+  }
+
+  .ciudadano-pagina .eco-perfil-encabezado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .ciudadano-pagina .eco-perfil-foto-contenedor {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    border: 4px solid #34b05a;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8f5f9;
+  }
+
+  .ciudadano-pagina .eco-perfil-fotografia {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .ciudadano-pagina .eco-perfil-foto-contenedor .eco-perfil-avatar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #126384;
+    color: white;
+    font-size: 42px;
+    font-weight: 700;
+  }
+
+  .ciudadano-pagina .eco-perfil-encabezado h2 {
+    margin: 4px 0 0;
+    color: #126384;
+    font-size: 24px;
+  }
+
+  .ciudadano-pagina .eco-perfil-encabezado p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+  }
+
+  .ciudadano-pagina .eco-perfil-cambiar-foto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .ciudadano-pagina .eco-perfil-boton-foto {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 11px 18px;
+    border-radius: 12px;
+    background: #e8f5f9;
+    color: #126384;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .ciudadano-pagina .eco-perfil-cambiar-foto small {
+    font-size: 11px;
+    color: #64748b;
+  }
+
+  .ciudadano-pagina .eco-perfil-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+  }
+
+  .ciudadano-pagina .eco-perfil-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    width: 100%;
+  }
+
+  .ciudadano-pagina .eco-perfil-campo label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #126384;
+  }
+
+  .ciudadano-pagina .eco-perfil-campo input {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-height: 46px;
+    padding: 11px 13px;
+    border: 1px solid #dce7ec;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #263b45;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  .ciudadano-pagina .eco-perfil-campo input:disabled {
+    background: #f3f7f8;
+    color: #64748b;
+    opacity: 1;
+  }
+
+  .ciudadano-pagina .eco-perfil-campo input:focus {
+    outline: none;
+    border-color: #0c83a7;
+    box-shadow: 0 0 0 3px rgba(12, 131, 167, 0.12);
+  }
+
+  .ciudadano-pagina .eco-perfil-campo small {
+    font-size: 11px;
+    color: #64748b;
+  }
+
+  .ciudadano-pagina .eco-perfil-puntos {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px;
+    border-radius: 16px;
+    background: linear-gradient(110deg,
+        #126384,
+        #0c83a7);
+    color: white;
+  }
+
+  .ciudadano-pagina .eco-perfil-puntos span {
+    font-size: 13px;
+  }
+
+  .ciudadano-pagina .eco-perfil-puntos strong {
+    font-size: 32px;
+    color: #ffdc07;
+  }
+
+  .ciudadano-pagina .eco-perfil-puntos small {
+    font-size: 11px;
+    color: #e5f6fa;
+  }
+
+  .ciudadano-pagina .eco-perfil-mensaje {
+    padding: 12px;
+    border-radius: 12px;
+    background: #e8f5f9;
+    color: #126384;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .ciudadano-pagina .eco-perfil-acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ciudadano-pagina .eco-perfil-guardar,
+  .ciudadano-pagina .eco-perfil-editar {
+    display: block;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(110deg,
+        #34b05a,
+        #0c83a7);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .ciudadano-pagina .eco-perfil-cancelar {
+    width: 100%;
+    min-height: 46px;
+    border: 1px solid #dce7ec;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #126384;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .ciudadano-pagina .eco-perfil-salir {
+    width: 100%;
+    min-height: 46px;
+    padding: 12px;
+    border: 1px solid #dce7ec;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #126384;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .ciudadano-pagina .eco-perfil-guardar:disabled,
+  .ciudadano-pagina .eco-perfil-cancelar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+@media (max-width: 700px) {
+  .eco-boton-confirmar-ubicacion {
+    background: linear-gradient(135deg, #126384, #0C83A7) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    min-height: 52px;
+    box-shadow: 0 4px 12px rgba(18, 99, 132, 0.18);
+  }
+
+  .eco-boton-confirmar-ubicacion:active {
+    background: #0A5977 !important;
+    transform: scale(0.99);
+  }
+}
+
+@media (max-width: 700px) {
+  .eco-boton-confirmar-ubicacion {
+    background: linear-gradient(110deg,
+        #45B96B 0%,
+        #2696B2 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 14px !important;
+    font-weight: 700 !important;
+    min-height: 54px;
+    box-shadow: 0 5px 14px rgba(18, 99, 132, 0.12);
+  }
+
+  .eco-boton-confirmar-ubicacion:active {
+    filter: brightness(0.92);
+  }
+}
+
+@media (max-width: 700px) {
+  .eco-reciclador-pagina {
+    min-height: 100vh;
+    background: #f3f8fa;
+    color: #173b4c;
+  }
+
+  .eco-reciclador-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 16px;
+    background: #ffffff;
+    border-bottom: 1px solid #dbe8ee;
+  }
+
+  .eco-reciclador-marca h1 {
+    margin: 0;
+    color: #126384;
+    font-size: 24px;
+    font-weight: 800;
+  }
+
+  .eco-reciclador-marca span {
+    font-size: 12px;
+    color: #607d8b;
+  }
+
+  .eco-reciclador-salir {
+    width: auto;
+    padding: 10px 12px;
+    border: 1px solid #cbdfe8;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #126384;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .eco-reciclador-contenido {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px 14px 40px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .eco-reciclador-navegacion {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 4px 0 14px;
+    margin-bottom: 16px;
+    scrollbar-width: none;
+  }
+
+  .eco-reciclador-navegacion::-webkit-scrollbar {
+    display: none;
+  }
+
+  .eco-reciclador-tab {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 42px;
+    padding: 10px 16px;
+    border: 1px solid #d6e5eb;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #126384;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .eco-reciclador-tab.activa {
+    border-color: #126384;
+    background: #126384;
+    color: #ffffff;
+  }
+
+  .eco-reciclador-vista {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  .eco-reciclador-bienvenida {
+    padding: 8px 2px;
+  }
+
+  .eco-reciclador-bienvenida span {
+    color: #34b05a;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .eco-reciclador-bienvenida h2 {
+    margin: 8px 0;
+    color: #126384;
+    font-size: 26px;
+    line-height: 1.2;
+  }
+
+  .eco-reciclador-bienvenida p,
+  .eco-reciclador-titulo p {
+    margin: 0;
+    color: #607d8b;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .eco-reciclador-resumen {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 22px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #126384, #0c83a7);
+    color: #ffffff;
+  }
+
+  .eco-reciclador-resumen span {
+    font-size: 14px;
+  }
+
+  .eco-reciclador-resumen strong {
+    font-size: 42px;
+    line-height: 1.1;
+    color: #ffdc07;
+  }
+
+  .eco-reciclador-resumen small {
+    font-size: 12px;
+    color: #e6f5fa;
+  }
+
+  .eco-reciclador-boton-principal {
+    width: 100%;
+    min-height: 50px;
+    padding: 12px;
+    border: 0;
+    border-radius: 14px;
+    background: linear-gradient(110deg, #45b96b, #2696b2);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .eco-reciclador-titulo h2 {
+    margin: 0 0 6px;
+    color: #126384;
+    font-size: 23px;
+  }
+
+  .eco-reciclador-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .eco-reciclador-lista .reciclador-entregas-card {
+    padding: 18px;
+    border: 1px solid #dce9ef;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 5px 16px rgba(18, 99, 132, 0.06);
+  }
+
+  .eco-reciclador-lista .reciclador-entregas-card h3 {
+    margin: 0 0 12px;
+    color: #126384;
+    font-size: 18px;
+  }
+
+  .eco-reciclador-lista .reciclador-entregas-card p {
+    margin: 7px 0;
+    font-size: 14px;
+  }
+
+  .eco-reciclador-lista .reciclador-accciones {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .eco-reciclador-lista .reciclador-accciones button {
+    flex: 1;
+    min-width: 0;
+    min-height: 44px;
+    border-radius: 12px;
+    font-weight: 700;
+  }
+
+  .eco-reciclador-lista .reciclador-boton-aprobar {
+    background: #34b05a;
+    color: #ffffff;
+  }
+
+  .eco-reciclador-lista .reciclador-boton-rechazar {
+    background: #fff0f0;
+    color: #b42318;
+    border: 1px solid #f4c7c7;
+  }
+
+  .eco-reciclador-rechazo,
+  .reciclador-rechazo {
+    margin-top: 14px;
+  }
+
+  .eco-reciclador-acciones-rechazo {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .eco-reciclador-acciones-rechazo button {
+    flex: 1;
+    min-width: 0;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+
+  .eco-reciclador-vacio {
+    padding: 24px 18px;
+    border: 1px solid #dce9ef;
+    border-radius: 16px;
+    background: #ffffff;
+    color: #607d8b;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .eco-reciclador-mensaje {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #e9f6ee;
+    color: #17643a;
+    font-size: 13px;
+  }
+
+  .eco-reciclador-perfil {
+    padding: 24px 18px;
+    border: 1px solid #dce9ef;
+    border-radius: 20px;
+    background: #ffffff;
+    text-align: center;
+  }
+
+  .eco-reciclador-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 14px;
+    border: 3px solid #34b05a;
+    border-radius: 50%;
+    background: #126384;
+    color: #ffffff;
+    font-size: 38px;
+    font-weight: 800;
+  }
+
+  .eco-reciclador-perfil h2 {
+    margin: 0 0 8px;
+    color: #126384;
+    font-size: 24px;
+  }
+
+  .eco-reciclador-perfil>p {
+    margin-bottom: 24px;
+    color: #607d8b;
+    font-size: 13px;
+  }
+
+  .eco-reciclador-dato {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid #e4edf1;
+    text-align: left;
+    font-size: 13px;
+  }
+
+  .eco-reciclador-dato strong {
+    color: #126384;
+    text-align: right;
+  }
+
+  .eco-reciclador-salir-perfil {
+    width: 100%;
+    min-height: 46px;
+    margin-top: 20px;
+    border: 1px solid #126384;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #126384;
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 700px) {
+  .eco-reciclador-logo {
+    display: block;
+    width: 100px;
+    height: 85px;
+    object-fit: contain;
+  }
+
+  .eco-reciclador-header {
+    min-height: 105px;
+  }
+}
+
+@media (max-width: 700px) {
+  .eco-reciclador-perfil-editable {
+    padding: 22px 18px !important;
+    border-radius: 20px;
+    background: #ffffff;
+    text-align: center;
+  }
+
+  .eco-reciclador-perfil-editable .eco-reciclador-avatar {
+    width: 92px;
+    height: 92px;
+    margin: 0 auto 12px;
+    padding: 0;
+    overflow: hidden;
+    border: 3px solid #34b05a;
+    border-radius: 50%;
+    background: #126384;
+  }
+
+  .eco-reciclador-foto {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .eco-reciclador-foto-accion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .eco-reciclador-cambiar-foto {
+    display: inline-block;
+    padding: 9px 16px;
+    border: 1px solid #126384;
+    border-radius: 12px;
+    color: #126384;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .eco-reciclador-foto-accion small {
+    color: #607d8b;
+    font-size: 11px;
+  }
+
+  .eco-reciclador-perfil-editable h2 {
+    margin: 10px 0 6px;
+    color: #126384;
+    font-size: 23px;
+  }
+
+  .eco-reciclador-perfil-editable>p {
+    margin: 0 0 20px;
+    color: #607d8b;
+    font-size: 13px;
+  }
+
+  .eco-reciclador-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 18px;
+    text-align: left;
+  }
+
+  .eco-reciclador-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0;
+  }
+
+  .eco-reciclador-campo label {
+    color: #126384;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .eco-reciclador-campo input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 46px;
+    min-height: 46px;
+    margin: 0;
+    padding: 10px 12px;
+    border: 1px solid #d5e5ec;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #173b4c;
+    font-size: 14px;
+  }
+
+  .eco-reciclador-campo input:disabled {
+    background: #f1f6f8;
+    color: #567384;
+    opacity: 1;
+  }
+
+  .eco-reciclador-campo small {
+    color: #607d8b;
+    font-size: 11px;
+  }
+
+  .eco-reciclador-mensaje-perfil {
+    margin: 16px 0;
+    padding: 12px;
+    border-radius: 12px;
+    background: #eaf6ef;
+    color: #17643a;
+    font-size: 13px;
+  }
+
+  .eco-reciclador-botones-perfil {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .eco-reciclador-editar-perfil,
+  .eco-reciclador-guardar-perfil {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px;
+    border: 0;
+    border-radius: 12px;
+    background: linear-gradient(110deg, #45b96b, #2696b2);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .eco-reciclador-cancelar-perfil {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px;
+    border: 1px solid #cbdfe8;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #126384;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .eco-reciclador-botones-perfil button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .eco-reciclador-salir-perfil {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  .comercio-pagina {
+    min-height: 100dvh;
+    width: 100%;
+    background: #f4f8f9;
+    color: #173b49;
+    padding: 0 0 32px;
+    box-sizing: border-box;
+  }
+
+  .comercio-pagina *,
+  .comercio-pagina *::before,
+  .comercio-pagina *::after {
+    box-sizing: border-box;
+  }
+
+  .comercio-panel {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0 16px 24px;
+  }
+
+  .comercio-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 -16px 18px;
+    padding: 16px;
+    background: #fff;
+    border-bottom: 1px solid #e4ecef;
+  }
+
+  .comercio-header .eco-reciclador-marca {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .comercio-header .eco-reciclador-logo {
+    width: 126px;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .comercio-boton-salir {
+    flex-shrink: 0;
+    border: 1px solid #dce8ed;
+    border-radius: 12px;
+    background: #fff;
+    color: #126384;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 10px 12px;
+  }
+
+  .comercio-bienvenido {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 20px;
+    margin-bottom: 18px;
+    border-radius: 20px;
+    color: #fff;
+    background: linear-gradient(130deg,
+        #126384,
+        #0C83A7);
+    box-shadow: 0 8px 22px rgba(18, 99, 132, .14);
+  }
+
+  .comercio-bienvenido span:first-child {
+    font-size: 12px;
+    font-weight: 700;
+    opacity: .85;
+  }
+
+  .comercio-bienvenido h2 {
+    color: #fff;
+    font-size: clamp(20px, 5.5vw, 26px);
+    line-height: 1.2;
+    margin: 8px 0;
+    overflow-wrap: anywhere;
+  }
+
+  .comercio-bienvenido p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #e9f6f9;
+  }
+
+  .comercio-bienvenido .comercio-estado {
+    display: inline-flex;
+    align-items: center;
+    background: #fff;
+    color: #126384;
+    padding: 7px 11px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .comercio-recompensas,
+  .comercio-validacion,
+  .comercio-historial {
+    background: #fff;
+    border: 1px solid #e2ebee;
+    border-radius: 18px;
+    padding: 18px 16px;
+    margin: 0 0 18px;
+    box-shadow: 0 3px 14px rgba(18, 99, 132, .045);
+    min-width: 0;
+  }
+
+  .comercio-recompensas>h2,
+  .comercio-validacion h2,
+  .comercio-historial h2 {
+    font-size: 19px;
+    line-height: 1.25;
+    color: #126384;
+    margin: 0 0 12px;
+  }
+
+  .comercio-recompensas>button {
+    margin: 0 0 16px;
+  }
+
+  .comercio-pagina button {
+    min-height: 42px;
+    max-width: 100%;
+    cursor: pointer;
+  }
+
+  .comercio-recompensas>button,
+  .comercio-formulario-recompensa button[type='submit'],
+  .comercio-validacion>button,
+  .comercio-validacion button {
+    border: 0;
+    background: #34B05A;
+    color: #fff;
+    padding: 11px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .comercio-pagina button:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+  }
+
+  .comercio-formulario-recompensa {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #f5fafb;
+    border: 1px solid #dcebf0;
+    padding: 16px;
+    border-radius: 16px;
+    margin: 16px 0 20px;
+  }
+
+  .comercio-formulario-recompensa h3 {
+    color: #126384;
+    font-size: 17px;
+    margin: 0 0 5px;
+  }
+
+  .comercio-formulario-recompensa label,
+  .comercio-validacion>label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #254b59;
+    margin-top: 6px;
+  }
+
+  .comercio-formulario-recompensa input:not([type='file']),
+  .comercio-formulario-recompensa textarea,
+  .comercio-formulario-recompensa select,
+  .comercio-validacion input,
+  .comercio-validacion select {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-height: 44px;
+    padding: 11px 12px;
+    border: 1px solid #cfdee4;
+    border-radius: 11px;
+    background: #fff;
+    color: #173b49;
+    font: inherit;
+    font-size: 14px;
+    outline-offset: 2px;
+  }
+
+  .comercio-formulario-recompensa textarea {
+    min-height: 95px;
+    resize: vertical;
+  }
+
+  .comercio-formulario-recompensa input[type='file'] {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    font-size: 12px;
+    color: #345966;
+    padding: 12px 9px;
+    border: 1px dashed #8db5c2;
+    background: #fff;
+    border-radius: 12px;
+  }
+
+  .comercio-formulario-recompensa input[type='file']::file-selector-button {
+    border: 0;
+    background: #126384;
+    color: #fff;
+    border-radius: 8px;
+    padding: 9px;
+    font-weight: 700;
+    margin-right: 8px;
+  }
+
+  .comercio-formulario-recompensa img {
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #dce8ec;
+  }
+
+  .comercio-formulario-recompensa button[type='button'] {
+    border: 1px solid #bfd3dc;
+    color: #126384;
+    background: #fff;
+    border-radius: 11px;
+    padding: 10px 12px;
+    font-weight: 700;
+  }
+
+  .comercio-recompensas-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .comercio-recompensa-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #e0e9ed;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(18, 99, 132, .05);
+  }
+
+  .comercio-recompensa-card>img,
+  .comercio-recompensa-card>div:first-child {
+    width: 100% !important;
+    max-width: 100%;
+    height: 125px !important;
+    object-fit: cover;
+    border-radius: 10px !important;
+    margin-bottom: 10px;
+  }
+
+  .comercio-recompensa-card>span {
+    align-self: flex-start;
+    max-width: 100%;
+    color: #126384;
+    background: #e8f5f8;
+    border-radius: 999px;
+    padding: 4px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+
+  .comercio-recompensa-card h3 {
+    font-size: 14px;
+    line-height: 1.3;
+    margin: 9px 0 6px;
+    color: #173b49;
+    overflow-wrap: anywhere;
+  }
+
+  .comercio-recompensa-card p {
+    font-size: 12px;
+    line-height: 1.45;
+    color: #58717a;
+    margin: 4px 0;
+    overflow-wrap: anywhere;
+  }
+
+  .comercio-recompensa-card strong {
+    color: #126384;
+    font-size: 15px;
+  }
+
+  .comercio-recompensa-card button {
+    margin-top: auto;
+    width: 100%;
+    background: #126384;
+    color: #fff;
+    border: 0;
+    border-radius: 10px;
+    padding: 9px 6px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .comercio-validacion-encabezado>span {
+    display: block;
+    color: #34B05A;
+    font-weight: 800;
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+
+  .comercio-validacion-encabezado p,
+  .comercio-historial-encabezado p {
+    color: #5d7882;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0 0 16px;
+  }
+
+  .comercio-validacion>label {
+    display: block;
+    margin: 13px 0 6px;
+  }
+
+  .comercio-validacion>button {
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .comercio-validacion>div:not(.comercio-validacion-encabezado) {
+    background: #f3faf6;
+    border: 1px solid #cfe9d7;
+    border-radius: 13px;
+    padding: 13px;
+    margin-top: 14px;
+  }
+
+  .comercio-validacion>div:not(.comercio-validacion-encabezado) h3 {
+    color: #126384;
+    font-size: 16px;
+    margin: 0 0 9px;
+  }
+
+  .comercio-validacion>div:not(.comercio-validacion-encabezado) p {
+    font-size: 13px;
+    margin: 6px 0;
+    overflow-wrap: anywhere;
+  }
+
+  .comercio-tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #e2ebef;
+    border-radius: 12px;
+  }
+
+  .comercio-tabla {
+    width: 100%;
+    min-width: 480px;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .comercio-tabla th {
+    background: #eaf4f7;
+    color: #126384;
+    text-align: left;
+    font-weight: 800;
+  }
+
+  .comercio-tabla th,
+  .comercio-tabla td {
+    padding: 11px 9px;
+    border-bottom: 1px solid #e8eef0;
+    vertical-align: top;
+  }
+
+  .comercio-estado-canje {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 5px 8px;
+    background: #e7f6eb;
+    color: #258043;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  @media (max-width: 365px) {
+    .comercio-recompensas-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .comercio-panel {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .comercio-pagina {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+
+  .comercio-navegacion-movil {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    background: #ffffff;
+    border-top: 1px solid #e2e9ed;
+    padding:
+      8px 5px calc(8px + env(safe-area-inset-bottom));
+    box-shadow: 0 -4px 20px rgba(18, 99, 132, 0.09);
+  }
+
+  .comercio-navegacion-movil button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-width: 0;
+    min-height: 52px;
+    padding: 5px 2px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    color: #617781;
+    font-size: 10px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .comercio-navegacion-movil button.activo {
+    background: #e7f6ec;
+    color: #126384;
+  }
+
+  .comercio-nav-icono {
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .comercio-resumen-movil,
+  .comercio-perfil-movil {
+    background: #ffffff;
+    border: 1px solid #e2ebee;
+    border-radius: 18px;
+    padding: 18px 16px;
+    margin-bottom: 18px;
+  }
+
+  .comercio-resumen-movil h2,
+  .comercio-perfil-movil h2 {
+    color: #126384;
+    font-size: 19px;
+    margin: 0 0 16px;
+  }
+
+  .comercio-resumen-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .comercio-resumen-grid div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: #eff8fa;
+    border-radius: 14px;
+    padding: 16px 12px;
+  }
+
+  .comercio-resumen-grid strong {
+    color: #126384;
+    font-size: 27px;
+  }
+
+  .comercio-resumen-grid span {
+    color: #516a74;
+    font-size: 12px;
+  }
+
+  .comercio-resumen-movil>button,
+  .comercio-perfil-movil>button {
+    width: 100%;
+    margin-top: 9px;
+    background: #126384;
+    color: #ffffff;
+    border: 0;
+    border-radius: 12px;
+    padding: 12px;
+    font-weight: 700;
+  }
+
+  .comercio-resumen-movil>button+button {
+    background: #34B05A;
+  }
+
+  .comercio-perfil-avatar {
+    display: grid;
+    place-items: center;
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    background: #dff4e6;
+    color: #126384;
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+
+  .comercio-perfil-movil label {
+    display: block;
+    color: #607882;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 14px;
+  }
+
+  .comercio-perfil-movil p {
+    margin: 6px 0;
+    overflow-wrap: anywhere;
+  }
+
+  .comercio-perfil-movil small {
+    display: block;
+    margin-top: 14px;
+    color: #607882;
+    line-height: 1.5;
+  }
+}
+
+@media (min-width: 701px) {
+  .comercio-navegacion-movil {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .comercio-pagina {
+    padding-bottom: calc(90px + env(safe-area-inset-bottom));
+  }
+
+  .comercio-navegacion-movil {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 3px;
+    padding: 8px 5px calc(8px + env(safe-area-inset-bottom));
+    background: #fff;
+    border-top: 1px solid #e0e8ec;
+    box-shadow: 0 -4px 18px rgba(18, 99, 132, .1);
+  }
+
+  .comercio-navegacion-movil button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-width: 0;
+    min-height: 54px;
+    padding: 6px 2px;
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    color: #607782;
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+  .comercio-navegacion-movil button.activo {
+    background: #e7f6ec;
+    color: #126384;
+    font-weight: 800;
+  }
+
+  .comercio-nav-icono {
+    font-size: 23px;
+    line-height: 1;
+  }
+}
+
+@media (min-width: 701px) {
+  .comercio-navegacion-movil {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    max-width: 800px;
+    margin: 20px auto;
+  }
+
+  .comercio-navegacion-movil button {
+    padding: 12px;
+    border: 1px solid #dce8ed;
+    border-radius: 10px;
+    background: white;
+    color: #126384;
+    cursor: pointer;
+  }
+
+  .comercio-navegacion-movil button.activo {
+    background: #126384;
+    color: white;
+  }
+
+  .comercio-nav-icono {
+    display: block;
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 700px) {
+  .comercio-pagina {
+    padding-bottom: 24px;
+  }
+
+  .comercio-navegacion-movil {
+    position: static;
+    inset: auto;
+    z-index: auto;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 5px;
+    width: 100%;
+    max-width: none;
+    margin: 0 0 18px;
+    padding: 8px 4px;
+    background: #fff;
+    border: 1px solid #e1ebef;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(18, 99, 132, .06);
+  }
+
+  .comercio-navegacion-movil button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-width: 0;
+    min-height: 62px;
+    padding: 7px 2px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: #eaf5f8;
+    color: #126384;
+    font-size: 10px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .comercio-navegacion-movil button.activo {
+    background: #126384;
+    border-color: #126384;
+    color: #fff;
+  }
+
+  .comercio-nav-icono {
+    display: block;
+    font-size: 22px;
+    line-height: 1;
+  }
+}
+
+@media (min-width: 701px) {
+  .comercio-navegacion-movil {
+    position: static;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 900px;
+    margin: 16px auto 24px;
+    padding: 10px;
+  }
+
+  .comercio-navegacion-movil button {
+    padding: 12px 18px;
+    border: 1px solid #dce8ed;
+    border-radius: 12px;
+    background: #eaf5f8;
+    color: #126384;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .comercio-navegacion-movil button.activo {
+    background: #126384;
+    border-color: #126384;
+    color: #fff;
+  }
+}
+
+@media (max-width: 700px) {
+
+  .comercio-recompensas>button,
+  .comercio-formulario-recompensa button[type="submit"],
+  .comercio-recompensa-card button,
+  .comercio-validacion button,
+  .comercio-perfil-movil>button {
+    background: linear-gradient(110deg,
+        #43b96b 0%,
+        #34b05a 30%,
+        #269db0 75%,
+        #248fb0 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 14px !important;
+    min-height: 46px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 800;
+    box-shadow: 0 5px 12px rgba(18, 99, 132, 0.10);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .comercio-formulario-recompensa button[type="button"] {
+    background: linear-gradient(110deg,
+        #43b96b 0%,
+        #34b05a 30%,
+        #269db0 75%,
+        #248fb0 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 14px !important;
+    min-height: 44px;
+    padding: 11px 14px;
+    font-weight: 700;
+  }
+
+  .comercio-recompensas>button:active,
+  .comercio-formulario-recompensa button:active,
+  .comercio-recompensa-card button:active,
+  .comercio-validacion button:active {
+    transform: scale(0.98);
+  }
+
+  .comercio-pagina button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .comercio-navegacion-movil button {
+    background: #eaf5f8 !important;
+    color: #126384 !important;
+    box-shadow: none !important;
+  }
+
+  .comercio-navegacion-movil button.activo {
+    background: #126384 !important;
+    color: #ffffff !important;
+  }
+}
+
+.admin-pagina {
+  min-height: 100vh;
+  background: #f3f8fa;
+  color: #17394a;
+  padding: 22px 16px 44px;
+  font-family: inherit;
+}
+
+.admin-panel {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+}
+
+.admin-pagina * {
+  box-sizing: border-box;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  background: #fff;
+  border: 1px solid #dfebef;
+  border-radius: 20px;
+  padding: 15px 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 5px 18px rgba(18, 99, 132, .05);
+}
+
+.admin-marca {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.admin-logo {
+  width: 80px;
+  height: 66px;
+  object-fit: contain;
+}
+
+.admin-marca h1 {
+  margin: 0;
+  color: #126384;
+  font-size: 25px;
+  line-height: 1.1;
+}
+
+.admin-marca p {
+  margin: 5px 0 0;
+  color: #5c7682;
+  font-size: 13px;
+}
+
+.admin-boton-salir {
+  background: #fff;
+  color: #126384;
+  border: 1px solid #d4e5ec;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.admin-navegacion {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid #dfebef;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 16px rgba(18, 99, 132, .04);
+}
+
+.admin-navegacion button {
+  border: 0;
+  border-radius: 12px;
+  padding: 13px 7px;
+  background: #eaf5f8;
+  color: #126384;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+.admin-navegacion button.activo {
+  background: #126384;
+  color: #fff;
+}
+
+.admin-nav-icono {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.admin-bienvenida,
+.admin-seccion {
+  background: #fff;
+  border: 1px solid #dfebef;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.admin-bienvenida {
+  background: linear-gradient(115deg, #e7f7ed 0%, #edf9fb 100%);
+}
+
+.admin-bienvenida h2,
+.admin-seccion h2 {
+  color: #126384;
+  margin: 8px 0;
+  font-size: 24px;
+}
+
+.admin-bienvenida p,
+.admin-seccion-encabezado p,
+.admin-perfil>p {
+  color: #5d7884;
+  line-height: 1.5;
+}
+
+.admin-etiqueta {
+  color: #16885a;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+}
+
+.admin-estadisticas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.admin-estadistica-card {
+  background: #fff;
+  border: 1px solid #dfebef;
+  border-radius: 18px;
+  padding: 21px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-estadistica-card p {
+  margin: 0;
+  color: #486674;
+  font-weight: 700;
+}
+
+.admin-estadistica-card strong {
+  font-size: 38px;
+  color: #126384;
+}
+
+.admin-estadistica-card span {
+  font-size: 13px;
+  color: #6a828d;
+}
+
+.admin-acciones {
+  margin-top: 16px;
+}
+
+.admin-boton-principal,
+.admin-boton-aprobar,
+.admin-boton-secundario,
+.admin-boton-rechazar {
+  min-height: 44px;
+  padding: 11px 18px;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.admin-boton-principal,
+.admin-boton-aprobar {
+  background: linear-gradient(110deg,
+      #43b96b,
+      #34b05a 30%,
+      #269db0 75%,
+      #248fb0);
+  color: white;
+  border: 0;
+}
+
+.admin-boton-secundario {
+  background: #eaf5f8;
+  color: #126384;
+  border: 1px solid #d5e7ee;
+}
+
+.admin-boton-rechazar {
+  background: #fff;
+  color: #aa3340;
+  border: 1px solid #e9b6bd;
+}
+
+.admin-pagina button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+.admin-mensaje {
+  background: #eef7fa;
+  border-left: 4px solid #0c83a7;
+  padding: 12px 16px;
+  border-radius: 9px;
+  color: #126384;
+  margin: 12px 0;
+}
+
+.admin-seccion-encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.admin-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.admin-filtros button {
+  background: #edf5f8;
+  color: #126384;
+  border: 1px solid #d9e9ef;
+  border-radius: 25px;
+  padding: 10px 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-filtros button.activo {
+  background: #126384;
+  color: #fff;
+}
+
+.admin-lista-solicitudes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.admin-solicitudes-card {
+  border: 1px solid #dceaf0;
+  border-radius: 16px;
+  padding: 19px;
+  background: #fff;
+}
+
+.admin-tarjeta-encabezado {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+}
+
+.admin-tarjeta-encabezado h3 {
+  margin: 0;
+  color: #126384;
+  font-size: 19px;
+}
+
+.admin-estado {
+  background: #fff6dc;
+  color: #866100;
+  padding: 6px 10px;
+  border-radius: 25px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.admin-detalles {
+  margin: 18px 0;
+  display: grid;
+  gap: 12px;
+}
+
+.admin-detalles div {
+  min-width: 0;
+}
+
+.admin-detalles dt {
+  color: #647e89;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.admin-detalles dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+
+.admin-tarjeta-acciones {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.admin-tarjeta-acciones button {
+  flex: 1;
+}
+
+.admin-vacio {
+  text-align: center;
+  background: #f5f9fb;
+  border-radius: 14px;
+  padding: 28px 14px;
+  color: #56717d;
+}
+
+.admin-perfil {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.admin-perfil-avatar {
+  width: 116px;
+  height: 116px;
+  border-radius: 50%;
+  background: linear-gradient(120deg, #34b05a, #0c83a7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 50px;
+  font-weight: 800;
+  margin: 24px auto;
+  overflow: hidden;
+}
+
+.admin-perfil-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-formulario label {
+  font-size: 13px;
+  color: #426675;
+  font-weight: 800;
+  margin-top: 6px;
+}
+
+.admin-formulario input {
+  width: 100%;
+  min-height: 45px;
+  border: 1px solid #d4e5ec;
+  border-radius: 11px;
+  padding: 11px;
+  background: white;
+  color: #17394a;
+  font: inherit;
+}
+
+.admin-formulario input[type="file"] {
+  padding: 10px;
+  height: auto;
+}
+
+.admin-campo-lectura {
+  margin: 0;
+  background: #f2f7f9;
+  border-radius: 10px;
+  padding: 13px;
+  color: #375968;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 700px) {
+  .admin-pagina {
+    padding: 12px 12px 28px;
+  }
+
+  .admin-header {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .admin-logo {
+    width: 65px;
+    height: 58px;
+  }
+
+  .admin-marca {
+    gap: 7px;
+  }
+
+  .admin-marca h1 {
+    font-size: 20px;
+  }
+
+  .admin-marca p {
+    font-size: 11px;
+  }
+
+  .admin-boton-salir {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .admin-navegacion button {
+    flex-direction: column;
+    gap: 5px;
+    font-size: 12px;
+    min-height: 64px;
+  }
+
+  .admin-bienvenida,
+  .admin-seccion {
+    padding: 17px;
+  }
+
+  .admin-estadisticas {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .admin-estadistica-card {
+    padding: 11px 7px;
+  }
+
+  .admin-estadistica-card p {
+    font-size: 11px;
+  }
+
+  .admin-estadistica-card strong {
+    font-size: 29px;
+  }
+
+  .admin-estadistica-card span {
+    font-size: 10px;
+  }
+
+  .admin-lista-solicitudes {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-seccion-encabezado {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-bienvenida h2,
+  .admin-seccion h2 {
+    font-size: 21px;
+  }
+}
+
+@media (max-width: 350px) {
+  .admin-estadisticas {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-marca h1 {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 700px) {
+
+  .ciudadano-perfil form,
+  .reciclador-perfil form,
+  .comercio-perfil-movil form,
+  .admin-perfil .admin-formulario {
+    background: #f3f9fb !important;
+    border: 1px solid #d9eaf0 !important;
+    border-radius: 18px !important;
+    padding: 20px 16px !important;
+    box-shadow: 0 4px 14px rgba(18, 99, 132, 0.04);
+  }
+
+  .ciudadano-perfil form label,
+  .reciclador-perfil form label,
+  .comercio-perfil-movil form label,
+  .admin-perfil .admin-formulario label {
+    display: block;
+    color: #126384 !important;
+    font-size: 14px;
+    font-weight: 800;
+    margin: 14px 0 9px;
+  }
+
+  .ciudadano-perfil form input:not([type="file"]),
+  .reciclador-perfil form input:not([type="file"]),
+  .comercio-perfil-movil form input:not([type="file"]),
+  .admin-perfil .admin-formulario input:not([type="file"]),
+  .ciudadano-perfil form select,
+  .reciclador-perfil form select,
+  .comercio-perfil-movil form select,
+  .admin-perfil .admin-formulario select {
+    width: 100%;
+    min-height: 54px;
+    padding: 13px 15px;
+    background: #fff !important;
+    color: #17394a !important;
+    border: 1px solid #cbdfe8 !important;
+    border-radius: 14px !important;
+    font-size: 16px;
+    box-shadow: none !important;
+    outline: none;
+  }
+
+  .ciudadano-perfil form input:focus,
+  .reciclador-perfil form input:focus,
+  .comercio-perfil-movil form input:focus,
+  .admin-perfil .admin-formulario input:focus {
+    border-color: #0c83a7 !important;
+    box-shadow: 0 0 0 3px rgba(12, 131, 167, 0.12) !important;
+  }
+
+  .ciudadano-perfil form input[type="file"],
+  .reciclador-perfil form input[type="file"],
+  .comercio-perfil-movil form input[type="file"],
+  .admin-perfil .admin-formulario input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 12px !important;
+    background: #fff !important;
+    border: 1px dashed #93bfd0 !important;
+    border-radius: 15px !important;
+    color: #126384;
+    font-size: 13px;
+  }
+
+  .ciudadano-perfil input[type="file"]::file-selector-button,
+  .reciclador-perfil input[type="file"]::file-selector-button,
+  .comercio-perfil-movil input[type="file"]::file-selector-button,
+  .admin-perfil input[type="file"]::file-selector-button {
+    background: #126384;
+    color: #fff;
+    border: 0;
+    border-radius: 10px;
+    padding: 12px;
+    margin-right: 10px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .ciudadano-perfil form button[type="submit"],
+  .reciclador-perfil form button[type="submit"],
+  .comercio-perfil-movil form button[type="submit"],
+  .admin-perfil .admin-boton-principal {
+    width: 100%;
+    min-height: 50px;
+    background: linear-gradient(110deg,
+        #43b96b 0%,
+        #34b05a 30%,
+        #269db0 75%,
+        #248fb0 100%) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 14px !important;
+    font-size: 15px;
+    font-weight: 800;
+    margin-top: 16px;
+    box-shadow: 0 5px 12px rgba(18, 99, 132, 0.10);
+  }
+
+  .ciudadano-perfil form button[type="button"],
+  .reciclador-perfil form button[type="button"],
+  .comercio-perfil-movil form button[type="button"],
+  .admin-perfil .admin-boton-secundario {
+    min-height: 46px;
+    border-radius: 12px !important;
+    background: #e2f1f6 !important;
+    color: #126384 !important;
+    border: 1px solid #cbdfe8 !important;
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 700px) {
+
+  .reciclador-pagina .reciclador-perfil,
+  .reciclador-pagina .reciclador-perfil-card,
+  .reciclador-pagina .reciclador-seccion-perfil,
+  .reciclador-pagina .perfil-reciclador,
+  .reciclador-pagina .perfil-card {
+    background: #f3f9fb !important;
+    border: 1px solid #d9eaf0 !important;
+    border-radius: 20px !important;
+  }
+
+  .reciclador-pagina .reciclador-perfil form,
+  .reciclador-pagina .reciclador-perfil-card form,
+  .reciclador-pagina .reciclador-seccion-perfil form,
+  .reciclador-pagina .perfil-reciclador form {
+    background: #f3f9fb !important;
+    border-radius: 18px !important;
+    padding: 18px 14px !important;
+  }
+
+  .reciclador-pagina input:not([type="file"]):not([type="checkbox"]),
+  .reciclador-pagina select,
+  .reciclador-pagina textarea {
+    background: #ffffff !important;
+    border: 1px solid #cbdfe8 !important;
+    border-radius: 14px !important;
+    color: #17394a !important;
+  }
+
+  .reciclador-pagina input:disabled,
+  .reciclador-pagina input[readonly] {
+    background: #eaf2f6 !important;
+    color: #54798b !important;
+  }
+
+  .reciclador-pagina input[type="file"] {
+    width: 100%;
+    background: #ffffff !important;
+    border: 1px dashed #93bfd0 !important;
+    border-radius: 14px !important;
+    padding: 12px !important;
+  }
+
+  .reciclador-pagina input[type="file"]::file-selector-button {
+    background: #126384;
+    color: white;
+    border: 0;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-right: 8px;
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 700px) {
+  .comercio-navegacion-movil {
+    position: static !important;
+    inset: auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 5px;
+    width: 100%;
+    max-width: none;
+    margin: 0 0 18px;
+    padding: 8px 4px;
+    background: #fff;
+    border: 1px solid #e1ebef;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(18, 99, 132, .06);
+  }
+
+  .comercio-navegacion-movil button {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-width: 0;
+    min-height: 62px;
+    padding: 7px 2px;
+    background: #eaf5f8 !important;
+    color: #126384 !important;
+    border: 1px solid transparent !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+    font-size: 10px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .comercio-navegacion-movil button.activo {
+    background: #126384 !important;
+    color: #fff !important;
+    border-color: #126384 !important;
+  }
+
+  .comercio-recompensas>button,
+  .comercio-formulario-recompensa button,
+  .comercio-recompensa-card button,
+  .comercio-validacion button,
+  .comercio-perfil-movil>button,
+  .reciclador-perfil form button[type="submit"] {
+    background: linear-gradient(110deg, #43b96b 0%, #34b05a 30%, #269db0 75%, #248fb0 100%) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 14px !important;
+    min-height: 46px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 800;
+    box-shadow: 0 5px 12px rgba(18, 99, 132, .10);
+  }
+
+  .comercio-pagina button:disabled,
+  .reciclador-pagina button:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+  }
+
+  .comercio-pagina input:not([type="checkbox"]):not([type="radio"]),
+  .comercio-pagina select,
+  .comercio-pagina textarea,
+  .reciclador-perfil input:not([type="checkbox"]):not([type="radio"]),
+  .reciclador-perfil select,
+  .reciclador-perfil textarea {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .comercio-recompensas-grid,
+  .reciclador-entregas-grid {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .ciudadano-mapa-contenedor .eco-mapa-marco .leaflet-container {
+    height: min(53dvh, 370px);
+    min-height: 290px;
+    border-radius: 0;
+  }
+
+  .eco-mapa-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .eco-mapa-leyenda {
+    gap: 10px;
+  }
+
+  .eco-mapa-leyenda span {
+    font-size: 11px;
+  }
+
+  .eco-mapa-acciones {
+    flex-wrap: wrap;
+  }
+
+  .eco-mapa .eco-mapa-ruta,
+  .eco-mapa .eco-mapa-reciclar {
+    min-width: 125px;
+  }
+}
+
+@media (max-width: 700px) {
+  .eco-reciclador-pagina .eco-reciclador-navegacion {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 7px;
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+    padding: 4px 0 14px;
+    margin-bottom: 15px;
+  }
+
+  .eco-reciclador-pagina .eco-reciclador-navegacion .eco-reciclador-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 49px;
+    padding: 9px 3px;
+    border: 1px solid #dce9ed;
+    border-radius: 13px;
+    background: #fff;
+    color: #126384;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .eco-reciclador-pagina .eco-reciclador-navegacion .eco-reciclador-tab.activa {
+    background: linear-gradient(110deg, #34b05a, #0c83a7);
+    color: #fff;
+    border-color: transparent;
+  }
+
+  .eco-reciclador-pagina .eco-reciclador-historial-resumen {
+    min-height: 84px;
+    padding: 13px;
+    gap: 11px;
+  }
+
+  .eco-reciclador-pagina .eco-reciclador-historial-icono {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .eco-reciclador-pagina .eco-reciclador-historial-identidad>strong {
+    font-size: 14px;
+  }
+
+  .eco-reciclador-pagina .eco-reciclador-historial-detalles {
+    padding: 4px 14px 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .eco-reciclador-pagina .eco-reciclador-navegacion {
+    gap: 5px;
+  }
+
+  .eco-reciclador-pagina .eco-reciclador-navegacion .eco-reciclador-tab {
+    padding: 9px 1px;
+    font-size: 11px;
+  }
+}
+
+@media(max-width:700px) {
+  .comercio-pagina .comercio-navegacion-movil {
+    width: 100%;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+    padding: 7px 3px;
+    overflow: visible;
+  }
+
+  .comercio-pagina .comercio-navegacion-movil button {
+    width: 100%;
+    min-width: 0;
+    min-height: 64px;
+    padding: 7px 1px;
+    gap: 5px;
+    font-size: clamp(9px, 2.4vw, 11px);
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  .comercio-pagina .comercio-navegacion-movil .comercio-nav-icono {
+    font-size: 21px;
+    min-height: 22px;
+  }
+
+  .comercio-pagina .comercio-historial {
+    padding: 18px 14px;
+  }
+
+  .comercio-pagina .comercio-historial-card-datos {
+    gap: 8px;
+  }
+
+  .comercio-pagina .comercio-validacion {
+    padding: 18px 14px;
+  }
+}
+
+@media (max-width: 700px) {
+  .comercio-pagina .comercio-navegacion-movil {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .comercio-pagina .comercio-navegacion-movil button {
+    min-width: 0;
+    padding: 9px 2px;
+    font-size: 10px;
+    overflow-wrap: anywhere;
+  }
+
+  .comercio-pagina .eco-comercio-historial-lista {
+    grid-template-columns: 1fr;
+  }
+
+  .comercio-pagina .eco-comercio-canje-campos {
+    grid-template-columns: 1fr;
+  }
+}

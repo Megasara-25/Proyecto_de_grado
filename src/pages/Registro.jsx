@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { supabase } from '../lib/supabase';
 import MapaSeleccionUbicacion from "../components/MapaSeleccionUbicacion";
+import logoEcocycle from '../assets/ecocycle-logo.png'
+import { Capacitor } from '@capacitor/core'
+import {
+    validarTelefonoColombiano,
+    normalizarTelefono
+} from '../utils/validaciones'
 
 function Registro({ volverLogin }) {
     const [nombre, setNombre] = useState('')
@@ -104,6 +110,11 @@ function Registro({ volverLogin }) {
             return
         }
 
+        if (!validarTelefonoColombiano(telefono)) {
+            setMensaje('Ingresa un numero celular valido')
+            return
+        }
+
         setMensaje('')
 
         const { data, error } = await supabase.auth.signUp({
@@ -114,7 +125,7 @@ function Registro({ volverLogin }) {
                     nombre: nombre,
                     tipo_documento: tipoDocumento,
                     numero_documento: numeroDocumento,
-                    telefono: telefono,
+                    telefono: normalizarTelefono(telefono),
                     fecha_nacimiento: fechaNacimiento,
                     rol: rol,
 
@@ -137,7 +148,9 @@ function Registro({ volverLogin }) {
                         ? ubicacionCentro?.longitud
                         : null
                 },
-                emailRedirectTo: 'http://localhost:5173'
+                emailRedirectTo: Capacitor.isNativePlatform()
+                    ? 'com.ecocycle.app://auth/callback'
+                    : window.location.origin
             }
         })
 
@@ -159,8 +172,18 @@ function Registro({ volverLogin }) {
     return (
         <div className="contenedor">
             <div className="tarjeta">
-                <h2>EcoCycle</h2>
+                <div className="registro-logo-contenedor">
+                    <img
+                        src={logoEcocycle}
+                        alt="EcoCycle"
+                        className="registro-logo"
+                    />
+                </div>
+
                 <h2>Crear cuenta</h2>
+                <p className="registro-descripcion">
+                    Unete y separte del cambio
+                </p>
 
                 <label>Nombre completo</label>
                 <input
@@ -208,9 +231,14 @@ function Registro({ volverLogin }) {
                     onChange={(e) => setNumeroDocumento(e.target.value)}
                 />
 
-                <label>Telefono</label>
+                <label htmlFor="registro-telefono">Telefono celular</label>
                 <input
-                    type="text"
+                    id="registro-telefono"
+                    type="tel"
+                    inputMode="numeric"
+                    autoComplete="tel-national"
+                    placeholder="Ej. 3001234567"
+                    maxLength={16}
                     value={telefono}
                     onChange={(e) => setTelefono(e.target.value)}
                 />
