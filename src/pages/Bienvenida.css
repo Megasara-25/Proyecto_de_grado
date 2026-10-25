@@ -1,0 +1,517 @@
+
+/* =====================================================
+   ECOCYCLE - PANTALLAS DE BIENVENIDA
+   React + Capacitor
+   ===================================================== */
+
+/* Colores de la interfaz */
+.eco-bienvenida {
+  --eco-verde: #2eac68;
+  --eco-turquesa: #0e85a3;
+  --eco-verde-oscuro: #174b32;
+  --eco-texto: #486456;
+  --eco-gradiente: linear-gradient(
+    105deg,
+    #2eac68 0%,
+    #168f96 68%,
+    #0e85a3 100%
+  );
+
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
+  padding: 20px;
+  background: linear-gradient(
+    155deg,
+    #ecf9ee 0%,
+    #f8fcf8 55%,
+    #dff2e3 100%
+  );
+  font-family: inherit;
+}
+
+/* Evitar conflictos con otros estilos */
+.eco-bienvenida,
+.eco-bienvenida * {
+  box-sizing: border-box;
+}
+
+/* =====================================================
+   FONDO DECORATIVO
+   ===================================================== */
+
+.eco-bienvenida-fondo {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(5px);
+}
+
+.eco-bienvenida-fondo-uno {
+  width: 310px;
+  height: 310px;
+  background: rgba(107, 190, 120, 0.13);
+  top: -150px;
+  right: -120px;
+}
+
+.eco-bienvenida-fondo-dos {
+  width: 250px;
+  height: 250px;
+  background: rgba(54, 142, 91, 0.1);
+  bottom: -110px;
+  left: -110px;
+}
+
+/* =====================================================
+   CONTENEDOR PRINCIPAL
+   ===================================================== */
+
+.eco-bienvenida-tarjeta {
+  width: 100%;
+  max-width: 440px;
+  min-height: min(740px, calc(100dvh - 40px));
+
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+  z-index: 1;
+
+  padding: 25px 25px 20px;
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(42, 119, 72, 0.12);
+  border-radius: 28px;
+  box-shadow: 0 18px 50px rgba(32, 90, 48, 0.1);
+}
+
+/* =====================================================
+   ENCABEZADO - LOGO Y SALTAR
+   ===================================================== */
+
+.eco-bienvenida-encabezado {
+  width: 100%;
+  min-height: 52px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.eco-bienvenida-logo {
+  display: block;
+  width: auto;
+  max-width: 160px;
+  height: 48px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* Botón Saltar */
+
+.eco-bienvenida-saltar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 40px;
+  padding: 9px 15px;
+
+  border: 1px solid #c8e9d8;
+  border-radius: 999px;
+  background: #e7f6ee;
+
+  color: #176d42;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.eco-bienvenida-saltar:hover {
+  background: #d5f0e1;
+}
+
+.eco-bienvenida-saltar:active {
+  transform: scale(0.97);
+}
+
+.eco-bienvenida-saltar span {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* =====================================================
+   CONTENIDO CENTRAL
+   ===================================================== */
+
+.eco-bienvenida-contenido {
+  flex: 1;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 18px 0 8px;
+}
+
+/* =====================================================
+   IMÁGENES DEL ZIP DE ONBOARDING
+   ===================================================== */
+
+.eco-bienvenida-ilustracion {
+  width: min(280px, 75vw);
+  aspect-ratio: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+  position: relative;
+  margin: 0 auto 22px;
+}
+
+.eco-bienvenida-imagen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* =====================================================
+   TEXTOS
+   ===================================================== */
+
+.eco-bienvenida-informacion {
+  width: 100%;
+  max-width: 365px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.eco-bienvenida-categoria {
+  display: inline-block;
+  margin-bottom: 11px;
+
+  font-size: 13px;
+  font-weight: 700;
+  color: #43864e;
+  letter-spacing: 0.3px;
+}
+
+.eco-bienvenida-informacion h1 {
+  margin: 0 0 14px;
+
+  color: var(--eco-verde-oscuro);
+  font-size: clamp(24px, 5.5vw, 30px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.6px;
+  overflow-wrap: break-word;
+}
+
+.eco-bienvenida-descripcion {
+  margin: 0;
+
+  color: var(--eco-texto);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.eco-bienvenida-detalle {
+  margin: 13px 0 0;
+
+  color: #6a8874;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* =====================================================
+   FOOTER Y NAVEGACIÓN
+   ===================================================== */
+
+.eco-bienvenida-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  flex-shrink: 0;
+
+  padding-top: 12px;
+}
+
+/* Indicadores de pantalla */
+
+.eco-bienvenida-indicadores {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 5px;
+}
+
+.eco-bienvenida-punto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50px;
+  background: #cbded0;
+
+  transition:
+    width 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.eco-bienvenida-punto.activo {
+  width: 29px;
+  background: var(--eco-gradiente);
+}
+
+/* Contenedores de botones */
+
+.eco-bienvenida-acciones {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.eco-bienvenida-acciones-finales {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+/* =====================================================
+   BOTONES
+   ===================================================== */
+
+.eco-bienvenida-boton-principal,
+.eco-bienvenida-boton-secundario {
+  flex: 1;
+  min-height: 54px;
+  padding: 12px 18px;
+
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    filter 0.15s ease,
+    background-color 0.15s ease;
+}
+
+/* Botón principal: degradado EcoCycle */
+
+.eco-bienvenida-boton-principal {
+  border: none;
+  background: var(--eco-gradiente);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.eco-bienvenida-boton-principal:hover {
+  filter: brightness(0.95);
+}
+
+.eco-bienvenida-boton-principal:active {
+  transform: scale(0.98);
+}
+
+/* Botón secundario: Crear cuenta y Anterior */
+
+.eco-bienvenida-boton-secundario {
+  background: #ffffff;
+  color: #168b88;
+  border: 1.5px solid #168b88;
+}
+
+.eco-bienvenida-boton-secundario:hover {
+  background: #edf9f5;
+}
+
+.eco-bienvenida-boton-secundario:active {
+  transform: scale(0.98);
+}
+
+/* Enlace a la landing */
+
+.eco-bienvenida-enlace {
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 5px;
+
+  background: transparent;
+  border: none;
+
+  color: #118c96;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+
+  cursor: pointer;
+}
+
+.eco-bienvenida-enlace:hover {
+  color: #176d42;
+}
+
+/* =====================================================
+   FRASE FINAL
+   ===================================================== */
+
+.eco-bienvenida-pie {
+  margin: 3px 0 0;
+
+  color: #769681;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.4px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* =====================================================
+   ACCESIBILIDAD
+   ===================================================== */
+
+.eco-bienvenida button:focus-visible {
+  outline: 3px solid #80c798;
+  outline-offset: 3px;
+}
+
+.eco-bienvenida button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* =====================================================
+   TELÉFONOS ANDROID
+   ===================================================== */
+
+@media (max-width: 480px) {
+  .eco-bienvenida {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .eco-bienvenida-tarjeta {
+    max-width: none;
+    min-height: 100dvh;
+    padding:
+      max(22px, env(safe-area-inset-top))
+      23px
+      max(18px, env(safe-area-inset-bottom));
+
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .eco-bienvenida-logo {
+    max-width: 145px;
+  }
+}
+
+/* =====================================================
+   PANTALLAS DE POCA ALTURA
+   ===================================================== */
+
+@media (max-height: 760px) {
+  .eco-bienvenida-tarjeta {
+    min-height: 100dvh;
+  }
+
+  .eco-bienvenida-contenido {
+    padding-top: 8px;
+  }
+
+  .eco-bienvenida-ilustracion {
+    width: min(205px, 54vw);
+    margin-bottom: 12px;
+  }
+
+  .eco-bienvenida-informacion h1 {
+    font-size: 25px;
+    margin-bottom: 10px;
+  }
+
+  .eco-bienvenida-descripcion {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .eco-bienvenida-detalle {
+    font-size: 12px;
+    margin-top: 9px;
+  }
+
+  .eco-bienvenida-footer {
+    gap: 9px;
+  }
+}
+
+@media (max-height: 620px) {
+  .eco-bienvenida {
+    overflow-y: auto;
+  }
+
+  .eco-bienvenida-tarjeta {
+    min-height: 100dvh;
+  }
+
+  .eco-bienvenida-ilustracion {
+    width: min(145px, 43vw);
+    margin-bottom: 8px;
+  }
+
+  .eco-bienvenida-informacion h1 {
+    font-size: 22px;
+  }
+
+  .eco-bienvenida-descripcion {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .eco-bienvenida-detalle {
+    font-size: 12px;
+    margin-top: 6px;
+  }
+
+  .eco-bienvenida-boton-principal,
+  .eco-bienvenida-boton-secundario {
+    min-height: 46px;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eco-bienvenida *,
+  .eco-bienvenida *::before,
+  .eco-bienvenida *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
