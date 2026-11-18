@@ -101,6 +101,15 @@ export default function MapaReciclaje({ recicladores = [], onSeleccionarCentro }
     })
     .filter(Boolean), [recicladores])
 
+  useEffect(() => {
+    if (
+      idSeleccionado !== null &&
+      !puntosValidos.some((centro) => centro.id === idSeleccionado)
+    ) {
+      setIdSeleccionado(null)
+    }
+  }, [puntosValidos, idSeleccionado])
+
   const seleccionado = puntosValidos.find((centro) => centro.id === idSeleccionado)
   const distancia = seleccionado && ubicacionUsuario
     ? calcularDistancia(ubicacionUsuario[0], ubicacionUsuario[1], seleccionado.latitud, seleccionado.longitud)

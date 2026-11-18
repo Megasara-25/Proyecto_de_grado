@@ -226,7 +226,13 @@ function Comercio({ perfil, cerrarSesion }) {
   }
 
   const confirmarCanje = async () => {
-    if (confirmandoCanje || !canjeEncontrado) return
+    if (
+      confirmandoCanje ||
+      !canjeEncontrado ||
+      canjeEncontrado.estado_canje !== 'Pendiente'
+    ) {
+      return
+    }
 
     setConfirmandoCanje(true)
     setMensaje('')
@@ -236,24 +242,43 @@ function Comercio({ perfil, cerrarSesion }) {
         'confirmar_canje_comercio',
         {
           p_canje_id: canjeEncontrado.canje_id,
-          p_codigo_canje: codigoCanje
+          p_codigo_canje: codigoCanje.trim()
         }
       )
 
       if (error) {
         console.error('Error al confirmar canje:', error)
-        setMensaje('No fue posible confirmar el canje')
+        if (
+          error.message?.includes('EcoPuntos insuficientes') ||
+          error.message?.includes('Ecopuntos insuficientes')
+        ) {
+          setMensaje(
+            'El ciudadano no tiene EcoPuntos suficientes para confirmar este canje'
+          )
+        } else if (
+          error.message?.includes('stock') ||
+          error.message?.includes('disponibilidad')
+        ) {
+          setMensaje(
+            'La recompensa no tiene unidades disponibles para confirmar el canje'
+          )
+        } else {
+          setMensaje('No fue posible confirmar el canje')
+        }
         return
       }
 
       if (!data) {
-        setMensaje('El canje ya fue utilizado o no es valido')
+        setMensaje('El código de canje venció, fue reemplazado o ya no es válido')
         setCanjeEncontrado(null)
         return
       }
 
       setMensaje('Canje confirmado correctamente')
       await cargarHistorialCanjes()
+      if (datosComercio?.id) {
+        await cargarMisRecompensas(datosComercio.id)
+      }
 
       setCanjeEncontrado({
         ...canjeEncontrado,
