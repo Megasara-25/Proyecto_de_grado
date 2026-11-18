@@ -793,6 +793,76 @@ button:hover {
   font-size: 13px;
 }
 
+.ciudadano-cantidades-materiales {
+  margin-bottom: 28px;
+}
+
+.ciudadano-cantidades-lista {
+  display: grid;
+  gap: 14px;
+}
+
+.ciudadano-cantidad-material-item {
+  padding: 16px 18px;
+  background: #ffffff;
+  border: 1px solid #d9e8da;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(28, 62, 37, 0.04);
+}
+
+.ciudadano-cantidad-material-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.ciudadano-cantidad-material-cabecera label {
+  margin: 0;
+  color: #173e35;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ciudadano-cantidad-material-cabecera span {
+  color: #276d2c;
+  font-size: 12px;
+  font-weight: 700;
+  background: #edf7ee;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.ciudadano-cantidad-material-puntos {
+  margin: 10px 0 0;
+  color: #385d4a;
+  font-size: 13px;
+}
+
+.ciudadano-sin-centros-compatibles {
+  margin-bottom: 24px;
+  padding: 20px 22px;
+  background: #fff9ed;
+  border: 1px solid #f2d39b;
+  border-radius: 14px;
+  color: #6b4c1b;
+}
+
+.ciudadano-sin-centros-compatibles p {
+  margin: 0 0 6px;
+  color: #4f350d;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.ciudadano-sin-centros-compatibles span {
+  display: block;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 .reciclador-entrega-card {
   background: #ffffff;
   border: 1px solid #dfe8df;
@@ -1082,6 +1152,33 @@ button:hover {
   font-size: 14px;
 }
 
+.ciudadano-sr-anuncio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ciudadano-canje-vigencia-fila {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 14px;
+}
+
+.ciudadano-canje-vigencia-fila .ciudadano-canje-codigo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .ciudadano-canje-codigo {
   padding: 20px;
   background: #f1f7f1;
@@ -1101,6 +1198,100 @@ button:hover {
   color: #1b5e20;
   font-size: 34px;
   letter-spacing: 8px;
+}
+
+.ciudadano-canje-codigo.ciudadano-canje-codigo-vencido {
+  background: #fff5f5;
+  border-color: #d97770;
+}
+
+.ciudadano-canje-codigo.ciudadano-canje-codigo-vencido strong {
+  color: #b42318;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+.ciudadano-canje-reloj {
+  flex: 0 0 108px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 10px;
+  background: #f5fbf8;
+  border: 1px solid #cce5d5;
+  border-radius: 14px;
+}
+
+.ciudadano-canje-reloj.por-vencer {
+  background: #fff9ec;
+  border-color: #f3c46b;
+}
+
+.ciudadano-canje-reloj.vencido {
+  background: #fff5f5;
+  border-color: #e6a8a3;
+}
+
+.ciudadano-canje-anillo-marco {
+  position: relative;
+  width: 78px;
+  height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ciudadano-canje-anillo-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ciudadano-canje-anillo-fondo {
+  fill: none;
+  stroke: #dcebe1;
+  stroke-width: 7;
+}
+
+.ciudadano-canje-anillo-progreso {
+  fill: none;
+  stroke: #2e7d32;
+  stroke-width: 7;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.25s linear, stroke 0.2s ease;
+}
+
+.ciudadano-canje-reloj.por-vencer .ciudadano-canje-anillo-progreso {
+  stroke: #c77700;
+}
+
+.ciudadano-canje-reloj.vencido .ciudadano-canje-anillo-progreso {
+  stroke: #b42318;
+}
+
+.ciudadano-canje-reloj-texto {
+  position: absolute;
+  color: #126384;
+  font-size: 16px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.ciudadano-canje-reloj.por-vencer .ciudadano-canje-reloj-texto {
+  color: #8f5300;
+}
+
+.ciudadano-canje-reloj.vencido .ciudadano-canje-reloj-texto {
+  color: #b42318;
+}
+
+.ciudadano-canje-reloj-etiqueta {
+  color: #466056;
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .ciudadano-canje-detalles {
@@ -1129,14 +1320,89 @@ button:hover {
   font-size: 12px;
 }
 
+.ciudadano-canje-regenerar {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: linear-gradient(110deg, #34B05A 0%, #0C83A7 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ciudadano-canje-regenerar:hover:not(:disabled) {
+  filter: brightness(1.04);
+  opacity: 1;
+}
+
+.ciudadano-canje-regenerar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ciudadano-canje-cancelar {
+  width: 100%;
+  min-height: 46px;
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: #ffffff;
+  color: #b42318;
+  border: 1px solid #b42318;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ciudadano-canje-cancelar:hover:not(:disabled) {
+  background: #fff5f5;
+  opacity: 1;
+}
+
+.ciudadano-canje-cancelar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 @media (max-width: 600px) {
   .ciudadano-canje-exitoso {
     padding: 20px;
   }
 
+  .ciudadano-canje-vigencia-fila {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .ciudadano-canje-reloj {
+    flex: 0 0 96px;
+    padding: 10px 8px;
+  }
+
+  .ciudadano-canje-anillo-marco {
+    width: 68px;
+    height: 68px;
+  }
+
   .ciudadano-canje-codigo strong {
-    font-size: 28px;
-    letter-spacing: 5px;
+    font-size: 26px;
+    letter-spacing: 4px;
+  }
+}
+
+@media (max-width: 380px) {
+  .ciudadano-canje-vigencia-fila {
+    flex-direction: column;
+  }
+
+  .ciudadano-canje-reloj {
+    width: 100%;
+    flex: none;
   }
 }
 

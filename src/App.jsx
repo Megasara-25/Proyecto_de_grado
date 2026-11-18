@@ -298,14 +298,36 @@ function App() {
     setMostrarRegistro(destino === 'registro')
   }
 
-  const cerrarSesion = async () => {
+  const cerrarSesion = async (opciones = {}) => {
+    if (perfil?.rol === 'ciudadano' && !opciones?.codigosInvalidados) {
+      const { error: errorInvalidacion } = await supabase.rpc(
+        'invalidar_canjes_sesion_ciudadano'
+      )
+
+      if (errorInvalidacion) {
+        return {
+          ok: false,
+          error: errorInvalidacion
+        }
+      }
+    }
+
+    const { error: errorSalida } = await supabase.auth.signOut()
+
+    if (errorSalida) {
+      return {
+        ok: false,
+        error: errorSalida
+      }
+    }
+
     setRecuperandoContrasena(false)
     setCorreoConfirmado(false)
     setErrorAutenticacion('')
-
-    await supabase.auth.signOut()
     setUsuario(null)
     setPerfil(null)
+
+    return { ok: true }
   }
 
   if (recuperandoContrasena) {

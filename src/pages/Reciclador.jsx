@@ -63,6 +63,8 @@ function Reciclador({ perfil, cerrarSesion }) {
     `)
       .eq('recicladorid', idReciclador)
       .eq('estado', 'Pendiente')
+      .order('fecha', { ascending: false })
+      .order('id', { ascending: false })
 
     if (error) {
       console.error('Error al cargar entregas: ', error)
@@ -356,6 +358,34 @@ function Reciclador({ perfil, cerrarSesion }) {
       cargarHistorial(recicladorId)
     }
   }, [pestanaActiva, recicladorId])
+
+  useEffect(() => {
+    if (!recicladorId) return
+
+    const canal = supabase
+      .channel(`entregas-reciclador-${recicladorId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'entrega',
+          filter: `recicladorid=eq.${recicladorId}`,
+        },
+        () => {
+          cargarEntrega(recicladorId)
+        }
+      )
+      .subscribe((estado) => {
+        if (estado === 'SUBSCRIBED') {
+          cargarEntrega(recicladorId)
+        }
+      })
+
+    return () => {
+      void supabase.removeChannel(canal)
+    }
+  }, [recicladorId])
 
   const pestanasReciclador = [
     { id: 'inicio', nombre: 'Inicio' },
