@@ -62,7 +62,7 @@ function Registro({ volverLogin }) {
 
         if (rol === 'reciclador') {
             if (!nombreCentro || !direccion || !ciudad) {
-                setMensaje('Completa el nombre del centro, la dirección y la ciudad.');
+                setMensaje('Completa el nombre del centro, la direccion y la ciudad.');
                 return;
             }
             if (materialseleccionados.length === 0) {
@@ -71,8 +71,8 @@ function Registro({ volverLogin }) {
             }
             if (!ubicacionCentro) {
                 setMensaje(
-                    'Debes confirmar la ubicación del centro en el mapa antes de registrarte. ' +
-                    'Usa el botón "Confirmar ubicación del centro".'
+                    'Debes confirmar la ubicacion del centro en el mapa antes de registrarte. ' +
+                    'Usa el boton "Confirmar ubicacion del centro".'
                 );
                 return;
             }
@@ -161,7 +161,7 @@ function Registro({ volverLogin }) {
                 setMensaje('se alcanzo temporalmente el limite de envio de correos. Intenta nuevamente ams tarde')
                 return
             }
-            setMensaje('No fue posible crear la cuenta')
+            setMensaje('No fue posible crear la cuenta. Verifica los datos e intentalo de nuevo')
             return
         }
         console.log('Usuario registrado:', data)
